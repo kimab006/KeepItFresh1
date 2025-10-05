@@ -6,15 +6,15 @@
 
 body {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
-    background: #f5f5f5;
+    background: #07391F;
     min-height: 100vh;
-    color: #07391F;
+    color: #FFF7ED;
 }
 
 .container {
     max-width: 430px;
     margin: 0 auto;
-    background: #FFF7ED;
+    background: #07391F;
     min-height: 100vh;
     box-shadow: 0 0 30px rgba(0,0,0,0.1);
     position: relative;
@@ -37,7 +37,7 @@ body {
 
 /* Landing Page */
 .landing {
-    background: linear-gradient(135deg, #ffed4e 0%, #ffd93d 100%);
+    background: linear-gradient(135deg, #0a4a28 0%, #07391F 100%);
     text-align: center;
     padding: 80px 30px;
     min-height: 100vh;
@@ -51,14 +51,14 @@ body {
     margin-bottom: 15px;
     font-weight: 800;
     line-height: 1.1;
-    color: #07391F;
+    color: #FFF7ED;
     letter-spacing: -1px;
 }
 
 .landing p {
     font-size: 1.2em;
     margin-bottom: 50px;
-    color: #07391F;
+    color: #FFF7ED;
     font-weight: 500;
 }
 
@@ -74,8 +74,8 @@ body {
 }
 
 .btn {
-    background: #07391F;
-    color: #FFF7ED;
+    background: #FFF7ED;
+    color: #07391F;
     border: none;
     padding: 18px 50px;
     font-size: 1.1em;
@@ -88,14 +88,14 @@ body {
 
 .btn:hover {
     transform: scale(1.05);
-    box-shadow: 0 10px 25px rgba(7, 57, 31, 0.3);
+    box-shadow: 0 10px 25px rgba(255, 247, 237, 0.3);
 }
 
 /* Navigation */
 .nav {
-    background: #FFF7ED;
+    background: #07391F;
     padding: 10px 0;
-    border-top: 1px solid #e8e8e8;
+    border-top: 1px solid rgba(255, 247, 237, 0.2);
     display: flex;
     justify-content: space-around;
     position: fixed;
@@ -111,7 +111,7 @@ body {
     padding: 10px 15px;
     cursor: pointer;
     font-size: 0.75em;
-    color: #8e8e93;
+    color: rgba(255, 247, 237, 0.6);
     transition: color 0.2s;
     display: flex;
     flex-direction: column;
@@ -121,17 +121,17 @@ body {
 }
 
 .nav-btn:hover {
-    color: #07391F;
+    color: #FFF7ED;
 }
 
 .nav-btn.active {
-    color: #07391F;
+    color: #FFF7ED;
 }
 
 /* Header */
 .header {
     padding: 60px 25px 30px;
-    background: #FFF7ED;
+    background: #07391F;
 }
 
 .header h1 {
@@ -139,11 +139,11 @@ body {
     font-weight: 800;
     margin-bottom: 8px;
     letter-spacing: -1px;
-    color: #07391F;
+    color: #FFF7ED;
 }
 
 .header p {
-    color: #8e8e93;
+    color: rgba(255, 247, 237, 0.7);
     font-size: 1em;
     font-weight: 500;
 }
@@ -155,7 +155,7 @@ body {
 
 /* Scan/Search Page */
 .search-section {
-    background: #f8f8f8;
+    background: rgba(255, 247, 237, 0.1);
     border-radius: 20px;
     padding: 20px;
     margin-bottom: 30px;
@@ -164,23 +164,24 @@ body {
 .search-box {
     width: 100%;
     padding: 15px 20px;
-    border: none;
+    border: 2px solid rgba(255, 247, 237, 0.2);
     border-radius: 15px;
     font-size: 1em;
-    background: #FFF7ED;
+    background: rgba(255, 247, 237, 0.05);
     margin-bottom: 15px;
     font-weight: 500;
+    color: #FFF7ED;
 }
 
 .search-box::placeholder {
-    color: #c7c7cc;
+    color: rgba(255, 247, 237, 0.5);
 }
 
 .scan-btn {
     width: 100%;
     padding: 18px;
-    background: #07391F;
-    color: #FFF7ED;
+    background: #FFF7ED;
+    color: #07391F;
     border: none;
     border-radius: 15px;
     font-size: 1em;
@@ -193,7 +194,7 @@ body {
     font-size: 1.3em;
     font-weight: 700;
     margin-bottom: 20px;
-    color: #07391F;
+    color: #FFF7ED;
 }
 
 .produce-grid {
@@ -204,8 +205,8 @@ body {
 }
 
 .produce-card {
-    background: #FFF7ED;
-    border: 2px solid #f0f0f0;
+    background: rgba(255, 247, 237, 0.1);
+    border: 2px solid rgba(255, 247, 237, 0.2);
     border-radius: 20px;
     padding: 25px 20px;
     text-align: center;
@@ -215,8 +216,9 @@ body {
 
 .produce-card:hover {
     transform: translateY(-5px);
-    border-color: #ffed4e;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    border-color: #FFF7ED;
+    box-shadow: 0 10px 25px rgba(255, 247, 237, 0.1);
+    background: rgba(255, 247, 237, 0.15);
 }
 
 .produce-icon {
@@ -227,7 +229,7 @@ body {
 .produce-name {
     font-weight: 700;
     font-size: 1em;
-    color: #07391F;
+    color: #FFF7ED;
 }
 
 /* Calendar View */
@@ -238,7 +240,7 @@ body {
 }
 
 .inventory-card {
-    background: #f8f8f8;
+    background: rgba(255, 247, 237, 0.1);
     padding: 20px;
     border-radius: 20px;
     display: flex;
@@ -249,12 +251,12 @@ body {
 
 .inventory-card.urgent {
     border-left-color: #ff3b30;
-    background: #fff5f5;
+    background: rgba(255, 59, 48, 0.1);
 }
 
 .inventory-card.warning {
     border-left-color: #ff9500;
-    background: #fff8f0;
+    background: rgba(255, 149, 0, 0.1);
 }
 
 .inventory-info {
@@ -271,18 +273,18 @@ body {
     font-size: 1.1em;
     font-weight: 700;
     margin-bottom: 5px;
-    color: #07391F;
+    color: #FFF7ED;
 }
 
 .inventory-date {
-    color: #8e8e93;
+    color: rgba(255, 247, 237, 0.6);
     font-size: 0.85em;
     font-weight: 500;
 }
 
 .days-badge {
     background: #34c759;
-    color: #FFF7ED;
+    color: #07391F;
     padding: 10px 18px;
     border-radius: 20px;
     font-weight: 700;
@@ -292,10 +294,12 @@ body {
 
 .days-badge.urgent {
     background: #ff3b30;
+    color: #FFF7ED;
 }
 
 .days-badge.warning {
     background: #ff9500;
+    color: #07391F;
 }
 
 /* Delete Inventory Button */
@@ -329,7 +333,7 @@ body {
 .info-hero {
     text-align: center;
     padding: 40px 25px;
-    background: linear-gradient(135deg, #ffed4e 0%, #ffd93d 100%);
+    background: linear-gradient(135deg, #0a4a28 0%, #07391F 100%);
     margin: -60px -25px 30px;
     padding-top: 100px;
 }
@@ -342,7 +346,7 @@ body {
 .info-hero h2 {
     font-size: 2.2em;
     font-weight: 800;
-    color: #07391F;
+    color: #FFF7ED;
     letter-spacing: -1px;
 }
 
@@ -350,8 +354,8 @@ body {
     position: absolute;
     top: 50px;
     left: 20px;
-    background: rgba(255, 247, 237, 0.9);
-    border: none;
+    background: rgba(255, 247, 237, 0.2);
+    border: 2px solid rgba(255, 247, 237, 0.3);
     width: 40px;
     height: 40px;
     border-radius: 50%;
@@ -361,11 +365,11 @@ body {
     align-items: center;
     justify-content: center;
     z-index: 10;
-    color: #07391F;
+    color: #FFF7ED;
 }
 
 .info-card {
-    background: #f8f8f8;
+    background: rgba(255, 247, 237, 0.1);
     border-radius: 20px;
     padding: 25px;
     margin-bottom: 20px;
@@ -375,12 +379,12 @@ body {
     font-size: 1.1em;
     font-weight: 700;
     margin-bottom: 12px;
-    color: #07391F;
+    color: #FFF7ED;
 }
 
 .info-card p {
     line-height: 1.6;
-    color: #666;
+    color: rgba(255, 247, 237, 0.8);
     font-weight: 500;
 }
 
@@ -391,30 +395,31 @@ body {
 }
 
 .nutrition-item {
-    background: #FFF7ED;
+    background: rgba(255, 247, 237, 0.15);
     padding: 20px;
     border-radius: 15px;
     text-align: center;
+    border: 1px solid rgba(255, 247, 237, 0.2);
 }
 
 .nutrition-value {
     font-size: 1.8em;
     font-weight: 800;
-    color: #07391F;
+    color: #FFF7ED;
     margin-bottom: 5px;
 }
 
 .nutrition-label {
     font-size: 0.85em;
-    color: #8e8e93;
+    color: rgba(255, 247, 237, 0.7);
     font-weight: 600;
 }
 
 .add-inventory-btn {
     width: 100%;
     padding: 18px;
-    background: #07391F;
-    color: #FFF7ED;
+    background: #FFF7ED;
+    color: #07391F;
     border: none;
     border-radius: 15px;
     font-size: 1.1em;
@@ -426,7 +431,7 @@ body {
 
 /* Notes */
 .note-composer {
-    background: #f8f8f8;
+    background: rgba(255, 247, 237, 0.1);
     border-radius: 20px;
     padding: 20px;
     margin-bottom: 30px;
@@ -435,26 +440,27 @@ body {
 .note-input {
     width: 100%;
     padding: 15px;
-    border: none;
+    border: 2px solid rgba(255, 247, 237, 0.2);
     border-radius: 15px;
     font-size: 1em;
     min-height: 120px;
     font-family: inherit;
-    background: #FFF7ED;
+    background: rgba(255, 247, 237, 0.05);
     margin-bottom: 15px;
     font-weight: 500;
     resize: none;
+    color: #FFF7ED;
 }
 
 .note-input::placeholder {
-    color: #c7c7cc;
+    color: rgba(255, 247, 237, 0.5);
 }
 
 .add-note-btn {
     width: 100%;
     padding: 15px;
-    background: #07391F;
-    color: #FFF7ED;
+    background: #FFF7ED;
+    color: #07391F;
     border: none;
     border-radius: 15px;
     font-size: 1em;
@@ -464,7 +470,7 @@ body {
 }
 
 .note-card {
-    background: #fffbea;
+    background: rgba(255, 237, 170, 0.15);
     border-radius: 20px;
     padding: 20px;
     margin-bottom: 15px;
@@ -479,7 +485,7 @@ body {
 }
 
 .note-date {
-    color: #999;
+    color: rgba(255, 247, 237, 0.6);
     font-size: 0.85em;
     font-weight: 600;
 }
@@ -496,14 +502,14 @@ body {
 }
 
 .note-text {
-    color: #07391F;
+    color: #FFF7ED;
     line-height: 1.5;
     font-weight: 500;
 }
 
 /* Settings */
 .settings-list {
-    background: #f8f8f8;
+    background: rgba(255, 247, 237, 0.05);
     border-radius: 20px;
     overflow: hidden;
 }
@@ -513,7 +519,7 @@ body {
     justify-content: space-between;
     align-items: center;
     padding: 20px;
-    background: #FFF7ED;
+    background: rgba(255, 247, 237, 0.1);
     margin-bottom: 2px;
 }
 
@@ -529,11 +535,11 @@ body {
 .setting-info h3 {
     font-weight: 700;
     margin-bottom: 5px;
-    color: #07391F;
+    color: #FFF7ED;
 }
 
 .setting-info p {
-    color: #8e8e93;
+    color: rgba(255, 247, 237, 0.6);
     font-size: 0.85em;
     font-weight: 500;
 }
@@ -542,14 +548,14 @@ body {
     position: relative;
     width: 51px;
     height: 31px;
-    background: #e9e9ea;
+    background: rgba(255, 247, 237, 0.2);
     border-radius: 31px;
     cursor: pointer;
     transition: background 0.3s;
 }
 
 .toggle.active {
-    background: #34c759;
+    background: #FFF7ED;
 }
 
 .toggle-slider {
@@ -558,7 +564,7 @@ body {
     left: 2px;
     width: 27px;
     height: 27px;
-    background: #FFF7ED;
+    background: #07391F;
     border-radius: 50%;
     transition: transform 0.3s;
     box-shadow: 0 3px 8px rgba(0,0,0,0.15);
@@ -566,22 +572,23 @@ body {
 
 .toggle.active .toggle-slider {
     transform: translateX(20px);
+    background: #34c759;
 }
 
 select {
     padding: 10px 15px;
     border-radius: 10px;
-    border: 1px solid #e0e0e0;
-    background: #f8f8f8;
+    border: 1px solid rgba(255, 247, 237, 0.3);
+    background: rgba(255, 247, 237, 0.1);
     font-size: 0.95em;
     font-weight: 600;
-    color: #07391F;
+    color: #FFF7ED;
 }
 
 .empty-state {
     text-align: center;
     padding: 60px 20px;
-    color: #8e8e93;
+    color: rgba(255, 247, 237, 0.6);
     font-weight: 500;
 }
 
@@ -650,7 +657,7 @@ select {
 }
 
 .scanner-text {
-    color: white;
+    color: #FFF7ED;
     margin-top: 30px;
     font-size: 1.1em;
     font-weight: 600;
@@ -662,8 +669,8 @@ select {
     position: absolute;
     top: 40px;
     right: 20px;
-    background: rgba(255, 247, 237, 0.9);
-    border: none;
+    background: rgba(255, 247, 237, 0.2);
+    border: 2px solid rgba(255, 247, 237, 0.3);
     width: 50px;
     height: 50px;
     border-radius: 50%;
@@ -671,7 +678,7 @@ select {
     font-size: 1.5em;
     pointer-events: all;
     z-index: 1001;
-    color: #07391F;
+    color: #FFF7ED;
 }
 
 .manual-input {
@@ -680,26 +687,34 @@ select {
     left: 50%;
     transform: translateX(-50%);
     pointer-events: all;
-    background: #FFF7ED;
+    background: rgba(7, 57, 31, 0.95);
     padding: 15px 25px;
     border-radius: 15px;
     display: flex;
     gap: 10px;
+    border: 2px solid rgba(255, 247, 237, 0.2);
 }
 
 .manual-input input {
     padding: 10px 15px;
-    border: 2px solid #e0e0e0;
+    border: 2px solid rgba(255, 247, 237, 0.3);
     border-radius: 10px;
     font-size: 1em;
     width: 150px;
+    background: rgba(255, 247, 237, 0.1);
+    color: #FFF7ED;
+}
+
+.manual-input input::placeholder {
+    color: rgba(255, 247, 237, 0.5);
 }
 
 .manual-input button {
     padding: 10px 20px;
-    background: #ffed4e;
+    background: #FFF7ED;
     border: none;
     border-radius: 10px;
     font-weight: 700;
     cursor: pointer;
+    color: #07391F;
 }
