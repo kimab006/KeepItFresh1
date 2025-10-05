@@ -517,6 +517,134 @@
             'Pear (Bosc)': { storage: 'Ripen at room temp, refrigerate when ripe.', ripeness: 'Color deepens, slightly soft at neck.', season: 'September to April' }
         };
 
+        // NUTRITION DATABASE - Individual nutrition facts per produce type
+        const nutritionData = {
+            'Banana': { calories: 105, carbs: '27g', protein: '1.3g', fiber: '3g', potassium: '422mg', vitaminC: '10mg' },
+            'Banana (Organic)': { calories: 105, carbs: '27g', protein: '1.3g', fiber: '3g', potassium: '422mg', vitaminC: '10mg' },
+            
+            'Apple (Fuji)': { calories: 95, carbs: '25g', protein: '0.5g', fiber: '4g', sugar: '19g', vitaminC: '8mg' },
+            'Apple (Granny Smith)': { calories: 80, carbs: '22g', protein: '0.4g', fiber: '4g', sugar: '15g', vitaminC: '10mg' },
+            'Apple (Gala)': { calories: 95, carbs: '25g', protein: '0.5g', fiber: '4g', sugar: '19g', vitaminC: '8mg' },
+            'Apple (Golden Delicious)': { calories: 95, carbs: '25g', protein: '0.5g', fiber: '4g', sugar: '19g', vitaminC: '8mg' },
+            'Apple (Red Delicious)': { calories: 95, carbs: '25g', protein: '0.5g', fiber: '4g', sugar: '19g', vitaminC: '8mg' },
+            'Apple (McIntosh)': { calories: 95, carbs: '25g', protein: '0.5g', fiber: '4g', sugar: '19g', vitaminC: '10mg' },
+            'Apple (Honeycrisp)': { calories: 95, carbs: '25g', protein: '0.5g', fiber: '4g', sugar: '19g', vitaminC: '8mg' },
+            'Apple (Organic Fuji)': { calories: 95, carbs: '25g', protein: '0.5g', fiber: '4g', sugar: '19g', vitaminC: '8mg' },
+            'Apple (Organic Granny Smith)': { calories: 80, carbs: '22g', protein: '0.4g', fiber: '4g', sugar: '15g', vitaminC: '10mg' },
+            
+            'Avocado': { calories: 234, carbs: '12g', protein: '3g', fiber: '10g', fat: '21g', potassium: '690mg' },
+            'Avocado (Hass)': { calories: 234, carbs: '12g', protein: '3g', fiber: '10g', fat: '21g', potassium: '690mg' },
+            'Avocado (Organic Hass)': { calories: 234, carbs: '12g', protein: '3g', fiber: '10g', fat: '21g', potassium: '690mg' },
+            
+            'Tomato (Roma)': { calories: 35, carbs: '7g', protein: '1.5g', fiber: '2g', vitaminC: '24mg', vitaminA: '1025IU' },
+            'Tomato (Beefsteak)': { calories: 40, carbs: '9g', protein: '2g', fiber: '2.5g', vitaminC: '28mg', vitaminA: '1100IU' },
+            'Tomato (Cherry)': { calories: 27, carbs: '6g', protein: '1.3g', fiber: '1.8g', vitaminC: '21mg', vitaminA: '900IU' },
+            'Tomato (Grape)': { calories: 27, carbs: '6g', protein: '1.3g', fiber: '1.8g', vitaminC: '21mg', vitaminA: '900IU' },
+            'Tomato (Organic Roma)': { calories: 35, carbs: '7g', protein: '1.5g', fiber: '2g', vitaminC: '24mg', vitaminA: '1025IU' },
+            
+            'Strawberry': { calories: 49, carbs: '12g', protein: '1g', fiber: '3g', sugar: '7g', vitaminC: '89mg' },
+            'Strawberry (Organic)': { calories: 49, carbs: '12g', protein: '1g', fiber: '3g', sugar: '7g', vitaminC: '89mg' },
+            
+            'Lettuce (Green Leaf)': { calories: 15, carbs: '3g', protein: '1.4g', fiber: '1.3g', vitaminA: '7400IU', vitaminK: '174mcg' },
+            'Lettuce (Iceberg)': { calories: 10, carbs: '2g', protein: '0.6g', fiber: '1g', vitaminA: '500IU', vitaminK: '17mcg' },
+            'Lettuce (Romaine)': { calories: 17, carbs: '3g', protein: '1.2g', fiber: '2g', vitaminA: '8700IU', vitaminK: '103mcg' },
+            'Lettuce (Red Leaf)': { calories: 13, carbs: '2g', protein: '1.3g', fiber: '1g', vitaminA: '7500IU', vitaminK: '140mcg' },
+            'Lettuce (Organic Green Leaf)': { calories: 15, carbs: '3g', protein: '1.4g', fiber: '1.3g', vitaminA: '7400IU', vitaminK: '174mcg' },
+            
+            'Orange (Navel)': { calories: 69, carbs: '18g', protein: '1.3g', fiber: '3.4g', sugar: '12g', vitaminC: '83mg' },
+            'Orange (Valencia)': { calories: 62, carbs: '15g', protein: '1.2g', fiber: '3.1g', sugar: '12g', vitaminC: '70mg' },
+            'Orange (Cara Cara)': { calories: 70, carbs: '18g', protein: '1.3g', fiber: '3.4g', sugar: '12g', vitaminC: '100mg' },
+            'Orange (Organic Navel)': { calories: 69, carbs: '18g', protein: '1.3g', fiber: '3.4g', sugar: '12g', vitaminC: '83mg' },
+            
+            'Grapes (Green)': { calories: 104, carbs: '27g', protein: '1.1g', fiber: '1.4g', sugar: '23g', vitaminC: '16mg' },
+            'Grapes (Red)': { calories: 104, carbs: '27g', protein: '1.1g', fiber: '1.4g', sugar: '23g', vitaminC: '16mg' },
+            'Grapes (Black)': { calories: 104, carbs: '27g', protein: '1.1g', fiber: '1.4g', sugar: '23g', vitaminC: '16mg' },
+            'Grapes (Organic Green)': { calories: 104, carbs: '27g', protein: '1.1g', fiber: '1.4g', sugar: '23g', vitaminC: '16mg' },
+            
+            'Blueberry': { calories: 84, carbs: '21g', protein: '1.1g', fiber: '3.6g', sugar: '15g', vitaminC: '14mg' },
+            'Raspberry': { calories: 64, carbs: '15g', protein: '1.5g', fiber: '8g', sugar: '5g', vitaminC: '32mg' },
+            'Blackberry': { calories: 62, carbs: '14g', protein: '2g', fiber: '7.6g', sugar: '7g', vitaminC: '30mg' },
+            'Blueberry (Organic)': { calories: 84, carbs: '21g', protein: '1.1g', fiber: '3.6g', sugar: '15g', vitaminC: '14mg' },
+            
+            'Pepper (Green Bell)': { calories: 30, carbs: '7g', protein: '1.3g', fiber: '2.5g', vitaminC: '120mg', vitaminA: '370IU' },
+            'Pepper (Red Bell)': { calories: 37, carbs: '9g', protein: '1.5g', fiber: '3g', vitaminC: '190mg', vitaminA: '4666IU' },
+            'Pepper (Yellow Bell)': { calories: 40, carbs: '10g', protein: '1.5g', fiber: '1.7g', vitaminC: '341mg', vitaminA: '200IU' },
+            'Pepper (Orange Bell)': { calories: 40, carbs: '10g', protein: '1.5g', fiber: '1.7g', vitaminC: '341mg', vitaminA: '200IU' },
+            'Pepper (Jalapeño)': { calories: 29, carbs: '6g', protein: '1g', fiber: '2.8g', vitaminC: '119mg', capsaicin: 'Yes' },
+            
+            'Potato (Russet)': { calories: 168, carbs: '38g', protein: '5g', fiber: '2.4g', potassium: '926mg', vitaminC: '20mg' },
+            'Potato (Red)': { calories: 149, carbs: '34g', protein: '4g', fiber: '3g', potassium: '943mg', vitaminC: '26mg' },
+            'Potato (Yukon Gold)': { calories: 110, carbs: '26g', protein: '3g', fiber: '2g', potassium: '738mg', vitaminC: '27mg' },
+            'Sweet Potato': { calories: 112, carbs: '26g', protein: '2g', fiber: '4g', vitaminA: '19218IU', vitaminC: '3mg' },
+            'Potato (Organic Russet)': { calories: 168, carbs: '38g', protein: '5g', fiber: '2.4g', potassium: '926mg', vitaminC: '20mg' },
+            
+            'Onion (Yellow)': { calories: 44, carbs: '10g', protein: '1.2g', fiber: '1.9g', vitaminC: '8mg', folate: '20mcg' },
+            'Onion (Red)': { calories: 44, carbs: '10g', protein: '1.2g', fiber: '1.9g', vitaminC: '8mg', quercetin: 'High' },
+            'Onion (White)': { calories: 44, carbs: '10g', protein: '1.2g', fiber: '1.9g', vitaminC: '8mg', folate: '20mcg' },
+            'Onion (Green/Scallion)': { calories: 32, carbs: '7g', protein: '1.8g', fiber: '2.6g', vitaminK: '207mcg', vitaminC: '19mg' },
+            
+            'Carrot': { calories: 52, carbs: '12g', protein: '1.2g', fiber: '3.6g', vitaminA: '21384IU', betaCarotene: '10605mcg' },
+            'Carrot (Baby)': { calories: 52, carbs: '12g', protein: '1.2g', fiber: '3.6g', vitaminA: '21384IU', betaCarotene: '10605mcg' },
+            'Carrot (Organic)': { calories: 52, carbs: '12g', protein: '1.2g', fiber: '3.6g', vitaminA: '21384IU', betaCarotene: '10605mcg' },
+            
+            'Broccoli': { calories: 55, carbs: '11g', protein: '3.7g', fiber: '3.8g', vitaminC: '135mg', vitaminK: '220mcg' },
+            'Cauliflower': { calories: 29, carbs: '6g', protein: '2.3g', fiber: '2.5g', vitaminC: '77mg', vitaminK: '20mcg' },
+            'Broccoli (Organic)': { calories: 55, carbs: '11g', protein: '3.7g', fiber: '3.8g', vitaminC: '135mg', vitaminK: '220mcg' },
+            
+            'Cucumber': { calories: 16, carbs: '4g', protein: '0.7g', fiber: '0.5g', vitaminK: '17mcg', water: '95%' },
+            'Cucumber (English)': { calories: 16, carbs: '4g', protein: '0.7g', fiber: '0.5g', vitaminK: '17mcg', water: '95%' },
+            'Cucumber (Organic)': { calories: 16, carbs: '4g', protein: '0.7g', fiber: '0.5g', vitaminK: '17mcg', water: '95%' },
+            
+            'Watermelon': { calories: 46, carbs: '12g', protein: '0.9g', fiber: '0.6g', vitaminC: '12mg', lycopene: '6890mcg' },
+            'Cantaloupe': { calories: 60, carbs: '14g', protein: '1.5g', fiber: '1.6g', vitaminA: '5986IU', vitaminC: '65mg' },
+            'Honeydew': { calories: 64, carbs: '16g', protein: '1g', fiber: '1.4g', vitaminC: '31mg', potassium: '404mg' },
+            
+            'Lime': { calories: 30, carbs: '11g', protein: '0.7g', fiber: '2.8g', vitaminC: '32mg', calcium: '33mg' },
+            'Lemon': { calories: 29, carbs: '9g', protein: '1.1g', fiber: '2.8g', vitaminC: '53mg', folate: '11mcg' },
+            'Grapefruit': { calories: 52, carbs: '13g', protein: '0.9g', fiber: '2g', vitaminC: '38mg', vitaminA: '1414IU' },
+            'Tangerine': { calories: 47, carbs: '12g', protein: '0.7g', fiber: '1.8g', vitaminC: '27mg', vitaminA: '681IU' },
+            
+            'Peach': { calories: 59, carbs: '14g', protein: '1.4g', fiber: '2.3g', vitaminC: '10mg', vitaminA: '489IU' },
+            'Nectarine': { calories: 63, carbs: '15g', protein: '1.5g', fiber: '2.4g', vitaminC: '7mg', vitaminA: '332IU' },
+            'Plum': { calories: 46, carbs: '11g', protein: '0.7g', fiber: '1.4g', vitaminC: '10mg', vitaminA: '345IU' },
+            'Cherry': { calories: 50, carbs: '12g', protein: '1g', fiber: '1.6g', vitaminC: '7mg', potassium: '173mg' },
+            'Apricot': { calories: 48, carbs: '11g', protein: '1.4g', fiber: '1.5g', vitaminA: '1926IU', vitaminC: '10mg' },
+            
+            'Pineapple': { calories: 82, carbs: '22g', protein: '0.9g', fiber: '2.3g', vitaminC: '79mg', manganese: '1.5mg' },
+            'Mango': { calories: 99, carbs: '25g', protein: '1.4g', fiber: '2.6g', vitaminC: '60mg', vitaminA: '1785IU' },
+            'Papaya': { calories: 62, carbs: '16g', protein: '0.7g', fiber: '2.5g', vitaminC: '87mg', folate: '58mcg' },
+            'Kiwi': { calories: 61, carbs: '15g', protein: '1.2g', fiber: '3g', vitaminC: '93mg', vitaminK: '40mcg' },
+            'Coconut': { calories: 354, carbs: '15g', protein: '3.3g', fiber: '9g', fat: '33g', manganese: '1.5mg' },
+            
+            'Zucchini': { calories: 21, carbs: '4g', protein: '1.5g', fiber: '1.2g', vitaminC: '22mg', potassium: '295mg' },
+            'Squash (Butternut)': { calories: 82, carbs: '22g', protein: '1.8g', fiber: '6.6g', vitaminA: '22869IU', vitaminC: '31mg' },
+            'Squash (Acorn)': { calories: 56, carbs: '15g', protein: '1.1g', fiber: '2.2g', vitaminC: '18mg', potassium: '437mg' },
+            'Squash (Spaghetti)': { calories: 42, carbs: '10g', protein: '1g', fiber: '2.2g', vitaminC: '5mg', betaCarotene: '171mcg' },
+            
+            'Spinach': { calories: 23, carbs: '4g', protein: '2.9g', fiber: '2.2g', iron: '2.7mg', vitaminK: '483mcg' },
+            'Kale': { calories: 35, carbs: '7g', protein: '2.9g', fiber: '2g', vitaminC: '120mg', vitaminK: '817mcg' },
+            'Arugula': { calories: 25, carbs: '4g', protein: '2.6g', fiber: '1.6g', vitaminK: '109mcg', calcium: '160mg' },
+            'Swiss Chard': { calories: 19, carbs: '4g', protein: '1.8g', fiber: '1.6g', vitaminK: '299mcg', magnesium: '81mg' },
+            
+            'Mushroom (White)': { calories: 22, carbs: '3g', protein: '3.1g', fiber: '1g', vitaminD: '7IU', selenium: '9mcg' },
+            'Mushroom (Portobello)': { calories: 29, carbs: '5g', protein: '2.5g', fiber: '1.5g', potassium: '437mg', niacin: '5mg' },
+            'Mushroom (Shiitake)': { calories: 34, carbs: '7g', protein: '2.2g', fiber: '2.5g', copper: '0.9mg', pantothenic: '3.6mg' },
+            
+            'Basil': { calories: 23, carbs: '3g', protein: '3.2g', fiber: '1.6g', vitaminK: '415mcg', iron: '3.2mg' },
+            'Cilantro': { calories: 23, carbs: '4g', protein: '2.1g', fiber: '2.8g', vitaminK: '310mcg', vitaminA: '6748IU' },
+            'Parsley': { calories: 36, carbs: '6g', protein: '3g', fiber: '3.3g', vitaminK: '1640mcg', vitaminC: '133mg' },
+            'Mint': { calories: 70, carbs: '15g', protein: '3.8g', fiber: '8g', iron: '5.1mg', vitaminA: '4248IU' },
+            
+            'Celery': { calories: 16, carbs: '3g', protein: '0.7g', fiber: '1.6g', vitaminK: '29mcg', folate: '36mcg' },
+            'Eggplant': { calories: 25, carbs: '6g', protein: '1g', fiber: '3g', manganese: '0.2mg', folate: '22mcg' },
+            'Asparagus': { calories: 27, carbs: '5g', protein: '3g', fiber: '2.8g', vitaminK: '56mcg', folate: '70mcg' },
+            'Corn': { calories: 96, carbs: '21g', protein: '3.4g', fiber: '2.4g', vitaminC: '7mg', magnesium: '37mg' },
+            
+            'Pear (Bartlett)': { calories: 101, carbs: '27g', protein: '0.6g', fiber: '5.5g', vitaminC: '7mg', copper: '0.1mg' },
+            'Pear (Anjou)': { calories: 101, carbs: '27g', protein: '0.6g', fiber: '5.5g', vitaminC: '7mg', potassium: '206mg' },
+            'Pear (Bosc)': { calories: 101, carbs: '27g', protein: '0.6g', fiber: '5.5g', vitaminC: '7mg', copper: '0.1mg' }
+        };
+
         function showPage(pageId) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById(pageId).classList.add('active');
@@ -692,12 +820,30 @@
             currentProduce = { name, icon, days, addedDate: new Date() };
             
             const data = produceData[name] || { storage: 'Store properly', ripeness: 'Check for freshness', season: 'Varies' };
+            const nutrition = nutritionData[name] || { calories: 'N/A', carbs: 'N/A', protein: 'N/A', fiber: 'N/A' };
+            
             document.getElementById('infoIcon').textContent = icon;
             document.getElementById('infoTitle').textContent = name;
             document.getElementById('infoShelfLife').textContent = `${days} days`;
             document.getElementById('infoStorage').textContent = data.storage;
             document.getElementById('infoRipeness').textContent = data.ripeness;
             document.getElementById('infoSeason').textContent = data.season;
+            
+            // Dynamically update nutrition grid
+            const nutritionGrid = document.querySelector('.nutrition-grid');
+            nutritionGrid.innerHTML = '';
+            
+            // Get all nutrition values and create grid items
+            const nutritionEntries = Object.entries(nutrition);
+            nutritionEntries.forEach(([key, value]) => {
+                const label = key.charAt(0).toUpperCase() + key.slice(1).replace(/([A-Z])/g, ' $1');
+                nutritionGrid.innerHTML += `
+                    <div class="nutrition-item">
+                        <div class="nutrition-value">${value}</div>
+                        <div class="nutrition-label">${label}</div>
+                    </div>
+                `;
+            });
             
             showPage('produceInfo');
         }
