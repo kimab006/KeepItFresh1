@@ -1,0 +1,829 @@
+const produceData = {
+            'Banana': { icon: '🍌', days: 5, storage: 'Store at room temperature. Keep away from direct sunlight. Separate from other fruits to slow ripening.', ripeness: 'Yellow with small brown spots. Should be slightly soft when pressed gently.', season: 'Available year-round' },
+            'Banana (Organic)': { icon: '🍌', days: 5, storage: 'Store at room temperature. Keep away from direct sunlight.', ripeness: 'Yellow with small brown spots.', season: 'Available year-round' },
+            
+            'Apple': { icon: '🍎', days: 14, storage: 'Store in the refrigerator crisper drawer. Can last up to a month when refrigerated.', ripeness: 'Firm to the touch with bright, glossy skin. No soft spots or bruises.', season: 'Peak season: September to November' },
+            'Apple (Fuji)': { icon: '🍎', days: 14, storage: 'Refrigerate for best results.', ripeness: 'Firm with red-pink color.', season: 'October to July' },
+            'Apple (Granny Smith)': { icon: '🍏', days: 14, storage: 'Refrigerate to maintain crispness.', ripeness: 'Bright green, very firm.', season: 'Year-round' },
+            'Apple (Gala)': { icon: '🍎', days: 14, storage: 'Store in fridge crisper drawer.', ripeness: 'Red and yellow striped, firm.', season: 'August to March' },
+            'Apple (Golden Delicious)': { icon: '🍎', days: 14, storage: 'Refrigerate for extended freshness.', ripeness: 'Golden yellow, slightly soft.', season: 'September to June' },
+            'Apple (Red Delicious)': { icon: '🍎', days: 14, storage: 'Keep refrigerated.', ripeness: 'Deep red color, firm.', season: 'September to July' },
+            'Apple (McIntosh)': { icon: '🍎', days: 14, storage: 'Best when refrigerated.', ripeness: 'Red with green, soft when ripe.', season: 'September to May' },
+            'Apple (Honeycrisp)': { icon: '🍎', days: 14, storage: 'Refrigerate to maintain crunch.', ripeness: 'Red and yellow, very crisp.', season: 'September to January' },
+            'Apple (Organic Fuji)': { icon: '🍎', days: 14, storage: 'Refrigerate for best results.', ripeness: 'Firm with red-pink color.', season: 'October to July' },
+            'Apple (Organic Granny Smith)': { icon: '🍏', days: 14, storage: 'Refrigerate to maintain crispness.', ripeness: 'Bright green, very firm.', season: 'Year-round' },
+            
+            'Avocado': { icon: '🥑', days: 4, storage: 'Ripen at room temperature, then refrigerate. Store in paper bag to speed ripening.', ripeness: 'Yields to gentle pressure, dark green to black skin, stem comes off easily.', season: 'Available year-round, peak: Spring-Summer' },
+            'Avocado (Hass)': { icon: '🥑', days: 4, storage: 'Ripen at room temp, refrigerate when ripe.', ripeness: 'Dark skin, yields to gentle pressure.', season: 'Year-round' },
+            'Avocado (Organic Hass)': { icon: '🥑', days: 4, storage: 'Ripen at room temp, refrigerate when ripe.', ripeness: 'Dark skin, yields to gentle pressure.', season: 'Year-round' },
+            
+            'Tomato': { icon: '🍅', days: 7, storage: 'Store at room temperature away from direct sunlight. Do not refrigerate as it affects flavor.', ripeness: 'Deep red color, slightly soft when gently pressed, sweet aroma at stem.', season: 'Peak season: June to September' },
+            'Tomato (Roma)': { icon: '🍅', days: 7, storage: 'Room temperature, never refrigerate.', ripeness: 'Deep red, firm but gives slightly.', season: 'June to September' },
+            'Tomato (Beefsteak)': { icon: '🍅', days: 7, storage: 'Keep at room temperature.', ripeness: 'Large, deep red, heavy for size.', season: 'Summer months' },
+            'Tomato (Cherry)': { icon: '🍅', days: 5, storage: 'Room temperature for best flavor.', ripeness: 'Bright red, firm.', season: 'Year-round' },
+            'Tomato (Grape)': { icon: '🍅', days: 5, storage: 'Room temperature preferred.', ripeness: 'Deep red, glossy.', season: 'Year-round' },
+            'Tomato (Organic Roma)': { icon: '🍅', days: 7, storage: 'Room temperature, never refrigerate.', ripeness: 'Deep red, firm but gives slightly.', season: 'June to September' },
+            
+            'Strawberry': { icon: '🍓', days: 3, storage: 'Refrigerate unwashed in original container. Wash just before eating.', ripeness: 'Bright red color throughout, fresh green caps, sweet aroma.', season: 'Peak season: April to June' },
+            'Strawberry (Organic)': { icon: '🍓', days: 3, storage: 'Refrigerate unwashed.', ripeness: 'Bright red, fresh green caps.', season: 'April to June' },
+            
+            'Lettuce': { icon: '🥬', days: 5, storage: 'Wrap in damp paper towel, store in refrigerator crisper drawer in plastic bag.', ripeness: 'Crisp leaves, vibrant green color, no wilting or brown edges.', season: 'Available year-round, best in Spring and Fall' },
+            'Lettuce (Green Leaf)': { icon: '🥬', days: 5, storage: 'Wrap in damp towel, refrigerate.', ripeness: 'Crisp, bright green leaves.', season: 'Spring and Fall' },
+            'Lettuce (Iceberg)': { icon: '🥬', days: 7, storage: 'Refrigerate in crisper drawer.', ripeness: 'Firm head, crisp leaves.', season: 'Year-round' },
+            'Lettuce (Romaine)': { icon: '🥬', days: 5, storage: 'Refrigerate in plastic bag.', ripeness: 'Dark green, crisp ribs.', season: 'Year-round' },
+            'Lettuce (Red Leaf)': { icon: '🥬', days: 5, storage: 'Wrap in damp towel, refrigerate.', ripeness: 'Red-tipped, crisp.', season: 'Spring and Fall' },
+            'Lettuce (Organic Green Leaf)': { icon: '🥬', days: 5, storage: 'Wrap in damp towel, refrigerate.', ripeness: 'Crisp, bright green leaves.', season: 'Spring and Fall' },
+            
+            'Orange (Navel)': { icon: '🍊', days: 14, storage: 'Room temperature for a week, refrigerate for longer.', ripeness: 'Heavy for size, firm, fragrant.', season: 'November to June' },
+            'Orange (Valencia)': { icon: '🍊', days: 14, storage: 'Cool place or refrigerate.', ripeness: 'Bright orange, slightly soft.', season: 'March to October' },
+            'Orange (Cara Cara)': { icon: '🍊', days: 14, storage: 'Room temp or refrigerate.', ripeness: 'Orange-red skin, heavy.', season: 'December to April' },
+            'Orange (Organic Navel)': { icon: '🍊', days: 14, storage: 'Room temperature for a week, refrigerate for longer.', ripeness: 'Heavy for size, firm, fragrant.', season: 'November to June' },
+            
+            'Grapes (Green)': { icon: '🍇', days: 7, storage: 'Refrigerate unwashed in original bag.', ripeness: 'Plump, firmly attached to stem.', season: 'May to January' },
+            'Grapes (Red)': { icon: '🍇', days: 7, storage: 'Refrigerate unwashed.', ripeness: 'Deep color, plump.', season: 'May to January' },
+            'Grapes (Black)': { icon: '🍇', days: 7, storage: 'Keep refrigerated.', ripeness: 'Dark purple, plump.', season: 'July to December' },
+            'Grapes (Organic Green)': { icon: '🍇', days: 7, storage: 'Refrigerate unwashed in original bag.', ripeness: 'Plump, firmly attached to stem.', season: 'May to January' },
+            
+            'Blueberry': { icon: '🫐', days: 5, storage: 'Refrigerate unwashed, rinse before eating.', ripeness: 'Deep blue color, firm.', season: 'May to September' },
+            'Raspberry': { icon: '🫐', days: 2, storage: 'Refrigerate immediately, very delicate.', ripeness: 'Deep red, plump.', season: 'June to October' },
+            'Blackberry': { icon: '🫐', days: 3, storage: 'Refrigerate, use quickly.', ripeness: 'Deep black, glossy.', season: 'May to September' },
+            'Blueberry (Organic)': { icon: '🫐', days: 5, storage: 'Refrigerate unwashed, rinse before eating.', ripeness: 'Deep blue color, firm.', season: 'May to September' },
+            
+            'Pepper (Green Bell)': { icon: '🫑', days: 7, storage: 'Refrigerate in crisper drawer.', ripeness: 'Firm, glossy skin, heavy.', season: 'Year-round' },
+            'Pepper (Red Bell)': { icon: '🫑', days: 7, storage: 'Refrigerate for freshness.', ripeness: 'Deep red, firm, glossy.', season: 'Year-round' },
+            'Pepper (Yellow Bell)': { icon: '🫑', days: 7, storage: 'Keep refrigerated.', ripeness: 'Bright yellow, firm.', season: 'Year-round' },
+            'Pepper (Orange Bell)': { icon: '🫑', days: 7, storage: 'Refrigerate in crisper.', ripeness: 'Bright orange, firm.', season: 'Year-round' },
+            'Pepper (Jalapeño)': { icon: '🌶️', days: 7, storage: 'Refrigerate for freshness.', ripeness: 'Dark green, firm, glossy.', season: 'Year-round' },
+            
+            'Potato (Russet)': { icon: '🥔', days: 30, storage: 'Cool, dark, dry place. Never refrigerate.', ripeness: 'Firm, no green spots or sprouts.', season: 'Year-round' },
+            'Potato (Red)': { icon: '🥔', days: 21, storage: 'Cool, dark place.', ripeness: 'Firm, smooth skin.', season: 'Year-round' },
+            'Potato (Yukon Gold)': { icon: '🥔', days: 21, storage: 'Cool, dark, dry place.', ripeness: 'Firm, golden skin.', season: 'Year-round' },
+            'Sweet Potato': { icon: '🍠', days: 14, storage: 'Cool, dry place, not refrigerated.', ripeness: 'Firm, no soft spots.', season: 'September to December' },
+            'Potato (Organic Russet)': { icon: '🥔', days: 30, storage: 'Cool, dark, dry place. Never refrigerate.', ripeness: 'Firm, no green spots or sprouts.', season: 'Year-round' },
+            
+            'Onion (Yellow)': { icon: '🧅', days: 30, storage: 'Cool, dry, dark place with good air circulation.', ripeness: 'Firm, dry outer skin, no sprouting.', season: 'Year-round' },
+            'Onion (Red)': { icon: '🧅', days: 30, storage: 'Cool, dry place.', ripeness: 'Firm, papery skin.', season: 'Year-round' },
+            'Onion (White)': { icon: '🧅', days: 30, storage: 'Cool, dry, dark place.', ripeness: 'Firm, white outer layers.', season: 'Year-round' },
+            'Onion (Green/Scallion)': { icon: '🧅', days: 7, storage: 'Refrigerate in plastic bag.', ripeness: 'Bright green tops, white bottoms.', season: 'Year-round' },
+            
+            'Carrot': { icon: '🥕', days: 21, storage: 'Remove tops, refrigerate in plastic bag.', ripeness: 'Firm, bright orange, smooth.', season: 'Year-round' },
+            'Carrot (Baby)': { icon: '🥕', days: 14, storage: 'Refrigerate in original bag.', ripeness: 'Firm, bright orange.', season: 'Year-round' },
+            'Carrot (Organic)': { icon: '🥕', days: 21, storage: 'Remove tops, refrigerate in plastic bag.', ripeness: 'Firm, bright orange, smooth.', season: 'Year-round' },
+            
+            'Broccoli': { icon: '🥦', days: 7, storage: 'Refrigerate in crisper drawer, unwashed.', ripeness: 'Tight florets, deep green color.', season: 'October to April' },
+            'Cauliflower': { icon: '🥦', days: 7, storage: 'Refrigerate in plastic bag.', ripeness: 'Compact head, creamy white.', season: 'September to June' },
+            'Broccoli (Organic)': { icon: '🥦', days: 7, storage: 'Refrigerate in crisper drawer, unwashed.', ripeness: 'Tight florets, deep green color.', season: 'October to April' },
+            
+            'Cucumber': { icon: '🥒', days: 7, storage: 'Refrigerate wrapped in paper towel.', ripeness: 'Firm, dark green, no soft spots.', season: 'May to August' },
+            'Cucumber (English)': { icon: '🥒', days: 7, storage: 'Refrigerate in plastic wrap.', ripeness: 'Long, firm, dark green.', season: 'Year-round' },
+            'Cucumber (Organic)': { icon: '🥒', days: 7, storage: 'Refrigerate wrapped in paper towel.', ripeness: 'Firm, dark green, no soft spots.', season: 'May to August' },
+            
+            'Watermelon': { icon: '🍉', days: 7, storage: 'Room temp until cut, then refrigerate.', ripeness: 'Dull skin, yellow spot on bottom, hollow sound.', season: 'May to September' },
+            'Cantaloupe': { icon: '🍈', days: 5, storage: 'Room temp to ripen, refrigerate when ripe.', ripeness: 'Sweet aroma, slightly soft at stem end.', season: 'June to September' },
+            'Honeydew': { icon: '🍈', days: 7, storage: 'Room temperature, refrigerate when ripe.', ripeness: 'Creamy yellow color, sweet aroma.', season: 'June to October' },
+            
+            'Lime': { icon: '🍋', days: 14, storage: 'Room temperature for a week, refrigerate longer.', ripeness: 'Heavy for size, bright green.', season: 'Year-round' },
+            'Lemon': { icon: '🍋', days: 21, storage: 'Room temp or refrigerate.', ripeness: 'Bright yellow, firm, heavy.', season: 'Year-round' },
+            'Grapefruit': { icon: '🍊', days: 14, storage: 'Cool place or refrigerate.', ripeness: 'Heavy for size, firm.', season: 'October to June' },
+            'Tangerine': { icon: '🍊', days: 7, storage: 'Room temp for few days, refrigerate longer.', ripeness: 'Loose skin, deep orange.', season: 'November to April' },
+            
+            'Peach': { icon: '🍑', days: 5, storage: 'Room temp to ripen, refrigerate when ripe.', ripeness: 'Sweet aroma, gives slightly to pressure.', season: 'May to September' },
+            'Nectarine': { icon: '🍑', days: 5, storage: 'Ripen at room temp, refrigerate when soft.', ripeness: 'Fragrant, gives to gentle pressure.', season: 'May to September' },
+            'Plum': { icon: '🍑', days: 5, storage: 'Room temp to ripen, then refrigerate.', ripeness: 'Slightly soft, sweet aroma.', season: 'May to October' },
+            'Cherry': { icon: '🍒', days: 3, storage: 'Refrigerate unwashed immediately.', ripeness: 'Glossy, firm, plump.', season: 'May to August' },
+            'Apricot': { icon: '🍑', days: 5, storage: 'Room temp to ripen, refrigerate when soft.', ripeness: 'Orange color, gives to pressure.', season: 'May to August' },
+            
+            'Pineapple': { icon: '🍍', days: 7, storage: 'Room temp for 1-2 days, refrigerate cut pieces.', ripeness: 'Sweet aroma at base, leaves pull easily.', season: 'March to July' },
+            'Mango': { icon: '🥭', days: 5, storage: 'Room temp to ripen, refrigerate when soft.', ripeness: 'Yields to pressure, sweet aroma.', season: 'March to September' },
+            'Papaya': { icon: '🥭', days: 5, storage: 'Room temp until mostly yellow, then refrigerate.', ripeness: 'Yellow skin, slightly soft.', season: 'Year-round' },
+            'Kiwi': { icon: '🥝', days: 7, storage: 'Room temp to ripen, refrigerate when soft.', ripeness: 'Gives to gentle pressure.', season: 'Year-round' },
+            'Coconut': { icon: '🥥', days: 30, storage: 'Room temperature, refrigerate if cracked.', ripeness: 'Heavy, sloshing sound when shaken.', season: 'Year-round' },
+            
+            'Zucchini': { icon: '🥒', days: 7, storage: 'Refrigerate in plastic bag.', ripeness: 'Firm, smooth skin, small to medium size.', season: 'June to September' },
+            'Squash (Butternut)': { icon: '🎃', days: 30, storage: 'Cool, dry place, do not refrigerate.', ripeness: 'Tan color, hard skin, heavy.', season: 'September to February' },
+            'Squash (Acorn)': { icon: '🎃', days: 21, storage: 'Cool, dry place.', ripeness: 'Dark green with orange spot, hard.', season: 'October to December' },
+            'Squash (Spaghetti)': { icon: '🎃', days: 21, storage: 'Cool, dry, dark place.', ripeness: 'Yellow color, hard skin.', season: 'September to March' },
+            
+            'Spinach': { icon: '🥬', days: 5, storage: 'Refrigerate in original bag, use quickly.', ripeness: 'Dark green, crisp leaves.', season: 'Year-round, peak Spring/Fall' },
+            'Kale': { icon: '🥬', days: 5, storage: 'Refrigerate in plastic bag.', ripeness: 'Dark green, crisp, no yellowing.', season: 'Year-round, best in Winter' },
+            'Arugula': { icon: '🥬', days: 3, storage: 'Refrigerate, very delicate.', ripeness: 'Bright green, tender leaves.', season: 'Spring and Fall' },
+            'Swiss Chard': { icon: '🥬', days: 5, storage: 'Refrigerate in plastic bag.', ripeness: 'Crisp stalks, vibrant leaves.', season: 'June to October' },
+            
+            'Mushroom (White)': { icon: '🍄', days: 7, storage: 'Refrigerate in paper bag, not plastic.', ripeness: 'Firm, dry, closed caps.', season: 'Year-round' },
+            'Mushroom (Portobello)': { icon: '🍄', days: 7, storage: 'Paper bag in refrigerator.', ripeness: 'Firm, dry, large caps.', season: 'Year-round' },
+            'Mushroom (Shiitake)': { icon: '🍄', days: 7, storage: 'Refrigerate in paper bag.', ripeness: 'Firm, dry, umbrella-shaped.', season: 'Year-round' },
+            
+            'Basil': { icon: '🌿', days: 5, storage: 'Trim stems, place in water like flowers, room temp.', ripeness: 'Bright green, no brown spots.', season: 'June to September' },
+            'Cilantro': { icon: '🌿', days: 5, storage: 'Refrigerate stems in water, cover loosely.', ripeness: 'Bright green, fragrant.', season: 'Year-round' },
+            'Parsley': { icon: '🌿', days: 7, storage: 'Refrigerate in plastic bag or in water.', ripeness: 'Bright green, crisp.', season: 'Year-round' },
+            'Mint': { icon: '🌿', days: 5, storage: 'Refrigerate stems in water.', ripeness: 'Bright green, aromatic.', season: 'Year-round' },
+            
+            'Celery': { icon: '🥬', days: 14, storage: 'Wrap in foil, refrigerate in crisper.', ripeness: 'Firm, crisp stalks, tight bunch.', season: 'Year-round' },
+            'Eggplant': { icon: '🍆', days: 7, storage: 'Room temperature, use within a week.', ripeness: 'Firm, glossy skin, heavy.', season: 'July to October' },
+            'Asparagus': { icon: '🥒', days: 5, storage: 'Refrigerate upright in water.', ripeness: 'Firm stalks, tight tips, bright green.', season: 'February to June' },
+            'Corn': { icon: '🌽', days: 5, storage: 'Refrigerate in husk, use quickly.', ripeness: 'Bright green husk, plump kernels.', season: 'May to September' },
+            
+            'Pear (Bartlett)': { icon: '🍐', days: 7, storage: 'Room temp to ripen, refrigerate when ripe.', ripeness: 'Gives slightly at neck, fragrant.', season: 'August to February' },
+            'Pear (Anjou)': { icon: '🍐', days: 7, storage: 'Room temp to ripen, refrigerate when soft.', ripeness: 'Gives to gentle pressure at neck.', season: 'October to May' },
+            'Pear (Bosc)': { icon: '🍐', days: 7, storage: 'Ripen at room temp, refrigerate when ripe.', ripeness: 'Color deepens, slightly soft at neck.', season: 'September to April' }
+        };<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Produce Tracker</title>
+    <link rel="stylesheet" href="stylei.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Landing Page -->
+        <div id="landing" class="page active">
+            <div class="landing">
+                <div class="hero-icon">🥗</div>
+                <h1>Keep It Fresh</h1>
+                <p>Track your produce & reduce waste</p>
+                <button class="btn" onclick="showPage('scan')">Get Started</button>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <div id="nav" class="nav" style="display: none;">
+            <button class="nav-btn" onclick="showPage('scan')">
+                <span style="font-size: 1.8em;">🔍</span>
+                Scan
+            </button>
+            <button class="nav-btn" onclick="showPage('calendar')">
+                <span style="font-size: 1.8em;">📅</span>
+                Inventory
+            </button>
+            <button class="nav-btn" onclick="showPage('notes')">
+                <span style="font-size: 1.8em;">📝</span>
+                Notes
+            </button>
+            <button class="nav-btn" onclick="showPage('settings')">
+                <span style="font-size: 1.8em;">⚙️</span>
+                Settings
+            </button>
+        </div>
+
+        <!-- Scan/Search Page -->
+        <div id="scan" class="page">
+            <div class="header">
+                <h1>Discover</h1>
+                <p>Scan or search for produce</p>
+            </div>
+            <div class="content">
+                <div class="search-section">
+                    <input type="text" class="search-box" placeholder="Search by name or PLU code..." id="searchInput">
+                    <button class="scan-btn" onclick="startScanner()">📷 Scan Barcode</button>
+                </div>
+
+                <div class="section-title">Popular Items</div>
+                <div class="produce-grid">
+                    <div class="produce-card" onclick="selectProduce('Banana', '🍌', 5)">
+                        <div class="produce-icon">🍌</div>
+                        <div class="produce-name">Banana</div>
+                    </div>
+                    <div class="produce-card" onclick="selectProduce('Apple', '🍎', 14)">
+                        <div class="produce-icon">🍎</div>
+                        <div class="produce-name">Apple</div>
+                    </div>
+                    <div class="produce-card" onclick="selectProduce('Tomato', '🍅', 7)">
+                        <div class="produce-icon">🍅</div>
+                        <div class="produce-name">Tomato</div>
+                    </div>
+                    <div class="produce-card" onclick="selectProduce('Avocado', '🥑', 4)">
+                        <div class="produce-icon">🥑</div>
+                        <div class="produce-name">Avocado</div>
+                    </div>
+                    <div class="produce-card" onclick="selectProduce('Strawberry', '🍓', 3)">
+                        <div class="produce-icon">🍓</div>
+                        <div class="produce-name">Strawberry</div>
+                    </div>
+                    <div class="produce-card" onclick="selectProduce('Lettuce', '🥬', 5)">
+                        <div class="produce-icon">🥬</div>
+                        <div class="produce-name">Lettuce</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Calendar View -->
+        <div id="calendar" class="page">
+            <div class="header">
+                <h1>Inventory</h1>
+                <p>Your fresh produce</p>
+            </div>
+            <div class="content">
+                <div class="inventory-list" id="inventoryList">
+                    <div class="empty-state">
+                        <div class="empty-icon">🛒</div>
+                        <p>No produce yet<br>Start by scanning items!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Notes Page -->
+        <div id="notes" class="page">
+            <div class="header">
+                <h1>Notes</h1>
+                <p>Keep track of your ideas</p>
+            </div>
+            <div class="content">
+                <div class="note-composer">
+                    <textarea class="note-input" id="noteInput" placeholder="Add a note about your produce..."></textarea>
+                    <button class="add-note-btn" onclick="addNote()">Add Note</button>
+                </div>
+                <div id="notesList"></div>
+            </div>
+        </div>
+
+        <!-- Settings Page -->
+        <div id="settings" class="page">
+            <div class="header">
+                <h1>Settings</h1>
+                <p>Customize your experience</p>
+            </div>
+            <div class="content">
+                <div class="settings-list">
+                    <div class="setting-row">
+                        <div class="setting-info">
+                            <h3>Notifications</h3>
+                            <p>Get reminders about expiring produce</p>
+                        </div>
+                        <div class="toggle active" onclick="toggleSetting(this)">
+                            <div class="toggle-slider"></div>
+                        </div>
+                    </div>
+                    <div class="setting-row">
+                        <div class="setting-info">
+                            <h3>Reminder Timing</h3>
+                            <p>When to notify you</p>
+                        </div>
+                        <select>
+                            <option>1 day</option>
+                            <option selected>2 days</option>
+                            <option>3 days</option>
+                        </select>
+                    </div>
+                    <div class="setting-row">
+                        <div class="setting-info">
+                            <h3>Dark Mode</h3>
+                            <p>Switch to dark theme</p>
+                        </div>
+                        <div class="toggle" onclick="toggleSetting(this)">
+                            <div class="toggle-slider"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Produce Info Page -->
+        <div id="produceInfo" class="page">
+            <button class="back-btn" onclick="showPage('scan')">←</button>
+            <div class="info-hero">
+                <div class="info-hero-icon" id="infoIcon">🍌</div>
+                <h2 id="infoTitle">Banana</h2>
+            </div>
+
+            <div class="content">
+                <div class="info-card">
+                    <h3>Shelf Life</h3>
+                    <p id="infoShelfLife">5 days at room temperature</p>
+                </div>
+
+                <div class="info-card">
+                    <h3>Storage Tips</h3>
+                    <p id="infoStorage">Store at room temperature. Keep away from direct sunlight. Separate from other fruits to slow ripening.</p>
+                </div>
+
+                <div class="info-card">
+                    <h3>How to Tell When Ripe</h3>
+                    <p id="infoRipeness">Yellow with small brown spots. Should be slightly soft when pressed gently.</p>
+                </div>
+
+                <div class="info-card">
+                    <h3>Nutritional Information</h3>
+                    <div class="nutrition-grid">
+                        <div class="nutrition-item">
+                            <div class="nutrition-value">105</div>
+                            <div class="nutrition-label">Calories</div>
+                        </div>
+                        <div class="nutrition-item">
+                            <div class="nutrition-value">27g</div>
+                            <div class="nutrition-label">Carbs</div>
+                        </div>
+                        <div class="nutrition-item">
+                            <div class="nutrition-value">3g</div>
+                            <div class="nutrition-label">Fiber</div>
+                        </div>
+                        <div class="nutrition-item">
+                            <div class="nutrition-value">422mg</div>
+                            <div class="nutrition-label">Potassium</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <h3>Seasonal Availability</h3>
+                    <p id="infoSeason">Available year-round</p>
+                </div>
+
+                <button class="add-inventory-btn" onclick="addToInventory()">Add to Inventory</button>
+            </div>
+        </div>
+
+        <!-- Scanner Modal -->
+        <div id="scanner-container">
+            <button class="close-scanner" onclick="stopScanner()">✕</button>
+            <div id="scanner-video"></div>
+            <div class="scanner-overlay">
+                <div class="scanner-frame">
+                    <div class="scanner-line"></div>
+                </div>
+                <div class="scanner-text">
+                    Position barcode or PLU code within frame
+                </div>
+                <div class="manual-input">
+                    <input type="text" id="manualPLU" placeholder="Enter PLU">
+                    <button onclick="lookupManualPLU()">Search</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let inventory = [];
+        let notes = [];
+        let currentProduce = null;
+        let scannerActive = false;
+
+        // PLU Code Database - Comprehensive list of common produce
+        const pluDatabase = {
+            // BANANAS
+            '4011': { name: 'Banana', icon: '🍌', days: 5 },
+            '4186': { name: 'Banana', icon: '🍌', days: 5 },
+            '4237': { name: 'Banana', icon: '🍌', days: 5 },
+            '94011': { name: 'Banana (Organic)', icon: '🍌', days: 5 },
+            
+            // APPLES
+            '3283': { name: 'Apple (Fuji)', icon: '🍎', days: 14 },
+            '4131': { name: 'Apple (Fuji)', icon: '🍎', days: 14 },
+            '4139': { name: 'Apple (Granny Smith)', icon: '🍏', days: 14 },
+            '4015': { name: 'Apple (Gala)', icon: '🍎', days: 14 },
+            '4016': { name: 'Apple (Golden Delicious)', icon: '🍎', days: 14 },
+            '4017': { name: 'Apple (Granny Smith)', icon: '🍏', days: 14 },
+            '4101': { name: 'Apple (Red Delicious)', icon: '🍎', days: 14 },
+            '4152': { name: 'Apple (McIntosh)', icon: '🍎', days: 14 },
+            '3284': { name: 'Apple (Honeycrisp)', icon: '🍎', days: 14 },
+            '94131': { name: 'Apple (Organic Fuji)', icon: '🍎', days: 14 },
+            '94139': { name: 'Apple (Organic Granny Smith)', icon: '🍏', days: 14 },
+            
+            // AVOCADOS
+            '4046': { name: 'Avocado (Hass)', icon: '🥑', days: 4 },
+            '4225': { name: 'Avocado', icon: '🥑', days: 4 },
+            '94046': { name: 'Avocado (Organic Hass)', icon: '🥑', days: 4 },
+            
+            // TOMATOES
+            '4664': { name: 'Tomato (Roma)', icon: '🍅', days: 7 },
+            '4799': { name: 'Tomato (Beefsteak)', icon: '🍅', days: 7 },
+            '3151': { name: 'Tomato (Cherry)', icon: '🍅', days: 5 },
+            '4087': { name: 'Tomato (Grape)', icon: '🍅', days: 5 },
+            '94664': { name: 'Tomato (Organic Roma)', icon: '🍅', days: 7 },
+            
+            // STRAWBERRIES
+            '4770': { name: 'Strawberry', icon: '🍓', days: 3 },
+            '94770': { name: 'Strawberry (Organic)', icon: '🍓', days: 3 },
+            
+            // LETTUCE
+            '4061': { name: 'Lettuce (Green Leaf)', icon: '🥬', days: 5 },
+            '4076': { name: 'Lettuce (Iceberg)', icon: '🥬', days: 7 },
+            '4075': { name: 'Lettuce (Romaine)', icon: '🥬', days: 5 },
+            '4820': { name: 'Lettuce (Red Leaf)', icon: '🥬', days: 5 },
+            '94061': { name: 'Lettuce (Organic Green Leaf)', icon: '🥬', days: 5 },
+            
+            // ORANGES
+            '4012': { name: 'Orange (Navel)', icon: '🍊', days: 14 },
+            '3107': { name: 'Orange (Valencia)', icon: '🍊', days: 14 },
+            '4450': { name: 'Orange (Cara Cara)', icon: '🍊', days: 14 },
+            '94012': { name: 'Orange (Organic Navel)', icon: '🍊', days: 14 },
+            
+            // GRAPES
+            '4023': { name: 'Grapes (Green)', icon: '🍇', days: 7 },
+            '4499': { name: 'Grapes (Red)', icon: '🍇', days: 7 },
+            '4500': { name: 'Grapes (Black)', icon: '🍇', days: 7 },
+            '94023': { name: 'Grapes (Organic Green)', icon: '🍇', days: 7 },
+            
+            // BERRIES
+            '4396': { name: 'Blueberry', icon: '🫐', days: 5 },
+            '4409': { name: 'Raspberry', icon: '🫐', days: 2 },
+            '4410': { name: 'Blackberry', icon: '🫐', days: 3 },
+            '94396': { name: 'Blueberry (Organic)', icon: '🫐', days: 5 },
+            
+            // PEPPERS
+            '4065': { name: 'Pepper (Green Bell)', icon: '🫑', days: 7 },
+            '4088': { name: 'Pepper (Red Bell)', icon: '🫑', days: 7 },
+            '4689': { name: 'Pepper (Yellow Bell)', icon: '🫑', days: 7 },
+            '4090': { name: 'Pepper (Orange Bell)', icon: '🫑', days: 7 },
+            '4693': { name: 'Pepper (Jalapeño)', icon: '🌶️', days: 7 },
+            
+            // POTATOES
+            '4072': { name: 'Potato (Russet)', icon: '🥔', days: 30 },
+            '4073': { name: 'Potato (Red)', icon: '🥔', days: 21 },
+            '4083': { name: 'Potato (Yukon Gold)', icon: '🥔', days: 21 },
+            '4091': { name: 'Sweet Potato', icon: '🍠', days: 14 },
+            '94072': { name: 'Potato (Organic Russet)', icon: '🥔', days: 30 },
+            
+            // ONIONS
+            '4663': { name: 'Onion (Yellow)', icon: '🧅', days: 30 },
+            '4082': { name: 'Onion (Red)', icon: '🧅', days: 30 },
+            '4166': { name: 'Onion (White)', icon: '🧅', days: 30 },
+            '4068': { name: 'Onion (Green/Scallion)', icon: '🧅', days: 7 },
+            
+            // CARROTS
+            '4562': { name: 'Carrot', icon: '🥕', days: 21 },
+            '4094': { name: 'Carrot (Baby)', icon: '🥕', days: 14 },
+            '94562': { name: 'Carrot (Organic)', icon: '🥕', days: 21 },
+            
+            // BROCCOLI & CAULIFLOWER
+            '4060': { name: 'Broccoli', icon: '🥦', days: 7 },
+            '4079': { name: 'Cauliflower', icon: '🥦', days: 7 },
+            '94060': { name: 'Broccoli (Organic)', icon: '🥦', days: 7 },
+            
+            // CUCUMBERS
+            '4062': { name: 'Cucumber', icon: '🥒', days: 7 },
+            '3338': { name: 'Cucumber (English)', icon: '🥒', days: 7 },
+            '94062': { name: 'Cucumber (Organic)', icon: '🥒', days: 7 },
+            
+            // MELONS
+            '4032': { name: 'Watermelon', icon: '🍉', days: 7 },
+            '4050': { name: 'Cantaloupe', icon: '🍈', days: 5 },
+            '4318': { name: 'Honeydew', icon: '🍈', days: 7 },
+            
+            // CITRUS
+            '4048': { name: 'Lime', icon: '🍋', days: 14 },
+            '4053': { name: 'Lemon', icon: '🍋', days: 21 },
+            '4450': { name: 'Grapefruit', icon: '🍊', days: 14 },
+            '3115': { name: 'Tangerine', icon: '🍊', days: 7 },
+            
+            // STONE FRUITS
+            '4044': { name: 'Peach', icon: '🍑', days: 5 },
+            '4042': { name: 'Nectarine', icon: '🍑', days: 5 },
+            '4040': { name: 'Plum', icon: '🍑', days: 5 },
+            '4039': { name: 'Cherry', icon: '🍒', days: 3 },
+            '4409': { name: 'Apricot', icon: '🍑', days: 5 },
+            
+            // TROPICAL
+            '4030': { name: 'Pineapple', icon: '🍍', days: 7 },
+            '4051': { name: 'Mango', icon: '🥭', days: 5 },
+            '3114': { name: 'Papaya', icon: '🥭', days: 5 },
+            '4233': { name: 'Kiwi', icon: '🥝', days: 7 },
+            '4414': { name: 'Coconut', icon: '🥥', days: 30 },
+            
+            // SQUASH & ZUCCHINI
+            '4067': { name: 'Zucchini', icon: '🥒', days: 7 },
+            '4750': { name: 'Squash (Butternut)', icon: '🎃', days: 30 },
+            '4759': { name: 'Squash (Acorn)', icon: '🎃', days: 21 },
+            '4784': { name: 'Squash (Spaghetti)', icon: '🎃', days: 21 },
+            
+            // LEAFY GREENS
+            '4592': { name: 'Spinach', icon: '🥬', days: 5 },
+            '4591': { name: 'Kale', icon: '🥬', days: 5 },
+            '4613': { name: 'Arugula', icon: '🥬', days: 3 },
+            '3120': { name: 'Swiss Chard', icon: '🥬', days: 5 },
+            
+            // MUSHROOMS
+            '4080': { name: 'Mushroom (White)', icon: '🍄', days: 7 },
+            '4084': { name: 'Mushroom (Portobello)', icon: '🍄', days: 7 },
+            '4081': { name: 'Mushroom (Shiitake)', icon: '🍄', days: 7 },
+            
+            // HERBS
+            '4889': { name: 'Basil', icon: '🌿', days: 5 },
+            '4901': { name: 'Cilantro', icon: '🌿', days: 5 },
+            '4899': { name: 'Parsley', icon: '🌿', days: 7 },
+            '4889': { name: 'Mint', icon: '🌿', days: 5 },
+            
+            // MISC
+            '4545': { name: 'Celery', icon: '🥬', days: 14 },
+            '4554': { name: 'Eggplant', icon: '🍆', days: 7 },
+            '4548': { name: 'Asparagus', icon: '🥒', days: 5 },
+            '4066': { name: 'Corn', icon: '🌽', days: 5 },
+            '3082': { name: 'Pear (Bartlett)', icon: '�梨', days: 7 },
+            '4416': { name: 'Pear (Anjou)', icon: '🍐', days: 7 },
+            '4421': { name: 'Pear (Bosc)', icon: '🍐', days: 7 }
+        };
+
+        const produceData = {
+            'Banana': { icon: '🍌', days: 5, storage: 'Store at room temperature. Keep away from direct sunlight. Separate from other fruits to slow ripening.', ripeness: 'Yellow with small brown spots. Should be slightly soft when pressed gently.', season: 'Available year-round' },
+            'Apple': { icon: '🍎', days: 14, storage: 'Store in the refrigerator crisper drawer. Can last up to a month when refrigerated.', ripeness: 'Firm to the touch with bright, glossy skin. No soft spots or bruises.', season: 'Peak season: September to November' },
+            'Tomato': { icon: '🍅', days: 7, storage: 'Store at room temperature away from direct sunlight. Do not refrigerate as it affects flavor.', ripeness: 'Deep red color, slightly soft when gently pressed, sweet aroma at stem.', season: 'Peak season: June to September' },
+            'Avocado': { icon: '🥑', days: 4, storage: 'Ripen at room temperature, then refrigerate. Store in paper bag to speed ripening.', ripeness: 'Yields to gentle pressure, dark green to black skin, stem comes off easily.', season: 'Available year-round, peak: Spring-Summer' },
+            'Strawberry': { icon: '🍓', days: 3, storage: 'Refrigerate unwashed in original container. Wash just before eating.', ripeness: 'Bright red color throughout, fresh green caps, sweet aroma.', season: 'Peak season: April to June' },
+            'Lettuce': { icon: '🥬', days: 5, storage: 'Wrap in damp paper towel, store in refrigerator crisper drawer in plastic bag.', ripeness: 'Crisp leaves, vibrant green color, no wilting or brown edges.', season: 'Available year-round, best in Spring and Fall' }
+        };
+
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            
+            if (pageId !== 'landing') {
+                document.getElementById('nav').style.display = 'flex';
+            } else {
+                document.getElementById('nav').style.display = 'none';
+            }
+
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+            if (event?.target?.classList.contains('nav-btn')) {
+                event.target.classList.add('active');
+            }
+
+            if (pageId === 'calendar') {
+                updateInventoryDisplay();
+            } else if (pageId === 'notes') {
+                updateNotesDisplay();
+            }
+        }
+
+        function startScanner() {
+            // Check if running on HTTPS or localhost
+            const isSecure = window.location.protocol === 'https:' || 
+                           window.location.hostname === 'localhost' || 
+                           window.location.hostname === '127.0.0.1';
+            
+            if (!isSecure) {
+                alert('⚠️ Camera requires HTTPS or localhost.\n\nPlease either:\n1. Run a local server (see console for instructions)\n2. Host on GitHub Pages/Netlify\n3. Use manual PLU entry');
+                console.log('%c🔧 To run a local server:', 'font-weight: bold; font-size: 14px;');
+                console.log('Python: python -m http.server 8000');
+                console.log('Node: npx http-server');
+                console.log('VS Code: Install "Live Server" extension');
+                return;
+            }
+
+            const container = document.getElementById('scanner-container');
+            container.classList.add('active');
+            scannerActive = true;
+
+            // Check if QuaggaJS loaded
+            if (typeof Quagga === 'undefined') {
+                alert('Scanner library not loaded. Check your internet connection.');
+                stopScanner();
+                return;
+            }
+
+            console.log('🎥 Initializing camera...');
+
+            Quagga.init({
+                inputStream: {
+                    name: "Live",
+                    type: "LiveStream",
+                    target: document.querySelector('#scanner-video'),
+                    constraints: {
+                        width: { min: 640, ideal: 1280, max: 1920 },
+                        height: { min: 480, ideal: 720, max: 1080 },
+                        facingMode: "environment", // Use back camera on mobile
+                        aspectRatio: { min: 1, max: 2 }
+                    },
+                },
+                decoder: {
+                    readers: [
+                        "ean_reader",      // Standard barcodes
+                        "ean_8_reader",    // 8-digit barcodes
+                        "code_128_reader", // Common in retail
+                        "code_39_reader",  // Alphanumeric codes
+                        "upc_reader",      // UPC-A codes
+                        "upc_e_reader"     // UPC-E codes
+                    ],
+                    debug: {
+                        drawBoundingBox: true,
+                        showFrequency: true,
+                        drawScanline: true,
+                        showPattern: true
+                    }
+                },
+                locate: true,
+                numOfWorkers: 4,
+                frequency: 10
+            }, function(err) {
+                if (err) {
+                    console.error('Camera error:', err);
+                    let errorMsg = 'Camera error: ';
+                    
+                    if (err.name === 'NotAllowedError') {
+                        errorMsg += 'Permission denied. Please allow camera access and try again.';
+                    } else if (err.name === 'NotFoundError') {
+                        errorMsg += 'No camera found on this device.';
+                    } else if (err.name === 'NotReadableError') {
+                        errorMsg += 'Camera is already in use by another application.';
+                    } else if (err.name === 'OverconstrainedError') {
+                        errorMsg += 'Camera does not meet requirements.';
+                    } else {
+                        errorMsg += err.message || 'Unknown error. Please use manual PLU entry.';
+                    }
+                    
+                    alert(errorMsg);
+                    stopScanner();
+                    return;
+                }
+                
+                console.log('✅ Camera initialized successfully!');
+                Quagga.start();
+                
+                // Update UI to show scanning is active
+                const text = document.querySelector('.scanner-text');
+                text.textContent = '📸 Scanning... Position barcode in frame';
+            });
+
+            Quagga.onDetected(function(result) {
+                const code = result.codeResult.code;
+                const format = result.codeResult.format;
+                console.log(`✅ Detected ${format}: ${code}`);
+                
+                // Vibrate on detection (if supported)
+                if (navigator.vibrate) {
+                    navigator.vibrate(100);
+                }
+                
+                lookupPLU(code);
+            });
+
+            // Debug: Show when scanner is processing
+            Quagga.onProcessed(function(result) {
+                if (result && result.codeResult) {
+                    console.log('Processing barcode...');
+                }
+            });
+        }
+
+        function stopScanner() {
+            if (scannerActive) {
+                Quagga.stop();
+                Quagga.offDetected();
+                Quagga.offProcessed();
+                scannerActive = false;
+                console.log('🛑 Scanner stopped');
+            }
+            document.getElementById('scanner-container').classList.remove('active');
+            
+            // Reset scanner text
+            const text = document.querySelector('.scanner-text');
+            text.textContent = 'Position barcode or PLU code within frame';
+            text.style.color = 'white';
+        }
+
+        function lookupPLU(code) {
+            const cleanCode = code.replace(/^0+/, '');
+            
+            if (pluDatabase[cleanCode]) {
+                stopScanner();
+                const produce = pluDatabase[cleanCode];
+                selectProduce(produce.name, produce.icon, produce.days);
+            } else {
+                const text = document.querySelector('.scanner-text');
+                const originalText = text.textContent;
+                text.textContent = `PLU ${cleanCode} not found. Keep scanning or try manual entry.`;
+                text.style.color = '#ff3b30';
+                setTimeout(() => {
+                    text.textContent = originalText;
+                    text.style.color = 'white';
+                }, 2000);
+            }
+        }
+
+        function lookupManualPLU() {
+            const input = document.getElementById('manualPLU');
+            const code = input.value.trim();
+            
+            if (code) {
+                lookupPLU(code);
+                input.value = '';
+            }
+        }
+
+        function selectProduce(name, icon, days) {
+            currentProduce = { name, icon, days, addedDate: new Date() };
+            
+            const data = produceData[name];
+            document.getElementById('infoIcon').textContent = icon;
+            document.getElementById('infoTitle').textContent = name;
+            document.getElementById('infoShelfLife').textContent = `${days} days`;
+            document.getElementById('infoStorage').textContent = data.storage;
+            document.getElementById('infoRipeness').textContent = data.ripeness;
+            document.getElementById('infoSeason').textContent = data.season;
+            
+            showPage('produceInfo');
+        }
+
+        function addToInventory() {
+            if (currentProduce) {
+                inventory.push({...currentProduce, id: Date.now()});
+                alert(`${currentProduce.icon} ${currentProduce.name} added to inventory!`);
+                showPage('calendar');
+            }
+        }
+
+        function updateInventoryDisplay() {
+            const list = document.getElementById('inventoryList');
+            if (inventory.length === 0) {
+                list.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-icon">🛒</div>
+                        <p>No produce yet<br>Start by scanning items!</p>
+                    </div>
+                `;
+                return;
+            }
+
+            list.innerHTML = inventory.map(item => {
+                const daysLeft = item.days - Math.floor((new Date() - item.addedDate) / (1000 * 60 * 60 * 24));
+                let urgencyClass = '';
+                
+                if (daysLeft <= 2) urgencyClass = 'urgent';
+                else if (daysLeft <= 4) urgencyClass = 'warning';
+
+                return `
+                    <div class="inventory-card ${urgencyClass}">
+                        <div class="inventory-info">
+                            <div class="inventory-icon">${item.icon}</div>
+                            <div class="inventory-details">
+                                <h3>${item.name}</h3>
+                                <div class="inventory-date">Added ${item.addedDate.toLocaleDateString()}</div>
+                            </div>
+                        </div>
+                        <div class="days-badge ${urgencyClass}">${daysLeft}d</div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function addNote() {
+            const input = document.getElementById('noteInput');
+            if (input.value.trim()) {
+                notes.push({
+                    text: input.value,
+                    date: new Date(),
+                    id: Date.now()
+                });
+                input.value = '';
+                updateNotesDisplay();
+            }
+        }
+
+        function updateNotesDisplay() {
+            const list = document.getElementById('notesList');
+            if (notes.length === 0) {
+                list.innerHTML = '';
+                return;
+            }
+
+            list.innerHTML = notes.map(note => `
+                <div class="note-card">
+                    <div class="note-header">
+                        <span class="note-date">${note.date.toLocaleDateString()} ${note.date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}</span>
+                        <button class="delete-btn" onclick="deleteNote(${note.id})">Delete</button>
+                    </div>
+                    <p class="note-text">${note.text}</p>
+                </div>
+            `).join('');
+        }
+
+        function deleteNote(id) {
+            notes = notes.filter(n => n.id !== id);
+            updateNotesDisplay();
+        }
+
+        function toggleSetting(element) {
+            element.classList.toggle('active');
+        }
+
+        // Search functionality
+        document.getElementById('searchInput')?.addEventListener('input', (e) => {
+            const search = e.target.value.toLowerCase();
+            
+            // Check if it's a PLU code (4-5 digits)
+            if (/^\d{4,5}$/.test(search)) {
+                if (pluDatabase[search]) {
+                    const produce = pluDatabase[search];
+                    selectProduce(produce.name, produce.icon, produce.days);
+                }
+            }
+            
+            // Filter visible produce
+            document.querySelectorAll('.produce-card').forEach(item => {
+                const text = item.textContent.toLowerCase();
+                item.style.display = text.includes(search) ? 'block' : 'none';
+            });
+        });
+
+        // Allow Enter key for manual PLU
+        document.getElementById('manualPLU')?.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                lookupManualPLU();
+            }
+        });
+    </script>
+</body>
+</html>
