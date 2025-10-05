@@ -121,7 +121,7 @@ body {
 }
 
 .nav-btn:hover {
-    color: #FFF7ED;
+    color: rgba(255, 247, 237, 0.9);
 }
 
 .nav-btn.active {
