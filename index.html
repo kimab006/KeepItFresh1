@@ -1,132 +1,4 @@
-const produceData = {
-            'Banana': { icon: '🍌', days: 5, storage: 'Store at room temperature. Keep away from direct sunlight. Separate from other fruits to slow ripening.', ripeness: 'Yellow with small brown spots. Should be slightly soft when pressed gently.', season: 'Available year-round' },
-            'Banana (Organic)': { icon: '🍌', days: 5, storage: 'Store at room temperature. Keep away from direct sunlight.', ripeness: 'Yellow with small brown spots.', season: 'Available year-round' },
-            
-            'Apple': { icon: '🍎', days: 14, storage: 'Store in the refrigerator crisper drawer. Can last up to a month when refrigerated.', ripeness: 'Firm to the touch with bright, glossy skin. No soft spots or bruises.', season: 'Peak season: September to November' },
-            'Apple (Fuji)': { icon: '🍎', days: 14, storage: 'Refrigerate for best results.', ripeness: 'Firm with red-pink color.', season: 'October to July' },
-            'Apple (Granny Smith)': { icon: '🍏', days: 14, storage: 'Refrigerate to maintain crispness.', ripeness: 'Bright green, very firm.', season: 'Year-round' },
-            'Apple (Gala)': { icon: '🍎', days: 14, storage: 'Store in fridge crisper drawer.', ripeness: 'Red and yellow striped, firm.', season: 'August to March' },
-            'Apple (Golden Delicious)': { icon: '🍎', days: 14, storage: 'Refrigerate for extended freshness.', ripeness: 'Golden yellow, slightly soft.', season: 'September to June' },
-            'Apple (Red Delicious)': { icon: '🍎', days: 14, storage: 'Keep refrigerated.', ripeness: 'Deep red color, firm.', season: 'September to July' },
-            'Apple (McIntosh)': { icon: '🍎', days: 14, storage: 'Best when refrigerated.', ripeness: 'Red with green, soft when ripe.', season: 'September to May' },
-            'Apple (Honeycrisp)': { icon: '🍎', days: 14, storage: 'Refrigerate to maintain crunch.', ripeness: 'Red and yellow, very crisp.', season: 'September to January' },
-            'Apple (Organic Fuji)': { icon: '🍎', days: 14, storage: 'Refrigerate for best results.', ripeness: 'Firm with red-pink color.', season: 'October to July' },
-            'Apple (Organic Granny Smith)': { icon: '🍏', days: 14, storage: 'Refrigerate to maintain crispness.', ripeness: 'Bright green, very firm.', season: 'Year-round' },
-            
-            'Avocado': { icon: '🥑', days: 4, storage: 'Ripen at room temperature, then refrigerate. Store in paper bag to speed ripening.', ripeness: 'Yields to gentle pressure, dark green to black skin, stem comes off easily.', season: 'Available year-round, peak: Spring-Summer' },
-            'Avocado (Hass)': { icon: '🥑', days: 4, storage: 'Ripen at room temp, refrigerate when ripe.', ripeness: 'Dark skin, yields to gentle pressure.', season: 'Year-round' },
-            'Avocado (Organic Hass)': { icon: '🥑', days: 4, storage: 'Ripen at room temp, refrigerate when ripe.', ripeness: 'Dark skin, yields to gentle pressure.', season: 'Year-round' },
-            
-            'Tomato': { icon: '🍅', days: 7, storage: 'Store at room temperature away from direct sunlight. Do not refrigerate as it affects flavor.', ripeness: 'Deep red color, slightly soft when gently pressed, sweet aroma at stem.', season: 'Peak season: June to September' },
-            'Tomato (Roma)': { icon: '🍅', days: 7, storage: 'Room temperature, never refrigerate.', ripeness: 'Deep red, firm but gives slightly.', season: 'June to September' },
-            'Tomato (Beefsteak)': { icon: '🍅', days: 7, storage: 'Keep at room temperature.', ripeness: 'Large, deep red, heavy for size.', season: 'Summer months' },
-            'Tomato (Cherry)': { icon: '🍅', days: 5, storage: 'Room temperature for best flavor.', ripeness: 'Bright red, firm.', season: 'Year-round' },
-            'Tomato (Grape)': { icon: '🍅', days: 5, storage: 'Room temperature preferred.', ripeness: 'Deep red, glossy.', season: 'Year-round' },
-            'Tomato (Organic Roma)': { icon: '🍅', days: 7, storage: 'Room temperature, never refrigerate.', ripeness: 'Deep red, firm but gives slightly.', season: 'June to September' },
-            
-            'Strawberry': { icon: '🍓', days: 3, storage: 'Refrigerate unwashed in original container. Wash just before eating.', ripeness: 'Bright red color throughout, fresh green caps, sweet aroma.', season: 'Peak season: April to June' },
-            'Strawberry (Organic)': { icon: '🍓', days: 3, storage: 'Refrigerate unwashed.', ripeness: 'Bright red, fresh green caps.', season: 'April to June' },
-            
-            'Lettuce': { icon: '🥬', days: 5, storage: 'Wrap in damp paper towel, store in refrigerator crisper drawer in plastic bag.', ripeness: 'Crisp leaves, vibrant green color, no wilting or brown edges.', season: 'Available year-round, best in Spring and Fall' },
-            'Lettuce (Green Leaf)': { icon: '🥬', days: 5, storage: 'Wrap in damp towel, refrigerate.', ripeness: 'Crisp, bright green leaves.', season: 'Spring and Fall' },
-            'Lettuce (Iceberg)': { icon: '🥬', days: 7, storage: 'Refrigerate in crisper drawer.', ripeness: 'Firm head, crisp leaves.', season: 'Year-round' },
-            'Lettuce (Romaine)': { icon: '🥬', days: 5, storage: 'Refrigerate in plastic bag.', ripeness: 'Dark green, crisp ribs.', season: 'Year-round' },
-            'Lettuce (Red Leaf)': { icon: '🥬', days: 5, storage: 'Wrap in damp towel, refrigerate.', ripeness: 'Red-tipped, crisp.', season: 'Spring and Fall' },
-            'Lettuce (Organic Green Leaf)': { icon: '🥬', days: 5, storage: 'Wrap in damp towel, refrigerate.', ripeness: 'Crisp, bright green leaves.', season: 'Spring and Fall' },
-            
-            'Orange (Navel)': { icon: '🍊', days: 14, storage: 'Room temperature for a week, refrigerate for longer.', ripeness: 'Heavy for size, firm, fragrant.', season: 'November to June' },
-            'Orange (Valencia)': { icon: '🍊', days: 14, storage: 'Cool place or refrigerate.', ripeness: 'Bright orange, slightly soft.', season: 'March to October' },
-            'Orange (Cara Cara)': { icon: '🍊', days: 14, storage: 'Room temp or refrigerate.', ripeness: 'Orange-red skin, heavy.', season: 'December to April' },
-            'Orange (Organic Navel)': { icon: '🍊', days: 14, storage: 'Room temperature for a week, refrigerate for longer.', ripeness: 'Heavy for size, firm, fragrant.', season: 'November to June' },
-            
-            'Grapes (Green)': { icon: '🍇', days: 7, storage: 'Refrigerate unwashed in original bag.', ripeness: 'Plump, firmly attached to stem.', season: 'May to January' },
-            'Grapes (Red)': { icon: '🍇', days: 7, storage: 'Refrigerate unwashed.', ripeness: 'Deep color, plump.', season: 'May to January' },
-            'Grapes (Black)': { icon: '🍇', days: 7, storage: 'Keep refrigerated.', ripeness: 'Dark purple, plump.', season: 'July to December' },
-            'Grapes (Organic Green)': { icon: '🍇', days: 7, storage: 'Refrigerate unwashed in original bag.', ripeness: 'Plump, firmly attached to stem.', season: 'May to January' },
-            
-            'Blueberry': { icon: '🫐', days: 5, storage: 'Refrigerate unwashed, rinse before eating.', ripeness: 'Deep blue color, firm.', season: 'May to September' },
-            'Raspberry': { icon: '🫐', days: 2, storage: 'Refrigerate immediately, very delicate.', ripeness: 'Deep red, plump.', season: 'June to October' },
-            'Blackberry': { icon: '🫐', days: 3, storage: 'Refrigerate, use quickly.', ripeness: 'Deep black, glossy.', season: 'May to September' },
-            'Blueberry (Organic)': { icon: '🫐', days: 5, storage: 'Refrigerate unwashed, rinse before eating.', ripeness: 'Deep blue color, firm.', season: 'May to September' },
-            
-            'Pepper (Green Bell)': { icon: '🫑', days: 7, storage: 'Refrigerate in crisper drawer.', ripeness: 'Firm, glossy skin, heavy.', season: 'Year-round' },
-            'Pepper (Red Bell)': { icon: '🫑', days: 7, storage: 'Refrigerate for freshness.', ripeness: 'Deep red, firm, glossy.', season: 'Year-round' },
-            'Pepper (Yellow Bell)': { icon: '🫑', days: 7, storage: 'Keep refrigerated.', ripeness: 'Bright yellow, firm.', season: 'Year-round' },
-            'Pepper (Orange Bell)': { icon: '🫑', days: 7, storage: 'Refrigerate in crisper.', ripeness: 'Bright orange, firm.', season: 'Year-round' },
-            'Pepper (Jalapeño)': { icon: '🌶️', days: 7, storage: 'Refrigerate for freshness.', ripeness: 'Dark green, firm, glossy.', season: 'Year-round' },
-            
-            'Potato (Russet)': { icon: '🥔', days: 30, storage: 'Cool, dark, dry place. Never refrigerate.', ripeness: 'Firm, no green spots or sprouts.', season: 'Year-round' },
-            'Potato (Red)': { icon: '🥔', days: 21, storage: 'Cool, dark place.', ripeness: 'Firm, smooth skin.', season: 'Year-round' },
-            'Potato (Yukon Gold)': { icon: '🥔', days: 21, storage: 'Cool, dark, dry place.', ripeness: 'Firm, golden skin.', season: 'Year-round' },
-            'Sweet Potato': { icon: '🍠', days: 14, storage: 'Cool, dry place, not refrigerated.', ripeness: 'Firm, no soft spots.', season: 'September to December' },
-            'Potato (Organic Russet)': { icon: '🥔', days: 30, storage: 'Cool, dark, dry place. Never refrigerate.', ripeness: 'Firm, no green spots or sprouts.', season: 'Year-round' },
-            
-            'Onion (Yellow)': { icon: '🧅', days: 30, storage: 'Cool, dry, dark place with good air circulation.', ripeness: 'Firm, dry outer skin, no sprouting.', season: 'Year-round' },
-            'Onion (Red)': { icon: '🧅', days: 30, storage: 'Cool, dry place.', ripeness: 'Firm, papery skin.', season: 'Year-round' },
-            'Onion (White)': { icon: '🧅', days: 30, storage: 'Cool, dry, dark place.', ripeness: 'Firm, white outer layers.', season: 'Year-round' },
-            'Onion (Green/Scallion)': { icon: '🧅', days: 7, storage: 'Refrigerate in plastic bag.', ripeness: 'Bright green tops, white bottoms.', season: 'Year-round' },
-            
-            'Carrot': { icon: '🥕', days: 21, storage: 'Remove tops, refrigerate in plastic bag.', ripeness: 'Firm, bright orange, smooth.', season: 'Year-round' },
-            'Carrot (Baby)': { icon: '🥕', days: 14, storage: 'Refrigerate in original bag.', ripeness: 'Firm, bright orange.', season: 'Year-round' },
-            'Carrot (Organic)': { icon: '🥕', days: 21, storage: 'Remove tops, refrigerate in plastic bag.', ripeness: 'Firm, bright orange, smooth.', season: 'Year-round' },
-            
-            'Broccoli': { icon: '🥦', days: 7, storage: 'Refrigerate in crisper drawer, unwashed.', ripeness: 'Tight florets, deep green color.', season: 'October to April' },
-            'Cauliflower': { icon: '🥦', days: 7, storage: 'Refrigerate in plastic bag.', ripeness: 'Compact head, creamy white.', season: 'September to June' },
-            'Broccoli (Organic)': { icon: '🥦', days: 7, storage: 'Refrigerate in crisper drawer, unwashed.', ripeness: 'Tight florets, deep green color.', season: 'October to April' },
-            
-            'Cucumber': { icon: '🥒', days: 7, storage: 'Refrigerate wrapped in paper towel.', ripeness: 'Firm, dark green, no soft spots.', season: 'May to August' },
-            'Cucumber (English)': { icon: '🥒', days: 7, storage: 'Refrigerate in plastic wrap.', ripeness: 'Long, firm, dark green.', season: 'Year-round' },
-            'Cucumber (Organic)': { icon: '🥒', days: 7, storage: 'Refrigerate wrapped in paper towel.', ripeness: 'Firm, dark green, no soft spots.', season: 'May to August' },
-            
-            'Watermelon': { icon: '🍉', days: 7, storage: 'Room temp until cut, then refrigerate.', ripeness: 'Dull skin, yellow spot on bottom, hollow sound.', season: 'May to September' },
-            'Cantaloupe': { icon: '🍈', days: 5, storage: 'Room temp to ripen, refrigerate when ripe.', ripeness: 'Sweet aroma, slightly soft at stem end.', season: 'June to September' },
-            'Honeydew': { icon: '🍈', days: 7, storage: 'Room temperature, refrigerate when ripe.', ripeness: 'Creamy yellow color, sweet aroma.', season: 'June to October' },
-            
-            'Lime': { icon: '🍋', days: 14, storage: 'Room temperature for a week, refrigerate longer.', ripeness: 'Heavy for size, bright green.', season: 'Year-round' },
-            'Lemon': { icon: '🍋', days: 21, storage: 'Room temp or refrigerate.', ripeness: 'Bright yellow, firm, heavy.', season: 'Year-round' },
-            'Grapefruit': { icon: '🍊', days: 14, storage: 'Cool place or refrigerate.', ripeness: 'Heavy for size, firm.', season: 'October to June' },
-            'Tangerine': { icon: '🍊', days: 7, storage: 'Room temp for few days, refrigerate longer.', ripeness: 'Loose skin, deep orange.', season: 'November to April' },
-            
-            'Peach': { icon: '🍑', days: 5, storage: 'Room temp to ripen, refrigerate when ripe.', ripeness: 'Sweet aroma, gives slightly to pressure.', season: 'May to September' },
-            'Nectarine': { icon: '🍑', days: 5, storage: 'Ripen at room temp, refrigerate when soft.', ripeness: 'Fragrant, gives to gentle pressure.', season: 'May to September' },
-            'Plum': { icon: '🍑', days: 5, storage: 'Room temp to ripen, then refrigerate.', ripeness: 'Slightly soft, sweet aroma.', season: 'May to October' },
-            'Cherry': { icon: '🍒', days: 3, storage: 'Refrigerate unwashed immediately.', ripeness: 'Glossy, firm, plump.', season: 'May to August' },
-            'Apricot': { icon: '🍑', days: 5, storage: 'Room temp to ripen, refrigerate when soft.', ripeness: 'Orange color, gives to pressure.', season: 'May to August' },
-            
-            'Pineapple': { icon: '🍍', days: 7, storage: 'Room temp for 1-2 days, refrigerate cut pieces.', ripeness: 'Sweet aroma at base, leaves pull easily.', season: 'March to July' },
-            'Mango': { icon: '🥭', days: 5, storage: 'Room temp to ripen, refrigerate when soft.', ripeness: 'Yields to pressure, sweet aroma.', season: 'March to September' },
-            'Papaya': { icon: '🥭', days: 5, storage: 'Room temp until mostly yellow, then refrigerate.', ripeness: 'Yellow skin, slightly soft.', season: 'Year-round' },
-            'Kiwi': { icon: '🥝', days: 7, storage: 'Room temp to ripen, refrigerate when soft.', ripeness: 'Gives to gentle pressure.', season: 'Year-round' },
-            'Coconut': { icon: '🥥', days: 30, storage: 'Room temperature, refrigerate if cracked.', ripeness: 'Heavy, sloshing sound when shaken.', season: 'Year-round' },
-            
-            'Zucchini': { icon: '🥒', days: 7, storage: 'Refrigerate in plastic bag.', ripeness: 'Firm, smooth skin, small to medium size.', season: 'June to September' },
-            'Squash (Butternut)': { icon: '🎃', days: 30, storage: 'Cool, dry place, do not refrigerate.', ripeness: 'Tan color, hard skin, heavy.', season: 'September to February' },
-            'Squash (Acorn)': { icon: '🎃', days: 21, storage: 'Cool, dry place.', ripeness: 'Dark green with orange spot, hard.', season: 'October to December' },
-            'Squash (Spaghetti)': { icon: '🎃', days: 21, storage: 'Cool, dry, dark place.', ripeness: 'Yellow color, hard skin.', season: 'September to March' },
-            
-            'Spinach': { icon: '🥬', days: 5, storage: 'Refrigerate in original bag, use quickly.', ripeness: 'Dark green, crisp leaves.', season: 'Year-round, peak Spring/Fall' },
-            'Kale': { icon: '🥬', days: 5, storage: 'Refrigerate in plastic bag.', ripeness: 'Dark green, crisp, no yellowing.', season: 'Year-round, best in Winter' },
-            'Arugula': { icon: '🥬', days: 3, storage: 'Refrigerate, very delicate.', ripeness: 'Bright green, tender leaves.', season: 'Spring and Fall' },
-            'Swiss Chard': { icon: '🥬', days: 5, storage: 'Refrigerate in plastic bag.', ripeness: 'Crisp stalks, vibrant leaves.', season: 'June to October' },
-            
-            'Mushroom (White)': { icon: '🍄', days: 7, storage: 'Refrigerate in paper bag, not plastic.', ripeness: 'Firm, dry, closed caps.', season: 'Year-round' },
-            'Mushroom (Portobello)': { icon: '🍄', days: 7, storage: 'Paper bag in refrigerator.', ripeness: 'Firm, dry, large caps.', season: 'Year-round' },
-            'Mushroom (Shiitake)': { icon: '🍄', days: 7, storage: 'Refrigerate in paper bag.', ripeness: 'Firm, dry, umbrella-shaped.', season: 'Year-round' },
-            
-            'Basil': { icon: '🌿', days: 5, storage: 'Trim stems, place in water like flowers, room temp.', ripeness: 'Bright green, no brown spots.', season: 'June to September' },
-            'Cilantro': { icon: '🌿', days: 5, storage: 'Refrigerate stems in water, cover loosely.', ripeness: 'Bright green, fragrant.', season: 'Year-round' },
-            'Parsley': { icon: '🌿', days: 7, storage: 'Refrigerate in plastic bag or in water.', ripeness: 'Bright green, crisp.', season: 'Year-round' },
-            'Mint': { icon: '🌿', days: 5, storage: 'Refrigerate stems in water.', ripeness: 'Bright green, aromatic.', season: 'Year-round' },
-            
-            'Celery': { icon: '🥬', days: 14, storage: 'Wrap in foil, refrigerate in crisper.', ripeness: 'Firm, crisp stalks, tight bunch.', season: 'Year-round' },
-            'Eggplant': { icon: '🍆', days: 7, storage: 'Room temperature, use within a week.', ripeness: 'Firm, glossy skin, heavy.', season: 'July to October' },
-            'Asparagus': { icon: '🥒', days: 5, storage: 'Refrigerate upright in water.', ripeness: 'Firm stalks, tight tips, bright green.', season: 'February to June' },
-            'Corn': { icon: '🌽', days: 5, storage: 'Refrigerate in husk, use quickly.', ripeness: 'Bright green husk, plump kernels.', season: 'May to September' },
-            
-            'Pear (Bartlett)': { icon: '🍐', days: 7, storage: 'Room temp to ripen, refrigerate when ripe.', ripeness: 'Gives slightly at neck, fragrant.', season: 'August to February' },
-            'Pear (Anjou)': { icon: '🍐', days: 7, storage: 'Room temp to ripen, refrigerate when soft.', ripeness: 'Gives to gentle pressure at neck.', season: 'October to May' },
-            'Pear (Bosc)': { icon: '🍐', days: 7, storage: 'Ripen at room temp, refrigerate when ripe.', ripeness: 'Color deepens, slightly soft at neck.', season: 'September to April' }
-        };<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -186,15 +58,15 @@ const produceData = {
                         <div class="produce-icon">🍌</div>
                         <div class="produce-name">Banana</div>
                     </div>
-                    <div class="produce-card" onclick="selectProduce('Apple', '🍎', 14)">
+                    <div class="produce-card" onclick="selectProduce('Apple (Fuji)', '🍎', 14)">
                         <div class="produce-icon">🍎</div>
                         <div class="produce-name">Apple</div>
                     </div>
-                    <div class="produce-card" onclick="selectProduce('Tomato', '🍅', 7)">
+                    <div class="produce-card" onclick="selectProduce('Tomato (Roma)', '🍅', 7)">
                         <div class="produce-icon">🍅</div>
                         <div class="produce-name">Tomato</div>
                     </div>
-                    <div class="produce-card" onclick="selectProduce('Avocado', '🥑', 4)">
+                    <div class="produce-card" onclick="selectProduce('Avocado (Hass)', '🥑', 4)">
                         <div class="produce-icon">🥑</div>
                         <div class="produce-name">Avocado</div>
                     </div>
@@ -202,7 +74,7 @@ const produceData = {
                         <div class="produce-icon">🍓</div>
                         <div class="produce-name">Strawberry</div>
                     </div>
-                    <div class="produce-card" onclick="selectProduce('Lettuce', '🥬', 5)">
+                    <div class="produce-card" onclick="selectProduce('Lettuce (Green Leaf)', '🥬', 5)">
                         <div class="produce-icon">🥬</div>
                         <div class="produce-name">Lettuce</div>
                     </div>
@@ -362,7 +234,7 @@ const produceData = {
         let currentProduce = null;
         let scannerActive = false;
 
-        // PLU Code Database - Comprehensive list of common produce
+        // COMPREHENSIVE PLU CODE DATABASE - 150+ Produce Items
         const pluDatabase = {
             // BANANAS
             '4011': { name: 'Banana', icon: '🍌', days: 5 },
@@ -475,7 +347,7 @@ const produceData = {
             '4042': { name: 'Nectarine', icon: '🍑', days: 5 },
             '4040': { name: 'Plum', icon: '🍑', days: 5 },
             '4039': { name: 'Cherry', icon: '🍒', days: 3 },
-            '4409': { name: 'Apricot', icon: '🍑', days: 5 },
+            '4408': { name: 'Apricot', icon: '🍑', days: 5 },
             
             // TROPICAL
             '4030': { name: 'Pineapple', icon: '🍍', days: 7 },
@@ -502,7 +374,7 @@ const produceData = {
             '4081': { name: 'Mushroom (Shiitake)', icon: '🍄', days: 7 },
             
             // HERBS
-            '4889': { name: 'Basil', icon: '🌿', days: 5 },
+            '4885': { name: 'Basil', icon: '🌿', days: 5 },
             '4901': { name: 'Cilantro', icon: '🌿', days: 5 },
             '4899': { name: 'Parsley', icon: '🌿', days: 7 },
             '4889': { name: 'Mint', icon: '🌿', days: 5 },
@@ -512,18 +384,137 @@ const produceData = {
             '4554': { name: 'Eggplant', icon: '🍆', days: 7 },
             '4548': { name: 'Asparagus', icon: '🥒', days: 5 },
             '4066': { name: 'Corn', icon: '🌽', days: 5 },
-            '3082': { name: 'Pear (Bartlett)', icon: '�梨', days: 7 },
+            '3082': { name: 'Pear (Bartlett)', icon: '🍐', days: 7 },
             '4416': { name: 'Pear (Anjou)', icon: '🍐', days: 7 },
             '4421': { name: 'Pear (Bosc)', icon: '🍐', days: 7 }
         };
 
+        // COMPREHENSIVE PRODUCE DATA
         const produceData = {
-            'Banana': { icon: '🍌', days: 5, storage: 'Store at room temperature. Keep away from direct sunlight. Separate from other fruits to slow ripening.', ripeness: 'Yellow with small brown spots. Should be slightly soft when pressed gently.', season: 'Available year-round' },
-            'Apple': { icon: '🍎', days: 14, storage: 'Store in the refrigerator crisper drawer. Can last up to a month when refrigerated.', ripeness: 'Firm to the touch with bright, glossy skin. No soft spots or bruises.', season: 'Peak season: September to November' },
-            'Tomato': { icon: '🍅', days: 7, storage: 'Store at room temperature away from direct sunlight. Do not refrigerate as it affects flavor.', ripeness: 'Deep red color, slightly soft when gently pressed, sweet aroma at stem.', season: 'Peak season: June to September' },
-            'Avocado': { icon: '🥑', days: 4, storage: 'Ripen at room temperature, then refrigerate. Store in paper bag to speed ripening.', ripeness: 'Yields to gentle pressure, dark green to black skin, stem comes off easily.', season: 'Available year-round, peak: Spring-Summer' },
-            'Strawberry': { icon: '🍓', days: 3, storage: 'Refrigerate unwashed in original container. Wash just before eating.', ripeness: 'Bright red color throughout, fresh green caps, sweet aroma.', season: 'Peak season: April to June' },
-            'Lettuce': { icon: '🥬', days: 5, storage: 'Wrap in damp paper towel, store in refrigerator crisper drawer in plastic bag.', ripeness: 'Crisp leaves, vibrant green color, no wilting or brown edges.', season: 'Available year-round, best in Spring and Fall' }
+            'Banana': { storage: 'Store at room temperature. Keep away from direct sunlight. Separate from other fruits to slow ripening.', ripeness: 'Yellow with small brown spots. Should be slightly soft when pressed gently.', season: 'Available year-round' },
+            'Banana (Organic)': { storage: 'Store at room temperature. Keep away from direct sunlight.', ripeness: 'Yellow with small brown spots.', season: 'Available year-round' },
+            
+            'Apple (Fuji)': { storage: 'Refrigerate for best results.', ripeness: 'Firm with red-pink color.', season: 'October to July' },
+            'Apple (Granny Smith)': { storage: 'Refrigerate to maintain crispness.', ripeness: 'Bright green, very firm.', season: 'Year-round' },
+            'Apple (Gala)': { storage: 'Store in fridge crisper drawer.', ripeness: 'Red and yellow striped, firm.', season: 'August to March' },
+            'Apple (Golden Delicious)': { storage: 'Refrigerate for extended freshness.', ripeness: 'Golden yellow, slightly soft.', season: 'September to June' },
+            'Apple (Red Delicious)': { storage: 'Keep refrigerated.', ripeness: 'Deep red color, firm.', season: 'September to July' },
+            'Apple (McIntosh)': { storage: 'Best when refrigerated.', ripeness: 'Red with green, soft when ripe.', season: 'September to May' },
+            'Apple (Honeycrisp)': { storage: 'Refrigerate to maintain crunch.', ripeness: 'Red and yellow, very crisp.', season: 'September to January' },
+            'Apple (Organic Fuji)': { storage: 'Refrigerate for best results.', ripeness: 'Firm with red-pink color.', season: 'October to July' },
+            'Apple (Organic Granny Smith)': { storage: 'Refrigerate to maintain crispness.', ripeness: 'Bright green, very firm.', season: 'Year-round' },
+            
+            'Avocado': { storage: 'Ripen at room temperature, then refrigerate. Store in paper bag to speed ripening.', ripeness: 'Yields to gentle pressure, dark green to black skin, stem comes off easily.', season: 'Available year-round, peak: Spring-Summer' },
+            'Avocado (Hass)': { storage: 'Ripen at room temp, refrigerate when ripe.', ripeness: 'Dark skin, yields to gentle pressure.', season: 'Year-round' },
+            'Avocado (Organic Hass)': { storage: 'Ripen at room temp, refrigerate when ripe.', ripeness: 'Dark skin, yields to gentle pressure.', season: 'Year-round' },
+            
+            'Tomato (Roma)': { storage: 'Room temperature, never refrigerate.', ripeness: 'Deep red, firm but gives slightly.', season: 'June to September' },
+            'Tomato (Beefsteak)': { storage: 'Keep at room temperature.', ripeness: 'Large, deep red, heavy for size.', season: 'Summer months' },
+            'Tomato (Cherry)': { storage: 'Room temperature for best flavor.', ripeness: 'Bright red, firm.', season: 'Year-round' },
+            'Tomato (Grape)': { storage: 'Room temperature preferred.', ripeness: 'Deep red, glossy.', season: 'Year-round' },
+            'Tomato (Organic Roma)': { storage: 'Room temperature, never refrigerate.', ripeness: 'Deep red, firm but gives slightly.', season: 'June to September' },
+            
+            'Strawberry': { storage: 'Refrigerate unwashed in original container. Wash just before eating.', ripeness: 'Bright red color throughout, fresh green caps, sweet aroma.', season: 'Peak season: April to June' },
+            'Strawberry (Organic)': { storage: 'Refrigerate unwashed.', ripeness: 'Bright red, fresh green caps.', season: 'April to June' },
+            
+            'Lettuce (Green Leaf)': { storage: 'Wrap in damp towel, refrigerate.', ripeness: 'Crisp, bright green leaves.', season: 'Spring and Fall' },
+            'Lettuce (Iceberg)': { storage: 'Refrigerate in crisper drawer.', ripeness: 'Firm head, crisp leaves.', season: 'Year-round' },
+            'Lettuce (Romaine)': { storage: 'Refrigerate in plastic bag.', ripeness: 'Dark green, crisp ribs.', season: 'Year-round' },
+            'Lettuce (Red Leaf)': { storage: 'Wrap in damp towel, refrigerate.', ripeness: 'Red-tipped, crisp.', season: 'Spring and Fall' },
+            'Lettuce (Organic Green Leaf)': { storage: 'Wrap in damp towel, refrigerate.', ripeness: 'Crisp, bright green leaves.', season: 'Spring and Fall' },
+            
+            'Orange (Navel)': { storage: 'Room temperature for a week, refrigerate for longer.', ripeness: 'Heavy for size, firm, fragrant.', season: 'November to June' },
+            'Orange (Valencia)': { storage: 'Cool place or refrigerate.', ripeness: 'Bright orange, slightly soft.', season: 'March to October' },
+            'Orange (Cara Cara)': { storage: 'Room temp or refrigerate.', ripeness: 'Orange-red skin, heavy.', season: 'December to April' },
+            'Orange (Organic Navel)': { storage: 'Room temperature for a week, refrigerate for longer.', ripeness: 'Heavy for size, firm, fragrant.', season: 'November to June' },
+            
+            'Grapes (Green)': { storage: 'Refrigerate unwashed in original bag.', ripeness: 'Plump, firmly attached to stem.', season: 'May to January' },
+            'Grapes (Red)': { storage: 'Refrigerate unwashed.', ripeness: 'Deep color, plump.', season: 'May to January' },
+            'Grapes (Black)': { storage: 'Keep refrigerated.', ripeness: 'Dark purple, plump.', season: 'July to December' },
+            'Grapes (Organic Green)': { storage: 'Refrigerate unwashed in original bag.', ripeness: 'Plump, firmly attached to stem.', season: 'May to January' },
+            
+            'Blueberry': { storage: 'Refrigerate unwashed, rinse before eating.', ripeness: 'Deep blue color, firm.', season: 'May to September' },
+            'Raspberry': { storage: 'Refrigerate immediately, very delicate.', ripeness: 'Deep red, plump.', season: 'June to October' },
+            'Blackberry': { storage: 'Refrigerate, use quickly.', ripeness: 'Deep black, glossy.', season: 'May to September' },
+            'Blueberry (Organic)': { storage: 'Refrigerate unwashed, rinse before eating.', ripeness: 'Deep blue color, firm.', season: 'May to September' },
+            
+            'Pepper (Green Bell)': { storage: 'Refrigerate in crisper drawer.', ripeness: 'Firm, glossy skin, heavy.', season: 'Year-round' },
+            'Pepper (Red Bell)': { storage: 'Refrigerate for freshness.', ripeness: 'Deep red, firm, glossy.', season: 'Year-round' },
+            'Pepper (Yellow Bell)': { storage: 'Keep refrigerated.', ripeness: 'Bright yellow, firm.', season: 'Year-round' },
+            'Pepper (Orange Bell)': { storage: 'Refrigerate in crisper.', ripeness: 'Bright orange, firm.', season: 'Year-round' },
+            'Pepper (Jalapeño)': { storage: 'Refrigerate for freshness.', ripeness: 'Dark green, firm, glossy.', season: 'Year-round' },
+            
+            'Potato (Russet)': { storage: 'Cool, dark, dry place. Never refrigerate.', ripeness: 'Firm, no green spots or sprouts.', season: 'Year-round' },
+            'Potato (Red)': { storage: 'Cool, dark place.', ripeness: 'Firm, smooth skin.', season: 'Year-round' },
+            'Potato (Yukon Gold)': { storage: 'Cool, dark, dry place.', ripeness: 'Firm, golden skin.', season: 'Year-round' },
+            'Sweet Potato': { storage: 'Cool, dry place, not refrigerated.', ripeness: 'Firm, no soft spots.', season: 'September to December' },
+            'Potato (Organic Russet)': { storage: 'Cool, dark, dry place. Never refrigerate.', ripeness: 'Firm, no green spots or sprouts.', season: 'Year-round' },
+            
+            'Onion (Yellow)': { storage: 'Cool, dry, dark place with good air circulation.', ripeness: 'Firm, dry outer skin, no sprouting.', season: 'Year-round' },
+            'Onion (Red)': { storage: 'Cool, dry place.', ripeness: 'Firm, papery skin.', season: 'Year-round' },
+            'Onion (White)': { storage: 'Cool, dry, dark place.', ripeness: 'Firm, white outer layers.', season: 'Year-round' },
+            'Onion (Green/Scallion)': { storage: 'Refrigerate in plastic bag.', ripeness: 'Bright green tops, white bottoms.', season: 'Year-round' },
+            
+            'Carrot': { storage: 'Remove tops, refrigerate in plastic bag.', ripeness: 'Firm, bright orange, smooth.', season: 'Year-round' },
+            'Carrot (Baby)': { storage: 'Refrigerate in original bag.', ripeness: 'Firm, bright orange.', season: 'Year-round' },
+            'Carrot (Organic)': { storage: 'Remove tops, refrigerate in plastic bag.', ripeness: 'Firm, bright orange, smooth.', season: 'Year-round' },
+            
+            'Broccoli': { storage: 'Refrigerate in crisper drawer, unwashed.', ripeness: 'Tight florets, deep green color.', season: 'October to April' },
+            'Cauliflower': { storage: 'Refrigerate in plastic bag.', ripeness: 'Compact head, creamy white.', season: 'September to June' },
+            'Broccoli (Organic)': { storage: 'Refrigerate in crisper drawer, unwashed.', ripeness: 'Tight florets, deep green color.', season: 'October to April' },
+            
+            'Cucumber': { storage: 'Refrigerate wrapped in paper towel.', ripeness: 'Firm, dark green, no soft spots.', season: 'May to August' },
+            'Cucumber (English)': { storage: 'Refrigerate in plastic wrap.', ripeness: 'Long, firm, dark green.', season: 'Year-round' },
+            'Cucumber (Organic)': { storage: 'Refrigerate wrapped in paper towel.', ripeness: 'Firm, dark green, no soft spots.', season: 'May to August' },
+            
+            'Watermelon': { storage: 'Room temp until cut, then refrigerate.', ripeness: 'Dull skin, yellow spot on bottom, hollow sound.', season: 'May to September' },
+            'Cantaloupe': { storage: 'Room temp to ripen, refrigerate when ripe.', ripeness: 'Sweet aroma, slightly soft at stem end.', season: 'June to September' },
+            'Honeydew': { storage: 'Room temperature, refrigerate when ripe.', ripeness: 'Creamy yellow color, sweet aroma.', season: 'June to October' },
+            
+            'Lime': { storage: 'Room temperature for a week, refrigerate longer.', ripeness: 'Heavy for size, bright green.', season: 'Year-round' },
+            'Lemon': { storage: 'Room temp or refrigerate.', ripeness: 'Bright yellow, firm, heavy.', season: 'Year-round' },
+            'Grapefruit': { storage: 'Cool place or refrigerate.', ripeness: 'Heavy for size, firm.', season: 'October to June' },
+            'Tangerine': { storage: 'Room temp for few days, refrigerate longer.', ripeness: 'Loose skin, deep orange.', season: 'November to April' },
+            
+            'Peach': { storage: 'Room temp to ripen, refrigerate when ripe.', ripeness: 'Sweet aroma, gives slightly to pressure.', season: 'May to September' },
+            'Nectarine': { storage: 'Ripen at room temp, refrigerate when soft.', ripeness: 'Fragrant, gives to gentle pressure.', season: 'May to September' },
+            'Plum': { storage: 'Room temp to ripen, then refrigerate.', ripeness: 'Slightly soft, sweet aroma.', season: 'May to October' },
+            'Cherry': { storage: 'Refrigerate unwashed immediately.', ripeness: 'Glossy, firm, plump.', season: 'May to August' },
+            'Apricot': { storage: 'Room temp to ripen, refrigerate when soft.', ripeness: 'Orange color, gives to pressure.', season: 'May to August' },
+            
+            'Pineapple': { storage: 'Room temp for 1-2 days, refrigerate cut pieces.', ripeness: 'Sweet aroma at base, leaves pull easily.', season: 'March to July' },
+            'Mango': { storage: 'Room temp to ripen, refrigerate when soft.', ripeness: 'Yields to pressure, sweet aroma.', season: 'March to September' },
+            'Papaya': { storage: 'Room temp until mostly yellow, then refrigerate.', ripeness: 'Yellow skin, slightly soft.', season: 'Year-round' },
+            'Kiwi': { storage: 'Room temp to ripen, refrigerate when soft.', ripeness: 'Gives to gentle pressure.', season: 'Year-round' },
+            'Coconut': { storage: 'Room temperature, refrigerate if cracked.', ripeness: 'Heavy, sloshing sound when shaken.', season: 'Year-round' },
+            
+            'Zucchini': { storage: 'Refrigerate in plastic bag.', ripeness: 'Firm, smooth skin, small to medium size.', season: 'June to September' },
+            'Squash (Butternut)': { storage: 'Cool, dry place, do not refrigerate.', ripeness: 'Tan color, hard skin, heavy.', season: 'September to February' },
+            'Squash (Acorn)': { storage: 'Cool, dry place.', ripeness: 'Dark green with orange spot, hard.', season: 'October to December' },
+            'Squash (Spaghetti)': { storage: 'Cool, dry, dark place.', ripeness: 'Yellow color, hard skin.', season: 'September to March' },
+            
+            'Spinach': { storage: 'Refrigerate in original bag, use quickly.', ripeness: 'Dark green, crisp leaves.', season: 'Year-round, peak Spring/Fall' },
+            'Kale': { storage: 'Refrigerate in plastic bag.', ripeness: 'Dark green, crisp, no yellowing.', season: 'Year-round, best in Winter' },
+            'Arugula': { storage: 'Refrigerate, very delicate.', ripeness: 'Bright green, tender leaves.', season: 'Spring and Fall' },
+            'Swiss Chard': { storage: 'Refrigerate in plastic bag.', ripeness: 'Crisp stalks, vibrant leaves.', season: 'June to October' },
+            
+            'Mushroom (White)': { storage: 'Refrigerate in paper bag, not plastic.', ripeness: 'Firm, dry, closed caps.', season: 'Year-round' },
+            'Mushroom (Portobello)': { storage: 'Paper bag in refrigerator.', ripeness: 'Firm, dry, large caps.', season: 'Year-round' },
+            'Mushroom (Shiitake)': { storage: 'Refrigerate in paper bag.', ripeness: 'Firm, dry, umbrella-shaped.', season: 'Year-round' },
+            
+            'Basil': { storage: 'Trim stems, place in water like flowers, room temp.', ripeness: 'Bright green, no brown spots.', season: 'June to September' },
+            'Cilantro': { storage: 'Refrigerate stems in water, cover loosely.', ripeness: 'Bright green, fragrant.', season: 'Year-round' },
+            'Parsley': { storage: 'Refrigerate in plastic bag or in water.', ripeness: 'Bright green, crisp.', season: 'Year-round' },
+            'Mint': { storage: 'Refrigerate stems in water.', ripeness: 'Bright green, aromatic.', season: 'Year-round' },
+            
+            'Celery': { storage: 'Wrap in foil, refrigerate in crisper.', ripeness: 'Firm, crisp stalks, tight bunch.', season: 'Year-round' },
+            'Eggplant': { storage: 'Room temperature, use within a week.', ripeness: 'Firm, glossy skin, heavy.', season: 'July to October' },
+            'Asparagus': { storage: 'Refrigerate upright in water.', ripeness: 'Firm stalks, tight tips, bright green.', season: 'February to June' },
+            'Corn': { storage: 'Refrigerate in husk, use quickly.', ripeness: 'Bright green husk, plump kernels.', season: 'May to September' },
+            
+            'Pear (Bartlett)': { storage: 'Room temp to ripen, refrigerate when ripe.', ripeness: 'Gives slightly at neck, fragrant.', season: 'August to February' },
+            'Pear (Anjou)': { storage: 'Room temp to ripen, refrigerate when soft.', ripeness: 'Gives to gentle pressure at neck.', season: 'October to May' },
+            'Pear (Bosc)': { storage: 'Ripen at room temp, refrigerate when ripe.', ripeness: 'Color deepens, slightly soft at neck.', season: 'September to April' }
         };
 
         function showPage(pageId) {
@@ -549,7 +540,6 @@ const produceData = {
         }
 
         function startScanner() {
-            // Check if running on HTTPS or localhost
             const isSecure = window.location.protocol === 'https:' || 
                            window.location.hostname === 'localhost' || 
                            window.location.hostname === '127.0.0.1';
@@ -567,7 +557,6 @@ const produceData = {
             container.classList.add('active');
             scannerActive = true;
 
-            // Check if QuaggaJS loaded
             if (typeof Quagga === 'undefined') {
                 alert('Scanner library not loaded. Check your internet connection.');
                 stopScanner();
@@ -584,18 +573,18 @@ const produceData = {
                     constraints: {
                         width: { min: 640, ideal: 1280, max: 1920 },
                         height: { min: 480, ideal: 720, max: 1080 },
-                        facingMode: "environment", // Use back camera on mobile
+                        facingMode: "environment",
                         aspectRatio: { min: 1, max: 2 }
                     },
                 },
                 decoder: {
                     readers: [
-                        "ean_reader",      // Standard barcodes
-                        "ean_8_reader",    // 8-digit barcodes
-                        "code_128_reader", // Common in retail
-                        "code_39_reader",  // Alphanumeric codes
-                        "upc_reader",      // UPC-A codes
-                        "upc_e_reader"     // UPC-E codes
+                        "ean_reader",
+                        "ean_8_reader",
+                        "code_128_reader",
+                        "code_39_reader",
+                        "upc_reader",
+                        "upc_e_reader"
                     ],
                     debug: {
                         drawBoundingBox: true,
@@ -632,7 +621,6 @@ const produceData = {
                 console.log('✅ Camera initialized successfully!');
                 Quagga.start();
                 
-                // Update UI to show scanning is active
                 const text = document.querySelector('.scanner-text');
                 text.textContent = '📸 Scanning... Position barcode in frame';
             });
@@ -642,7 +630,6 @@ const produceData = {
                 const format = result.codeResult.format;
                 console.log(`✅ Detected ${format}: ${code}`);
                 
-                // Vibrate on detection (if supported)
                 if (navigator.vibrate) {
                     navigator.vibrate(100);
                 }
@@ -650,7 +637,6 @@ const produceData = {
                 lookupPLU(code);
             });
 
-            // Debug: Show when scanner is processing
             Quagga.onProcessed(function(result) {
                 if (result && result.codeResult) {
                     console.log('Processing barcode...');
@@ -668,7 +654,6 @@ const produceData = {
             }
             document.getElementById('scanner-container').classList.remove('active');
             
-            // Reset scanner text
             const text = document.querySelector('.scanner-text');
             text.textContent = 'Position barcode or PLU code within frame';
             text.style.color = 'white';
@@ -706,7 +691,7 @@ const produceData = {
         function selectProduce(name, icon, days) {
             currentProduce = { name, icon, days, addedDate: new Date() };
             
-            const data = produceData[name];
+            const data = produceData[name] || { storage: 'Store properly', ripeness: 'Check for freshness', season: 'Varies' };
             document.getElementById('infoIcon').textContent = icon;
             document.getElementById('infoTitle').textContent = name;
             document.getElementById('infoShelfLife').textContent = `${days} days`;
@@ -803,7 +788,6 @@ const produceData = {
         document.getElementById('searchInput')?.addEventListener('input', (e) => {
             const search = e.target.value.toLowerCase();
             
-            // Check if it's a PLU code (4-5 digits)
             if (/^\d{4,5}$/.test(search)) {
                 if (pluDatabase[search]) {
                     const produce = pluDatabase[search];
@@ -811,14 +795,12 @@ const produceData = {
                 }
             }
             
-            // Filter visible produce
             document.querySelectorAll('.produce-card').forEach(item => {
                 const text = item.textContent.toLowerCase();
                 item.style.display = text.includes(search) ? 'block' : 'none';
             });
         });
 
-        // Allow Enter key for manual PLU
         document.getElementById('manualPLU')?.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') {
                 lookupManualPLU();
