@@ -738,10 +738,21 @@
                                 <div class="inventory-date">Added ${item.addedDate.toLocaleDateString()}</div>
                             </div>
                         </div>
-                        <div class="days-badge ${urgencyClass}">${daysLeft}d</div>
+                        <div style="display: flex; align-items: center; gap: 10px;">
+                            <div class="days-badge ${urgencyClass}">${daysLeft}d</div>
+                            <button class="delete-inventory-btn" onclick="deleteInventoryItem(${item.id})" title="Remove from inventory">✕</button>
+                        </div>
                     </div>
                 `;
             }).join('');
+        }
+
+        function deleteInventoryItem(id) {
+            const item = inventory.find(i => i.id === id);
+            if (item && confirm(`Remove ${item.icon} ${item.name} from inventory?`)) {
+                inventory = inventory.filter(i => i.id !== id);
+                updateInventoryDisplay();
+            }
         }
 
         function addNote() {
