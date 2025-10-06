@@ -60,6 +60,7 @@ body {
     margin-bottom: 50px;
     color: #FFF7ED;
     font-weight: 500;
+    opacity: 0.9;
 }
 
 .hero-icon {
@@ -73,22 +74,93 @@ body {
     50% { transform: translateY(-10px); }
 }
 
-.btn {
+/* Scan Actions */
+.scan-actions {
+    max-width: 350px;
+    margin: 0 auto;
+    width: 100%;
+}
+
+.btn-primary {
+    width: 100%;
     background: #FFF7ED;
     color: #07391F;
     border: none;
-    padding: 18px 50px;
-    font-size: 1.1em;
-    border-radius: 30px;
+    padding: 20px 40px;
+    font-size: 1.2em;
+    border-radius: 15px;
     cursor: pointer;
     font-weight: 700;
     letter-spacing: 0.5px;
     transition: transform 0.2s, box-shadow 0.2s;
+    margin-bottom: 20px;
 }
 
-.btn:hover {
-    transform: scale(1.05);
-    box-shadow: 0 10px 25px rgba(255, 247, 237, 0.3);
+.btn-primary:hover {
+    transform: scale(1.02);
+    box-shadow: 0 10px 25px rgba(255, 247, 237, 0.2);
+}
+
+.divider {
+    display: flex;
+    align-items: center;
+    margin: 25px 0;
+    color: rgba(255, 247, 237, 0.5);
+    font-weight: 600;
+}
+
+.divider::before,
+.divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: rgba(255, 247, 237, 0.2);
+}
+
+.divider span {
+    padding: 0 15px;
+}
+
+.plu-input {
+    width: 100%;
+    padding: 18px 20px;
+    border: 2px solid rgba(255, 247, 237, 0.3);
+    border-radius: 15px;
+    font-size: 1.1em;
+    background: rgba(255, 247, 237, 0.1);
+    margin-bottom: 12px;
+    font-weight: 500;
+    color: #FFF7ED;
+    text-align: center;
+}
+
+.plu-input::placeholder {
+    color: rgba(255, 247, 237, 0.5);
+}
+
+.plu-input:focus {
+    outline: none;
+    border-color: #FFF7ED;
+    background: rgba(255, 247, 237, 0.15);
+}
+
+.btn-secondary {
+    width: 100%;
+    background: transparent;
+    color: #FFF7ED;
+    border: 2px solid rgba(255, 247, 237, 0.4);
+    padding: 15px 40px;
+    font-size: 1em;
+    border-radius: 15px;
+    cursor: pointer;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    transition: all 0.2s;
+}
+
+.btn-secondary:hover {
+    background: rgba(255, 247, 237, 0.1);
+    border-color: #FFF7ED;
 }
 
 /* Navigation */
@@ -153,180 +225,76 @@ body {
     padding: 0 25px 100px;
 }
 
-/* Scan/Search Page */
-.search-section {
-    background: rgba(255, 247, 237, 0.1);
-    border-radius: 20px;
-    padding: 20px;
-    margin-bottom: 30px;
-}
-
-.search-box {
-    width: 100%;
-    padding: 15px 20px;
-    border: 2px solid rgba(255, 247, 237, 0.2);
-    border-radius: 15px;
-    font-size: 1em;
-    background: rgba(255, 247, 237, 0.05);
-    margin-bottom: 15px;
-    font-weight: 500;
-    color: #FFF7ED;
-}
-
-.search-box::placeholder {
-    color: rgba(255, 247, 237, 0.5);
-}
-
-.scan-btn {
-    width: 100%;
-    padding: 18px;
-    background: #FFF7ED;
-    color: #07391F;
-    border: none;
-    border-radius: 15px;
-    font-size: 1em;
-    cursor: pointer;
-    font-weight: 700;
-    letter-spacing: 0.5px;
-}
-
-.section-title {
-    font-size: 1.3em;
-    font-weight: 700;
-    margin-bottom: 20px;
-    color: #FFF7ED;
-}
-
-.produce-grid {
+/* Collection Grid */
+.collection-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 15px;
-    margin-bottom: 30px;
+    padding-bottom: 20px;
 }
 
-.produce-card {
+.collection-item {
     background: rgba(255, 247, 237, 0.1);
     border: 2px solid rgba(255, 247, 237, 0.2);
     border-radius: 20px;
-    padding: 25px 20px;
+    padding: 25px 15px;
     text-align: center;
     cursor: pointer;
     transition: all 0.2s;
+    position: relative;
 }
 
-.produce-card:hover {
+.collection-item:hover {
     transform: translateY(-5px);
     border-color: #FFF7ED;
-    box-shadow: 0 10px 25px rgba(255, 247, 237, 0.1);
     background: rgba(255, 247, 237, 0.15);
 }
 
-.produce-icon {
+.collection-icon {
     font-size: 60px;
     margin-bottom: 12px;
 }
 
-.produce-name {
+.collection-name {
     font-weight: 700;
-    font-size: 1em;
+    font-size: 0.95em;
     color: #FFF7ED;
+    margin-bottom: 8px;
 }
 
-/* Calendar View */
-.inventory-list {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
-
-.inventory-card {
-    background: rgba(255, 247, 237, 0.1);
-    padding: 20px;
-    border-radius: 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-left: 5px solid #34c759;
-}
-
-.inventory-card.urgent {
-    border-left-color: #ff3b30;
-    background: rgba(255, 59, 48, 0.1);
-}
-
-.inventory-card.warning {
-    border-left-color: #ff9500;
-    background: rgba(255, 149, 0, 0.1);
-}
-
-.inventory-info {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-}
-
-.inventory-icon {
-    font-size: 40px;
-}
-
-.inventory-details h3 {
-    font-size: 1.1em;
-    font-weight: 700;
-    margin-bottom: 5px;
-    color: #FFF7ED;
-}
-
-.inventory-date {
-    color: rgba(255, 247, 237, 0.6);
-    font-size: 0.85em;
+.collection-date {
+    font-size: 0.75em;
+    color: rgba(255, 247, 237, 0.5);
     font-weight: 500;
 }
 
-.days-badge {
-    background: #34c759;
-    color: #07391F;
-    padding: 10px 18px;
-    border-radius: 20px;
-    font-weight: 700;
-    font-size: 0.9em;
-    white-space: nowrap;
-}
-
-.days-badge.urgent {
-    background: #ff3b30;
-    color: #FFF7ED;
-}
-
-.days-badge.warning {
-    background: #ff9500;
-    color: #07391F;
-}
-
-/* Delete Inventory Button */
-.delete-inventory-btn {
-    background: #ff3b30;
+.remove-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: rgba(255, 59, 48, 0.9);
     color: #FFF7ED;
     border: none;
-    width: 32px;
-    height: 32px;
+    width: 28px;
+    height: 28px;
     border-radius: 50%;
     cursor: pointer;
-    font-size: 1.2em;
+    font-size: 1em;
     font-weight: 700;
     display: flex;
     align-items: center;
     justify-content: center;
+    opacity: 0;
     transition: all 0.2s;
-    line-height: 1;
 }
 
-.delete-inventory-btn:hover {
-    background: #d32f2f;
+.collection-item:hover .remove-btn {
+    opacity: 1;
+}
+
+.remove-btn:hover {
+    background: #ff3b30;
     transform: scale(1.1);
-}
-
-.delete-inventory-btn:active {
-    transform: scale(0.95);
 }
 
 /* Produce Info */
@@ -415,7 +383,7 @@ body {
     font-weight: 600;
 }
 
-.add-inventory-btn {
+.add-collection-btn {
     width: 100%;
     padding: 18px;
     background: #FFF7ED;
@@ -427,84 +395,6 @@ body {
     font-weight: 700;
     letter-spacing: 0.5px;
     margin-top: 10px;
-}
-
-/* Notes */
-.note-composer {
-    background: rgba(255, 247, 237, 0.1);
-    border-radius: 20px;
-    padding: 20px;
-    margin-bottom: 30px;
-}
-
-.note-input {
-    width: 100%;
-    padding: 15px;
-    border: 2px solid rgba(255, 247, 237, 0.2);
-    border-radius: 15px;
-    font-size: 1em;
-    min-height: 120px;
-    font-family: inherit;
-    background: rgba(255, 247, 237, 0.05);
-    margin-bottom: 15px;
-    font-weight: 500;
-    resize: none;
-    color: #FFF7ED;
-}
-
-.note-input::placeholder {
-    color: rgba(255, 247, 237, 0.5);
-}
-
-.add-note-btn {
-    width: 100%;
-    padding: 15px;
-    background: #FFF7ED;
-    color: #07391F;
-    border: none;
-    border-radius: 15px;
-    font-size: 1em;
-    cursor: pointer;
-    font-weight: 700;
-    letter-spacing: 0.5px;
-}
-
-.note-card {
-    background: rgba(255, 237, 170, 0.15);
-    border-radius: 20px;
-    padding: 20px;
-    margin-bottom: 15px;
-    border-left: 5px solid #ffcc00;
-}
-
-.note-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 12px;
-}
-
-.note-date {
-    color: rgba(255, 247, 237, 0.6);
-    font-size: 0.85em;
-    font-weight: 600;
-}
-
-.delete-btn {
-    background: #ff3b30;
-    color: #FFF7ED;
-    border: none;
-    padding: 8px 15px;
-    border-radius: 10px;
-    cursor: pointer;
-    font-size: 0.85em;
-    font-weight: 700;
-}
-
-.note-text {
-    color: #FFF7ED;
-    line-height: 1.5;
-    font-weight: 500;
 }
 
 /* Settings */
@@ -575,14 +465,20 @@ body {
     background: #34c759;
 }
 
-select {
-    padding: 10px 15px;
-    border-radius: 10px;
-    border: 1px solid rgba(255, 247, 237, 0.3);
-    background: rgba(255, 247, 237, 0.1);
-    font-size: 0.95em;
-    font-weight: 600;
+.clear-btn {
+    background: rgba(255, 59, 48, 0.9);
     color: #FFF7ED;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 700;
+    transition: all 0.2s;
+}
+
+.clear-btn:hover {
+    background: #ff3b30;
+    transform: scale(1.05);
 }
 
 .empty-state {
@@ -590,6 +486,7 @@ select {
     padding: 60px 20px;
     color: rgba(255, 247, 237, 0.6);
     font-weight: 500;
+    grid-column: 1 / -1;
 }
 
 .empty-icon {
@@ -636,7 +533,7 @@ select {
 .scanner-frame {
     width: 280px;
     height: 180px;
-    border: 3px solid #ffed4e;
+    border: 3px solid #FFF7ED;
     border-radius: 20px;
     position: relative;
     box-shadow: 0 0 0 9999px rgba(0, 0, 0, 0.5);
@@ -646,7 +543,7 @@ select {
     position: absolute;
     width: 100%;
     height: 2px;
-    background: #ffed4e;
+    background: #FFF7ED;
     top: 50%;
     animation: scan 2s ease-in-out infinite;
 }
