@@ -9,353 +9,268 @@
 </head>
 <body>
     <div class="container">
-        <!-- Landing/Scan Page -->
-        <div id="landing" class="page active">
-            <div class="landing">
-                <div class="hero-icon">🥗</div>
-                <h1>Produce Scanner</h1>
-                <p>Scan to discover nutrition & seasonal info</p>
+        <!-- Scan Page (Landing) -->
+        <div id="scan" class="page active">
+            <div class="scan-header">
+                <h1>Scan Produce</h1>
+                <p>Scan barcode or enter PLU code</p>
+            </div>
+            
+            <div class="scan-content">
+                <button class="scan-camera-btn" onclick="startScanner()">
+                    <span class="camera-icon">📷</span>
+                    <span>Open Camera Scanner</span>
+                </button>
                 
-                <div class="scan-actions">
-                    <button class="btn-primary" onclick="startScanner()">📷 Scan Barcode</button>
-                    <div class="divider"><span>or</span></div>
-                    <input type="text" class="plu-input" placeholder="Enter PLU code..." id="mainPLUInput">
-                    <button class="btn-secondary" onclick="searchMainPLU()">Search</button>
+                <div class="divider"><span>or</span></div>
+                
+                <div class="manual-entry">
+                    <input type="text" class="plu-input" placeholder="Enter PLU code" id="pluInput">
+                    <button class="submit-btn" onclick="submitPLU()">Submit</button>
                 </div>
             </div>
         </div>
 
-        <!-- Navigation -->
-        <div id="nav" class="nav" style="display: none;">
-            <button class="nav-btn active" onclick="showPage('landing')">
-                <span style="font-size: 1.8em;">🔍</span>
-                Scan
-            </button>
-            <button class="nav-btn" onclick="showPage('inventory')">
-                <span style="font-size: 1.8em;">📦</span>
-                Collection
-            </button>
-            <button class="nav-btn" onclick="showPage('settings')">
-                <span style="font-size: 1.8em;">⚙️</span>
-                Settings
-            </button>
-        </div>
-
-        <!-- Collection Page -->
+        <!-- Inventory Page -->
         <div id="inventory" class="page">
-            <div class="header">
-                <h1>My Collection</h1>
-                <p>Your scanned produce items</p>
+            <div class="inventory-header">
+                <h1>My Inventory</h1>
+                <p>Your scanned produce</p>
             </div>
-            <div class="content">
-                <div class="collection-grid" id="collectionGrid">
-                    <div class="empty-state">
-                        <div class="empty-icon">📦</div>
-                        <p>No items yet<br>Start by scanning produce!</p>
+            
+            <div class="inventory-content">
+                <div class="inventory-grid" id="inventoryGrid">
+                    <div class="empty-message">
+                        <img src="images/empty.png" alt="Empty" class="empty-img">
+                        <p>No produce scanned yet</p>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Settings Page -->
-        <div id="settings" class="page">
-            <div class="header">
-                <h1>Settings</h1>
-                <p>Customize your experience</p>
-            </div>
-            <div class="content">
-                <div class="settings-list">
-                    <div class="setting-row">
-                        <div class="setting-info">
-                            <h3>Sound Effects</h3>
-                            <p>Play sound when scanning</p>
-                        </div>
-                        <div class="toggle active" onclick="toggleSetting(this)">
-                            <div class="toggle-slider"></div>
-                        </div>
-                    </div>
-                    <div class="setting-row">
-                        <div class="setting-info">
-                            <h3>Vibration</h3>
-                            <p>Haptic feedback on scan</p>
-                        </div>
-                        <div class="toggle active" onclick="toggleSetting(this)">
-                            <div class="toggle-slider"></div>
-                        </div>
-                    </div>
-                    <div class="setting-row">
-                        <div class="setting-info">
-                            <h3>Auto-Add to Collection</h3>
-                            <p>Automatically save scanned items</p>
-                        </div>
-                        <div class="toggle" onclick="toggleSetting(this)">
-                            <div class="toggle-slider"></div>
-                        </div>
-                    </div>
-                    <div class="setting-row">
-                        <div class="setting-info">
-                            <h3>Clear Collection</h3>
-                            <p>Remove all saved items</p>
-                        </div>
-                        <button class="clear-btn" onclick="clearCollection()">Clear All</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Produce Info Page -->
-        <div id="produceInfo" class="page">
-            <button class="back-btn" onclick="showPage('landing')">←</button>
-            <div class="info-hero">
-                <div class="info-hero-icon" id="infoIcon">🍌</div>
-                <h2 id="infoTitle">Banana</h2>
-            </div>
-
-            <div class="content">
-                <div class="info-card">
-                    <h3>🌍 Seasonal Availability</h3>
-                    <p id="infoSeason">Available year-round</p>
-                </div>
-
-                <div class="info-card">
-                    <h3>📦 Storage Tips</h3>
-                    <p id="infoStorage">Store at room temperature.</p>
-                </div>
-
-                <div class="info-card">
-                    <h3>✨ How to Tell When Ripe</h3>
-                    <p id="infoRipeness">Yellow with small brown spots.</p>
-                </div>
-
-                <div class="info-card">
-                    <h3>🥗 Nutritional Information</h3>
-                    <div class="nutrition-grid" id="nutritionGrid"></div>
-                </div>
-
-                <button class="add-collection-btn" onclick="addToCollection()">💾 Add to Collection</button>
-            </div>
-        </div>
+        <!-- Bottom Navigation -->
+        <nav class="bottom-nav">
+            <button class="nav-item active" onclick="switchPage('scan')">
+                <span class="nav-icon">🔍</span>
+                <span class="nav-label">Scan</span>
+            </button>
+            <button class="nav-item" onclick="switchPage('inventory')">
+                <span class="nav-icon">📦</span>
+                <span class="nav-label">Inventory</span>
+            </button>
+        </nav>
 
         <!-- Scanner Modal -->
-        <div id="scanner-container">
-            <button class="close-scanner" onclick="stopScanner()">✕</button>
-            <div id="scanner-video"></div>
+        <div id="scanner-modal" class="scanner-modal">
+            <button class="close-scanner-btn" onclick="closeScanner()">✕</button>
+            <div id="scanner-viewport"></div>
             <div class="scanner-overlay">
-                <div class="scanner-frame">
-                    <div class="scanner-line"></div>
+                <div class="scanner-box"></div>
+                <p class="scanner-hint">Position barcode within frame</p>
+                <div class="scanner-manual">
+                    <input type="text" id="scannerPLU" placeholder="Or enter PLU">
+                    <button onclick="submitScannerPLU()">Go</button>
                 </div>
-                <div class="scanner-text">Position barcode or PLU sticker within frame</div>
-                <div class="manual-input">
-                    <input type="text" id="manualPLU" placeholder="Enter PLU">
-                    <button onclick="lookupManualPLU()">Search</button>
+            </div>
+        </div>
+
+        <!-- Info Modal (Pop-up) -->
+        <div id="info-modal" class="info-modal">
+            <div class="info-modal-content">
+                <button class="close-info-btn" onclick="closeInfoModal()">✕</button>
+                
+                <div class="info-image-section">
+                    <img src="" alt="" id="modalImage" class="modal-produce-img">
+                    <h2 id="modalTitle">Produce Name</h2>
                 </div>
+
+                <div class="info-tabs">
+                    <button class="tab-btn active" onclick="switchTab('nutrition')">Nutrition</button>
+                    <button class="tab-btn" onclick="switchTab('origin')">Origin</button>
+                    <button class="tab-btn" onclick="switchTab('season')">Season</button>
+                </div>
+
+                <div class="tab-content">
+                    <div id="nutrition-tab" class="tab-panel active">
+                        <h3>Nutritional Information</h3>
+                        <div class="nutrition-list" id="nutritionList"></div>
+                    </div>
+                    
+                    <div id="origin-tab" class="tab-panel">
+                        <h3>Origin & Growing Info</h3>
+                        <p id="originInfo"></p>
+                    </div>
+                    
+                    <div id="season-tab" class="tab-panel">
+                        <h3>Seasonality</h3>
+                        <p id="seasonInfo"></p>
+                    </div>
+                </div>
+
+                <button class="done-btn" onclick="closeInfoModal()">Done</button>
             </div>
         </div>
     </div>
 
     <script>
-        let collection = [];
-        let currentProduce = null;
+        let inventory = [];
         let scannerActive = false;
-        let autoAdd = false;
+        let currentProduce = null;
 
-        // Load collection on page load
-        window.addEventListener('load', () => {
-            updateCollectionDisplay();
-        });
-
-        // PLU CODE DATABASE - 150+ Produce Items
+        // PLU Database - Your 28 specific items
         const pluDatabase = {
-            '4011': { name: 'Banana', icon: '🍌' },
-            '4186': { name: 'Banana', icon: '🍌' },
-            '4237': { name: 'Banana', icon: '🍌' },
-            '94011': { name: 'Banana (Organic)', icon: '🍌' },
-            '3283': { name: 'Apple (Fuji)', icon: '🍎' },
-            '4131': { name: 'Apple (Fuji)', icon: '🍎' },
-            '4139': { name: 'Apple (Granny Smith)', icon: '🍏' },
-            '4015': { name: 'Apple (Gala)', icon: '🍎' },
-            '4016': { name: 'Apple (Golden Delicious)', icon: '🍎' },
-            '4017': { name: 'Apple (Granny Smith)', icon: '🍏' },
-            '4101': { name: 'Apple (Red Delicious)', icon: '🍎' },
-            '4152': { name: 'Apple (McIntosh)', icon: '🍎' },
-            '3284': { name: 'Apple (Honeycrisp)', icon: '🍎' },
-            '94131': { name: 'Apple (Organic Fuji)', icon: '🍎' },
-            '94139': { name: 'Apple (Organic Granny Smith)', icon: '🍏' },
-            '4046': { name: 'Avocado (Hass)', icon: '🥑' },
-            '4225': { name: 'Avocado', icon: '🥑' },
-            '94046': { name: 'Avocado (Organic Hass)', icon: '🥑' },
-            '4664': { name: 'Tomato (Roma)', icon: '🍅' },
-            '4799': { name: 'Tomato (Beefsteak)', icon: '🍅' },
-            '3151': { name: 'Tomato (Cherry)', icon: '🍅' },
-            '4087': { name: 'Tomato (Grape)', icon: '🍅' },
-            '94664': { name: 'Tomato (Organic Roma)', icon: '🍅' },
-            '4770': { name: 'Strawberry', icon: '🍓' },
-            '94770': { name: 'Strawberry (Organic)', icon: '🍓' },
-            '4061': { name: 'Lettuce (Green Leaf)', icon: '🥬' },
-            '4076': { name: 'Lettuce (Iceberg)', icon: '🥬' },
-            '4075': { name: 'Lettuce (Romaine)', icon: '🥬' },
-            '4820': { name: 'Lettuce (Red Leaf)', icon: '🥬' },
-            '94061': { name: 'Lettuce (Organic Green Leaf)', icon: '🥬' },
-            '4012': { name: 'Orange (Navel)', icon: '🍊' },
-            '3107': { name: 'Orange (Valencia)', icon: '🍊' },
-            '4450': { name: 'Orange (Cara Cara)', icon: '🍊' },
-            '94012': { name: 'Orange (Organic Navel)', icon: '🍊' },
-            '4023': { name: 'Grapes (Green)', icon: '🍇' },
-            '4499': { name: 'Grapes (Red)', icon: '🍇' },
-            '4500': { name: 'Grapes (Black)', icon: '🍇' },
-            '94023': { name: 'Grapes (Organic Green)', icon: '🍇' },
-            '4396': { name: 'Blueberry', icon: '🫐' },
-            '4409': { name: 'Raspberry', icon: '🫐' },
-            '4410': { name: 'Blackberry', icon: '🫐' },
-            '94396': { name: 'Blueberry (Organic)', icon: '🫐' },
-            '4065': { name: 'Pepper (Green Bell)', icon: '🫑' },
-            '4088': { name: 'Pepper (Red Bell)', icon: '🫑' },
-            '4689': { name: 'Pepper (Yellow Bell)', icon: '🫑' },
-            '4090': { name: 'Pepper (Orange Bell)', icon: '🫑' },
-            '4693': { name: 'Pepper (Jalapeño)', icon: '🌶️' },
-            '4072': { name: 'Potato (Russet)', icon: '🥔' },
-            '4073': { name: 'Potato (Red)', icon: '🥔' },
-            '4083': { name: 'Potato (Yukon Gold)', icon: '🥔' },
-            '4091': { name: 'Sweet Potato', icon: '🍠' },
-            '94072': { name: 'Potato (Organic Russet)', icon: '🥔' },
-            '4663': { name: 'Onion (Yellow)', icon: '🧅' },
-            '4082': { name: 'Onion (Red)', icon: '🧅' },
-            '4166': { name: 'Onion (White)', icon: '🧅' },
-            '4068': { name: 'Onion (Green/Scallion)', icon: '🧅' },
-            '4562': { name: 'Carrot', icon: '🥕' },
-            '4094': { name: 'Carrot (Baby)', icon: '🥕' },
-            '94562': { name: 'Carrot (Organic)', icon: '🥕' },
-            '4060': { name: 'Broccoli', icon: '🥦' },
-            '4079': { name: 'Cauliflower', icon: '🥦' },
-            '94060': { name: 'Broccoli (Organic)', icon: '🥦' },
-            '4062': { name: 'Cucumber', icon: '🥒' },
-            '3338': { name: 'Cucumber (English)', icon: '🥒' },
-            '94062': { name: 'Cucumber (Organic)', icon: '🥒' },
-            '4032': { name: 'Watermelon', icon: '🍉' },
-            '4050': { name: 'Cantaloupe', icon: '🍈' },
-            '4318': { name: 'Honeydew', icon: '🍈' },
-            '4048': { name: 'Lime', icon: '🍋' },
-            '4053': { name: 'Lemon', icon: '🍋' },
-            '4451': { name: 'Grapefruit', icon: '🍊' },
-            '3115': { name: 'Tangerine', icon: '🍊' },
-            '4044': { name: 'Peach', icon: '🍑' },
-            '4042': { name: 'Nectarine', icon: '🍑' },
-            '4040': { name: 'Plum', icon: '🍑' },
-            '4039': { name: 'Cherry', icon: '🍒' },
-            '4408': { name: 'Apricot', icon: '🍑' },
-            '4030': { name: 'Pineapple', icon: '🍍' },
-            '4051': { name: 'Mango', icon: '🥭' },
-            '3114': { name: 'Papaya', icon: '🥭' },
-            '4233': { name: 'Kiwi', icon: '🥝' },
-            '4414': { name: 'Coconut', icon: '🥥' },
-            '4067': { name: 'Zucchini', icon: '🥒' },
-            '4750': { name: 'Squash (Butternut)', icon: '🎃' },
-            '4759': { name: 'Squash (Acorn)', icon: '🎃' },
-            '4784': { name: 'Squash (Spaghetti)', icon: '🎃' },
-            '4592': { name: 'Spinach', icon: '🥬' },
-            '4591': { name: 'Kale', icon: '🥬' },
-            '4613': { name: 'Arugula', icon: '🥬' },
-            '3120': { name: 'Swiss Chard', icon: '🥬' },
-            '4080': { name: 'Mushroom (White)', icon: '🍄' },
-            '4084': { name: 'Mushroom (Portobello)', icon: '🍄' },
-            '4081': { name: 'Mushroom (Shiitake)', icon: '🍄' },
-            '4885': { name: 'Basil', icon: '🌿' },
-            '4901': { name: 'Cilantro', icon: '🌿' },
-            '4899': { name: 'Parsley', icon: '🌿' },
-            '4889': { name: 'Mint', icon: '🌿' },
-            '4545': { name: 'Celery', icon: '🥬' },
-            '4554': { name: 'Eggplant', icon: '🍆' },
-            '4548': { name: 'Asparagus', icon: '🥒' },
-            '4066': { name: 'Corn', icon: '🌽' },
-            '3082': { name: 'Pear (Bartlett)', icon: '🍐' },
-            '4416': { name: 'Pear (Anjou)', icon: '🍐' },
-            '4421': { name: 'Pear (Bosc)', icon: '🍐' }
+            '93283': { name: 'Honeycrisp Apple', image: 'images/honeycrisp.png' },
+            '4036': { name: 'Large Yellow Nectarine', image: 'images/yellow-nectarine.png' },
+            '4401': { name: 'White Peach', image: 'images/white-peach.png' },
+            '3127': { name: 'Pomegranate', image: 'images/pomegranate.png' },
+            '4584': { name: 'Green Mango', image: 'images/green-mango.png' },
+            '94256': { name: 'Starfruit', image: 'images/starfruit.png' },
+            '4396': { name: 'Papaya', image: 'images/papaya.png' },
+            '4237': { name: 'Banana', image: 'images/banana.png' },
+            '4317': { name: 'Honeydew Melon', image: 'images/honeydew.png' },
+            '94388': { name: 'Lemon', image: 'images/lemon.png' },
+            '94282': { name: 'Organic Red Grapefruit', image: 'images/red-grapefruit.png' },
+            '94053': { name: 'Lemon', image: 'images/lemon.png' },
+            '4048': { name: 'Lime', image: 'images/lime.png' },
+            '3040': { name: 'Dragon Fruit', image: 'images/dragon-fruit.png' },
+            '94017': { name: 'Granny Smith Apple', image: 'images/granny-smith.png' },
+            '4808': { name: 'Tomato', image: 'images/tomato.png' },
+            '94040': { name: 'Black Prune', image: 'images/black-prune.png' },
+            '94688': { name: 'Bell Pepper', image: 'images/bell-pepper.png' },
+            '94763': { name: 'Organic Delicata/Sweet Potato', image: 'images/sweet-potato.png' },
+            '4225': { name: 'Avocado', image: 'images/avocado.png' },
+            '3616': { name: 'Apple', image: 'images/apple.png' },
+            '4032': { name: 'Watermelon', image: 'images/watermelon.png' },
+            '3623': { name: 'Melon', image: 'images/melon.png' },
+            '94030': { name: 'Green Kiwi', image: 'images/green-kiwi.png' },
+            '4409': { name: 'Pear', image: 'images/pear.png' },
+            '94415': { name: 'Red Pear', image: 'images/red-pear.png' },
+            '4040': { name: 'Black Plum', image: 'images/black-plum.png' },
+            '94378': { name: 'Peach', image: 'images/peach.png' }
         };
 
-        // PRODUCE DATA (abbreviated for space - add full data as needed)
-        const produceData = {
-            'Banana': { storage: 'Store at room temperature. Keep away from direct sunlight.', ripeness: 'Yellow with small brown spots.', season: 'Year-round' },
-            'Banana (Organic)': { storage: 'Store at room temperature.', ripeness: 'Yellow with brown spots.', season: 'Year-round' },
-            'Apple (Fuji)': { storage: 'Refrigerate for best results.', ripeness: 'Firm with red-pink color.', season: 'October to July' },
-            'Apple (Granny Smith)': { storage: 'Refrigerate to maintain crispness.', ripeness: 'Bright green, very firm.', season: 'Year-round' },
-            'Apple (Gala)': { storage: 'Store in fridge crisper drawer.', ripeness: 'Red and yellow striped.', season: 'August to March' },
-            'Apple (Golden Delicious)': { storage: 'Refrigerate for freshness.', ripeness: 'Golden yellow.', season: 'September to June' },
-            'Apple (Red Delicious)': { storage: 'Keep refrigerated.', ripeness: 'Deep red color, firm.', season: 'September to July' },
-            'Apple (McIntosh)': { storage: 'Best when refrigerated.', ripeness: 'Red with green, soft when ripe.', season: 'September to May' },
-            'Apple (Honeycrisp)': { storage: 'Refrigerate to maintain crunch.', ripeness: 'Red and yellow, very crisp.', season: 'September to January' },
-            'Apple (Organic Fuji)': { storage: 'Refrigerate for best results.', ripeness: 'Firm with red-pink color.', season: 'October to July' },
-            'Apple (Organic Granny Smith)': { storage: 'Refrigerate.', ripeness: 'Bright green, firm.', season: 'Year-round' },
-            'Avocado': { storage: 'Ripen at room temp, then refrigerate.', ripeness: 'Yields to gentle pressure.', season: 'Year-round' },
-            'Avocado (Hass)': { storage: 'Ripen at room temp.', ripeness: 'Dark skin, yields to pressure.', season: 'Year-round' },
-            'Avocado (Organic Hass)': { storage: 'Ripen at room temp.', ripeness: 'Dark skin, yields to pressure.', season: 'Year-round' },
-            'Tomato (Roma)': { storage: 'Room temperature, never refrigerate.', ripeness: 'Deep red, firm.', season: 'June to September' },
-            'Tomato (Beefsteak)': { storage: 'Room temperature.', ripeness: 'Large, deep red.', season: 'Summer' },
-            'Tomato (Cherry)': { storage: 'Room temperature for best flavor.', ripeness: 'Bright red, firm.', season: 'Year-round' },
-            'Tomato (Grape)': { storage: 'Room temperature.', ripeness: 'Deep red, glossy.', season: 'Year-round' },
-            'Tomato (Organic Roma)': { storage: 'Room temperature.', ripeness: 'Deep red, firm.', season: 'June to September' },
-            'Strawberry': { storage: 'Refrigerate unwashed.', ripeness: 'Bright red, fresh green caps.', season: 'April to June' },
-            'Strawberry (Organic)': { storage: 'Refrigerate unwashed.', ripeness: 'Bright red.', season: 'April to June' }
+        // Origin Information
+        const originData = {
+            'Honeycrisp Apple': 'Originally developed at the University of Minnesota. Commonly grown in the United States, particularly in Minnesota, Michigan, and Washington.',
+            'Large Yellow Nectarine': 'Native to China, now widely cultivated in California, Mediterranean regions, and South America.',
+            'White Peach': 'Originated in China over 4,000 years ago. Now grown in California, Georgia, and South Carolina in the US.',
+            'Pomegranate': 'Native to Iran and northern India. Cultivated throughout the Mediterranean region, Middle East, and California.',
+            'Green Mango': 'Originated in South Asia, primarily India. Now grown in tropical and subtropical regions worldwide.',
+            'Starfruit': 'Native to Southeast Asia, particularly Malaysia and Indonesia. Also grown in Florida, Hawaii, and the Caribbean.',
+            'Papaya': 'Native to Central America and southern Mexico. Now cultivated in tropical regions worldwide, especially Hawaii.',
+            'Banana': 'Native to Southeast Asia. Major producers include India, China, Philippines, Ecuador, and Central America.',
+            'Honeydew Melon': 'Believed to have originated in France or Algeria. Now grown in warm climates worldwide, especially California.',
+            'Lemon': 'Originated in Asia, likely northeastern India. Major producers include India, Mexico, China, and Mediterranean countries.',
+            'Organic Red Grapefruit': 'First discovered in Barbados. Now grown in subtropical climates, primarily Florida, Texas, and California.',
+            'Lime': 'Native to Southeast Asia. Major producers include Mexico, India, China, and Brazil.',
+            'Dragon Fruit': 'Native to Central America. Now cultivated in Southeast Asia, particularly Vietnam, Thailand, and the Philippines.',
+            'Granny Smith Apple': 'Originated in Australia in 1868. Now grown worldwide, with major production in the US, Australia, and New Zealand.',
+            'Tomato': 'Native to western South America. Now cultivated worldwide, with major producers in China, India, and the United States.',
+            'Black Prune': 'Originated from European plums. Primarily grown in California, which produces 99% of US prunes.',
+            'Bell Pepper': 'Native to Central and South America. Now grown worldwide, with major production in China, Mexico, and the United States.',
+            'Organic Delicata/Sweet Potato': 'Sweet potatoes are native to Central and South America. Major producers include China, Malawi, and the United States.',
+            'Avocado': 'Native to south-central Mexico. Major producers include Mexico, Dominican Republic, Peru, and California.',
+            'Apple': 'Originated in Central Asia. Now grown worldwide, with major producers in China, United States, and Poland.',
+            'Watermelon': 'Originated in Africa. Now cultivated worldwide, with major producers in China, Turkey, and Iran.',
+            'Melon': 'Likely originated in Africa or the Middle East. Now grown in warm climates worldwide.',
+            'Green Kiwi': 'Native to China, popularized in New Zealand. Major producers include China, Italy, and New Zealand.',
+            'Pear': 'Originated in coastal and temperate regions of Asia and Europe. Major producers include China, United States, and Italy.',
+            'Red Pear': 'Originated in Europe and Asia. Cultivated in temperate regions worldwide.',
+            'Black Plum': 'Originated in Asia. Now grown in temperate climates worldwide, especially California and the Mediterranean.',
+            'Peach': 'Native to northwest China. Major producers include China, Spain, Italy, and the United States (especially Georgia and California).'
         };
 
-        // NUTRITION DATABASE (abbreviated - you can add the full list from app.js)
+        // Seasonal Information
+        const seasonData = {
+            'Honeycrisp Apple': 'Peak season: September through November. Available in storage through winter.',
+            'Large Yellow Nectarine': 'Peak season: May through September, with peak availability in July and August.',
+            'White Peach': 'Peak season: May through September. Best flavor in summer months.',
+            'Pomegranate': 'Peak season: September through January, with best quality in October and November.',
+            'Green Mango': 'Available year-round in tropical regions. Peak season varies by growing region.',
+            'Starfruit': 'Available year-round, with peak season from August through March.',
+            'Papaya': 'Available year-round. Peak season in early summer and fall.',
+            'Banana': 'Available year-round. No specific peak season.',
+            'Honeydew Melon': 'Peak season: June through October, with best flavor in late summer.',
+            'Lemon': 'Available year-round, with peak production in winter and spring.',
+            'Organic Red Grapefruit': 'Peak season: November through June. Best quality in winter months.',
+            'Lime': 'Available year-round, with peak season in summer months.',
+            'Dragon Fruit': 'Peak season: June through September, though available year-round in some regions.',
+            'Granny Smith Apple': 'Available year-round. Peak harvest: October through November.',
+            'Tomato': 'Available year-round. Peak season: June through September for outdoor-grown varieties.',
+            'Black Prune': 'Peak season: August through October. Dried prunes available year-round.',
+            'Bell Pepper': 'Available year-round. Peak season: July through September.',
+            'Organic Delicata/Sweet Potato': 'Available year-round. Peak harvest: September through November.',
+            'Avocado': 'Available year-round, with peak season varying by variety (spring through summer for most).',
+            'Apple': 'Available year-round. Peak harvest: September through November.',
+            'Watermelon': 'Peak season: May through September, with best quality in July and August.',
+            'Melon': 'Peak season: June through September.',
+            'Green Kiwi': 'Available year-round. New Zealand kiwis peak November through May; California kiwis October through April.',
+            'Pear': 'Peak season: August through February, depending on variety.',
+            'Red Pear': 'Peak season: August through February.',
+            'Black Plum': 'Peak season: May through October, with best quality in summer months.',
+            'Peach': 'Peak season: May through September. Best flavor in June, July, and August.'
+        };
+
+        // Nutrition Data
         const nutritionData = {
-            'Banana': { calories: 105, carbs: '27g', protein: '1.3g', fiber: '3g', potassium: '422mg', vitaminC: '10mg' },
-            'Banana (Organic)': { calories: 105, carbs: '27g', protein: '1.3g', fiber: '3g', potassium: '422mg', vitaminC: '10mg' },
-            'Apple (Fuji)': { calories: 95, carbs: '25g', protein: '0.5g', fiber: '4g', sugar: '19g', vitaminC: '8mg' },
-            'Apple (Granny Smith)': { calories: 80, carbs: '22g', protein: '0.4g', fiber: '4g', sugar: '15g', vitaminC: '10mg' },
-            'Avocado': { calories: 234, carbs: '12g', protein: '3g', fiber: '10g', fat: '21g', potassium: '690mg' },
-            'Avocado (Hass)': { calories: 234, carbs: '12g', protein: '3g', fiber: '10g', fat: '21g', potassium: '690mg' },
-            'Tomato (Roma)': { calories: 35, carbs: '7g', protein: '1.5g', fiber: '2g', vitaminC: '24mg', vitaminA: '1025IU' },
-            'Strawberry': { calories: 49, carbs: '12g', protein: '1g', fiber: '3g', sugar: '7g', vitaminC: '89mg' }
+            'Honeycrisp Apple': { calories: 80, carbs: '22g', fiber: '5g', sugar: '16g', vitaminC: '8mg', potassium: '195mg' },
+            'Large Yellow Nectarine': { calories: 63, carbs: '15g', fiber: '2.4g', sugar: '11g', vitaminC: '7mg', vitaminA: '332IU' },
+            'White Peach': { calories: 59, carbs: '14g', fiber: '2.3g', sugar: '13g', vitaminC: '10mg', vitaminA: '489IU' },
+            'Pomegranate': { calories: 83, carbs: '19g', fiber: '4g', sugar: '14g', vitaminC: '10mg', potassium: '236mg' },
+            'Green Mango': { calories: 60, carbs: '15g', fiber: '1.6g', sugar: '14g', vitaminC: '36mg', vitaminA: '1082IU' },
+            'Starfruit': { calories: 31, carbs: '7g', fiber: '2.8g', sugar: '4g', vitaminC: '34mg', potassium: '133mg' },
+            'Papaya': { calories: 62, carbs: '16g', fiber: '2.5g', sugar: '11g', vitaminC: '87mg', vitaminA: '1532IU' },
+            'Banana': { calories: 105, carbs: '27g', fiber: '3g', sugar: '14g', potassium: '422mg', vitaminB6: '0.4mg' },
+            'Honeydew Melon': { calories: 64, carbs: '16g', fiber: '1.4g', sugar: '14g', vitaminC: '31mg', potassium: '404mg' },
+            'Lemon': { calories: 29, carbs: '9g', fiber: '2.8g', sugar: '2.5g', vitaminC: '53mg', folate: '11mcg' },
+            'Organic Red Grapefruit': { calories: 52, carbs: '13g', fiber: '2g', sugar: '9g', vitaminC: '38mg', vitaminA: '1414IU' },
+            'Lime': { calories: 30, carbs: '11g', fiber: '2.8g', sugar: '1.7g', vitaminC: '32mg', calcium: '33mg' },
+            'Dragon Fruit': { calories: 60, carbs: '13g', fiber: '3g', sugar: '8g', vitaminC: '3mg', iron: '0.7mg' },
+            'Granny Smith Apple': { calories: 80, carbs: '22g', fiber: '4g', sugar: '15g', vitaminC: '10mg', potassium: '195mg' },
+            'Tomato': { calories: 22, carbs: '5g', fiber: '1.5g', sugar: '3g', vitaminC: '17mg', lycopene: '3mg' },
+            'Black Prune': { calories: 240, carbs: '64g', fiber: '7g', sugar: '38g', vitaminK: '60mcg', potassium: '732mg' },
+            'Bell Pepper': { calories: 30, carbs: '7g', fiber: '2.5g', sugar: '4g', vitaminC: '120mg', vitaminA: '370IU' },
+            'Organic Delicata/Sweet Potato': { calories: 112, carbs: '26g', fiber: '4g', sugar: '5g', vitaminA: '19218IU', vitaminC: '3mg' },
+            'Avocado': { calories: 234, carbs: '12g', fiber: '10g', fat: '21g', potassium: '690mg', folate: '81mcg' },
+            'Apple': { calories: 95, carbs: '25g', fiber: '4g', sugar: '19g', vitaminC: '8mg', potassium: '195mg' },
+            'Watermelon': { calories: 46, carbs: '12g', fiber: '0.6g', sugar: '9g', vitaminC: '12mg', lycopene: '6890mcg' },
+            'Melon': { calories: 60, carbs: '14g', fiber: '1.6g', sugar: '13g', vitaminC: '65mg', vitaminA: '5986IU' },
+            'Green Kiwi': { calories: 61, carbs: '15g', fiber: '3g', sugar: '9g', vitaminC: '93mg', vitaminK: '40mcg' },
+            'Pear': { calories: 101, carbs: '27g', fiber: '5.5g', sugar: '17g', vitaminC: '7mg', potassium: '206mg' },
+            'Red Pear': { calories: 101, carbs: '27g', fiber: '5.5g', sugar: '17g', vitaminC: '7mg', potassium: '206mg' },
+            'Black Plum': { calories: 46, carbs: '11g', fiber: '1.4g', sugar: '10g', vitaminC: '10mg', vitaminA: '345IU' },
+            'Peach': { calories: 59, carbs: '14g', fiber: '2.3g', sugar: '13g', vitaminC: '10mg', vitaminA: '489IU' }
         };
 
-        function showPage(pageId) {
+        function switchPage(pageId) {
             document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
             document.getElementById(pageId).classList.add('active');
             
-            if (pageId !== 'landing') {
-                document.getElementById('nav').style.display = 'flex';
-            } else {
-                document.getElementById('nav').style.display = 'none';
-            }
-
-            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
-            const navButtons = document.querySelectorAll('.nav-btn');
-            if (pageId === 'landing') navButtons[0]?.classList.add('active');
-            if (pageId === 'inventory') navButtons[1]?.classList.add('active');
-            if (pageId === 'settings') navButtons[2]?.classList.add('active');
-
+            document.querySelectorAll('.nav-item').forEach(btn => btn.classList.remove('active'));
+            event.target.closest('.nav-item').classList.add('active');
+            
             if (pageId === 'inventory') {
-                updateCollectionDisplay();
+                updateInventoryDisplay();
             }
         }
 
-        function searchMainPLU() {
-            const input = document.getElementById('mainPLUInput');
+        function submitPLU() {
+            const input = document.getElementById('pluInput');
             const code = input.value.trim();
             if (code) {
-                lookupPLU(code);
+                lookupProduce(code);
                 input.value = '';
             }
         }
 
         function startScanner() {
-            const isSecure = window.location.protocol === 'https:' || 
-                           window.location.hostname === 'localhost' || 
-                           window.location.hostname === '127.0.0.1';
-            
-            if (!isSecure) {
-                alert('⚠️ Camera requires HTTPS or localhost.');
-                return;
-            }
-
-            const container = document.getElementById('scanner-container');
-            container.classList.add('active');
+            const modal = document.getElementById('scanner-modal');
+            modal.classList.add('active');
             scannerActive = true;
 
             if (typeof Quagga === 'undefined') {
                 alert('Scanner library not loaded.');
-                stopScanner();
+                closeScanner();
                 return;
             }
 
@@ -363,21 +278,21 @@
                 inputStream: {
                     name: "Live",
                     type: "LiveStream",
-                    target: document.querySelector('#scanner-video'),
+                    target: document.querySelector('#scanner-viewport'),
                     constraints: {
-                        width: { min: 640, ideal: 1280 },
-                        height: { min: 480, ideal: 720 },
+                        width: { ideal: 1280 },
+                        height: { ideal: 720 },
                         facingMode: "environment"
-                    },
+                    }
                 },
                 decoder: {
-                    readers: ["ean_reader", "ean_8_reader", "code_128_reader", "code_39_reader", "upc_reader", "upc_e_reader"]
+                    readers: ["ean_reader", "ean_8_reader", "code_128_reader", "upc_reader"]
                 },
                 locate: true
             }, function(err) {
                 if (err) {
-                    alert('Camera error. Use manual PLU entry.');
-                    stopScanner();
+                    alert('Camera error. Use manual entry.');
+                    closeScanner();
                     return;
                 }
                 Quagga.start();
@@ -386,143 +301,122 @@
             Quagga.onDetected(function(result) {
                 const code = result.codeResult.code;
                 if (navigator.vibrate) navigator.vibrate(100);
-                lookupPLU(code);
+                lookupProduce(code);
             });
         }
 
-        function stopScanner() {
+        function closeScanner() {
             if (scannerActive) {
                 Quagga.stop();
                 Quagga.offDetected();
                 scannerActive = false;
             }
-            document.getElementById('scanner-container').classList.remove('active');
+            document.getElementById('scanner-modal').classList.remove('active');
         }
 
-        function lookupPLU(code) {
-            const cleanCode = code.replace(/^0+/, '');
-            if (pluDatabase[cleanCode]) {
-                stopScanner();
-                const produce = pluDatabase[cleanCode];
-                selectProduce(produce.name, produce.icon);
-            } else {
-                const text = document.querySelector('.scanner-text');
-                text.textContent = `PLU ${cleanCode} not found.`;
-                text.style.color = '#ff3b30';
-                setTimeout(() => {
-                    text.textContent = 'Position barcode or PLU sticker within frame';
-                    text.style.color = '#FFF7ED';
-                }, 2000);
-            }
-        }
-
-        function lookupManualPLU() {
-            const input = document.getElementById('manualPLU');
+        function submitScannerPLU() {
+            const input = document.getElementById('scannerPLU');
             const code = input.value.trim();
             if (code) {
-                lookupPLU(code);
+                lookupProduce(code);
                 input.value = '';
             }
         }
 
-        function selectProduce(name, icon) {
-            currentProduce = { name, icon, addedDate: new Date() };
-            
-            const data = produceData[name] || { storage: 'Store properly', ripeness: 'Check for freshness', season: 'Varies' };
-            const nutrition = nutritionData[name] || { calories: 'N/A', carbs: 'N/A', protein: 'N/A', fiber: 'N/A' };
-            
-            document.getElementById('infoIcon').textContent = icon;
-            document.getElementById('infoTitle').textContent = name;
-            document.getElementById('infoStorage').textContent = data.storage;
-            document.getElementById('infoRipeness').textContent = data.ripeness;
-            document.getElementById('infoSeason').textContent = data.season;
-            
-            const nutritionGrid = document.getElementById('nutritionGrid');
-            nutritionGrid.innerHTML = '';
-            
-            Object.entries(nutrition).forEach(([key, value]) => {
-                const label = key.charAt(0).toUpperCase() + key.slice(1).replace(/([A-Z])/g, ' $1');
-                nutritionGrid.innerHTML += `
-                    <div class="nutrition-item">
-                        <div class="nutrition-value">${value}</div>
-                        <div class="nutrition-label">${label}</div>
-                    </div>
-                `;
-            });
-            
-            showPage('produceInfo');
-        }
-
-        function addToCollection() {
-            if (currentProduce) {
-                const exists = collection.some(item => item.name === currentProduce.name);
-                if (!exists) {
-                    collection.push({...currentProduce, id: Date.now()});
-                    alert(`${currentProduce.icon} ${currentProduce.name} added!`);
-                } else {
-                    alert(`${currentProduce.icon} ${currentProduce.name} already in collection!`);
-                }
-                showPage('inventory');
+        function lookupProduce(code) {
+            const cleanCode = code.replace(/^0+/, '');
+            if (pluDatabase[cleanCode]) {
+                closeScanner();
+                const produce = pluDatabase[cleanCode];
+                showInfoModal(produce.name, produce.image);
+                addToInventory(produce.name, produce.image);
+            } else {
+                alert(`PLU ${cleanCode} not found in database`);
             }
         }
 
-        function updateCollectionDisplay() {
-            const grid = document.getElementById('collectionGrid');
-            if (collection.length === 0) {
+        function showInfoModal(name, image) {
+            currentProduce = { name, image };
+            
+            document.getElementById('modalImage').src = image;
+            document.getElementById('modalImage').alt = name;
+            document.getElementById('modalTitle').textContent = name;
+            
+            // Set nutrition data
+            const nutrition = nutritionData[name];
+            const nutritionList = document.getElementById('nutritionList');
+            nutritionList.innerHTML = Object.entries(nutrition).map(([key, value]) => {
+                const label = key.charAt(0).toUpperCase() + key.slice(1).replace(/([A-Z])/g, ' $1');
+                return `
+                    <div class="nutrition-row">
+                        <span class="nutrition-label">${label}</span>
+                        <span class="nutrition-value">${value}</span>
+                    </div>
+                `;
+            }).join('');
+            
+            // Set origin and season data
+            document.getElementById('originInfo').textContent = originData[name];
+            document.getElementById('seasonInfo').textContent = seasonData[name];
+            
+            document.getElementById('info-modal').classList.add('active');
+        }
+
+        function closeInfoModal() {
+            document.getElementById('info-modal').classList.remove('active');
+        }
+
+        function switchTab(tabName) {
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-panel').forEach(panel => panel.classList.remove('active'));
+            
+            event.target.classList.add('active');
+            document.getElementById(`${tabName}-tab`).classList.add('active');
+        }
+
+        function addToInventory(name, image) {
+            const exists = inventory.some(item => item.name === name);
+            if (!exists) {
+                inventory.push({ name, image, date: new Date(), id: Date.now() });
+            }
+        }
+
+        function updateInventoryDisplay() {
+            const grid = document.getElementById('inventoryGrid');
+            if (inventory.length === 0) {
                 grid.innerHTML = `
-                    <div class="empty-state">
-                        <div class="empty-icon">📦</div>
-                        <p>No items yet<br>Start by scanning produce!</p>
+                    <div class="empty-message">
+                        <img src="images/empty.png" alt="Empty" class="empty-img">
+                        <p>No produce scanned yet</p>
                     </div>
                 `;
                 return;
             }
 
-            grid.innerHTML = collection.map(item => `
-                <div class="collection-item" onclick="viewCollectionItem('${item.name}', '${item.icon}')">
-                    <button class="remove-btn" onclick="event.stopPropagation(); removeFromCollection(${item.id})">✕</button>
-                    <div class="collection-icon">${item.icon}</div>
-                    <div class="collection-name">${item.name}</div>
-                    <div class="collection-date">${item.addedDate.toLocaleDateString()}</div>
+            grid.innerHTML = inventory.map(item => `
+                <div class="inventory-item" onclick="showInfoModal('${item.name}', '${item.image}')">
+                    <button class="remove-item-btn" onclick="event.stopPropagation(); removeFromInventory(${item.id})">✕</button>
+                    <img src="${item.image}" alt="${item.name}" class="inventory-img">
+                    <p class="inventory-name">${item.name}</p>
+                    <p class="inventory-date">${item.date.toLocaleDateString()}</p>
                 </div>
             `).join('');
         }
 
-        function viewCollectionItem(name, icon) {
-            selectProduce(name, icon);
-        }
-
-        function removeFromCollection(id) {
-            const item = collection.find(i => i.id === id);
-            if (item && confirm(`Remove ${item.icon} ${item.name}?`)) {
-                collection = collection.filter(i => i.id !== id);
-                updateCollectionDisplay();
+        function removeFromInventory(id) {
+            if (confirm('Remove this item from inventory?')) {
+                inventory = inventory.filter(item => item.id !== id);
+                updateInventoryDisplay();
             }
         }
 
-        function clearCollection() {
-            if (collection.length === 0) {
-                alert('Collection is already empty!');
-                return;
-            }
-            if (confirm(`Remove all ${collection.length} items?`)) {
-                collection = [];
-                updateCollectionDisplay();
-                alert('Collection cleared!');
-            }
-        }
-
-        function toggleSetting(element) {
-            element.classList.toggle('active');
-        }
-
-        // Event Listeners
-        document.getElementById('mainPLUInput')?.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') searchMainPLU();
+        // Enter key support
+        document.getElementById('pluInput')?.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') submitPLU();
         });
 
-        document.getElementById('manualPLU')?.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') lookupManualPLU();
+        document.getElementById('scannerPLU')?.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') submitScannerPLU();
         });
     </script>
 </body>
