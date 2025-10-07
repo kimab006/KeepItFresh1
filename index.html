@@ -3,9 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fruit Code</title>
-
-  <!-- Fonts -->
+  <title>PLU Scanner</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Chivo:ital,wght@0,100..900;1,100..900&family=Kode+Mono:wght@400..700&display=swap" rel="stylesheet">
@@ -40,12 +38,19 @@
       display: flex;
       justify-content: center;
       align-items: center;
+      cursor: pointer;
       margin: auto;
     }
 
     .scanner-frame span {
       font-size: 24px;
       font-weight: bold;
+      animation: bounce 1s infinite alternate;
+    }
+
+    @keyframes bounce {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-8px); }
     }
 
     .bottom-buttons {
@@ -65,7 +70,6 @@
       font-size: 16px;
     }
 
-    /* Responsive tweak */
     @media (max-width: 400px) {
       .scanner-frame {
         width: 80%;
@@ -91,13 +95,14 @@
     PLU: Unknown
   </div>
 
-  <div class="scanner-frame">
+  <!-- Scanner Button -->
+  <div class="scanner-frame" onclick="window.location.href='scan.html'">
     <span>+</span>
   </div>
 
   <div class="bottom-buttons">
     <a href="index.html">Library</a>
-    <a href="scanner.html">Scan</a>
+    <a href="scan.html">Scan</a>
   </div>
 
 </body>

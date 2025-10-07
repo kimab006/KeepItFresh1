@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>PLU Scanner</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: 'Kode Mono', monospace;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background-color: #000;
+      color: white;
+    }
+
+    video {
+      width: 100%;
+      max-width: 500px;
+      border: 5px solid white;
+      border-radius: 10px;
+    }
+
+    .message {
+      margin-top: 20px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <video id="video" autoplay></video>
+  <div class="message" id="message">Scanning for PLU code...</div>
+
+  <script type="module">
+    import { BrowserMultiFormatReader } from 'https://cdn.jsdelivr.net/npm/@zxing/browser@latest';
+
+    const codeReader = new BrowserMultiFormatReader();
+    const videoElement = document.getElementById('video');
+    const messageElement = document.getElementById('message');
+
+    codeReader
+      .listVideoInputDevices()
+      .then((videoInputDevices) => {
+        const selectedDeviceId = videoInputDevices[0]?.deviceId;
+        return codeReader.decodeFromVideoDevice(selectedDeviceId, videoElement, (result, err) => {
+          if (result) {
+            const code = result.text.trim();
+            messageElement.textContent = `PLU code detected: ${code}`;
+
+            // Redirect based on PLU code
+            setTimeout(() => {
+              window.location.href = `fruit/${code}.html`;
+            }, 1000);
+          }
+        });
+      })
+      .catch((err) => {
+        messageElement.textContent = "Error accessing camera.";
+        console.error(err);
+      });
+  </script>
+
+</body>
+</html>
