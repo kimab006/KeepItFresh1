@@ -195,14 +195,14 @@
     "code": "#ED228D",
     "plu": "Red (4045); Black (4045); White / Rainier (4258)",
     "description": "Cherries (Prunus spp.) are small stone fruits native to Europe and Asia. They range in color and flavor from sweet to tart, and are eaten fresh, baked, or processed into preserves and juices.",
-    "image": "assets/cherry1.png"
+    "image": "assets/cherries1.png"
   },
   "4258": {
     "subject": "Cherry Variety",
     "code": "#ED228D",
     "plu": "Red (4045); Black (4045); White / Rainier (4258)",
     "description": "Cherries (Prunus spp.) are small stone fruits native to Europe and Asia. They range in color and flavor from sweet to tart, and are eaten fresh, baked, or processed into preserves and juices.",
-    "image": "assets/cherry1.png"
+    "image": "assets/cherries1.png"
   },
   "4261": {
     "subject": "Coconut Variety",
@@ -251,21 +251,21 @@
     "code": "#ED228D",
     "plu": "Blue / Black, seeded, Ribier / Exotic / Niabel (4270); seeded, all other varieties (4957); seedless, Beauty / all other varieties (4056)",
     "description": "There are an estimated 10,000 grape (Vitus vinifera) varieties worldwide, though a significant portion of these are used for wine production and are not always found in commercial grocery stores or home kitchens. Of the 10,000 grape varieties, about 6,000 belong to the fine wine species.",
-    "image": "assets/grape1.png"
+    "image": "assets/grapes.png"
   },
   "4957": {
     "subject": "Grape Variety",
     "code": "#ED228D",
     "plu": "Blue / Black, seeded, Ribier / Exotic / Niabel (4270); seeded, all other varieties (4957); seedless, Beauty / all other varieties (4056)",
     "description": "There are an estimated 10,000 grape (Vitus vinifera) varieties worldwide, though a significant portion of these are used for wine production and are not always found in commercial grocery stores or home kitchens. Of the 10,000 grape varieties, about 6,000 belong to the fine wine species.",
-    "image": "assets/grape1.png"
+    "image": "assets/grapes.png"
   },
   "4056": {
     "subject": "Grape Variety",
     "code": "#ED228D",
     "plu": "Blue / Black, seeded, Ribier / Exotic / Niabel (4270); seeded, all other varieties (4957); seedless, Beauty / all other varieties (4056)",
     "description": "There are an estimated 10,000 grape (Vitus vinifera) varieties worldwide, though a significant portion of these are used for wine production and are not always found in commercial grocery stores or home kitchens. Of the 10,000 grape varieties, about 6,000 belong to the fine wine species.",
-    "image": "assets/grape1.png"
+    "image": "assets/grapes.png"
   },
   "4030": {
     "subject": "Kiwi Variety",
