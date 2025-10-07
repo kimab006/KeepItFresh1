@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fruit Tag Scanner</title>
     <link rel="stylesheet" href="stylei.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js"></script>
 </head>
-
 <body>
     <!-- Scanner/Landing Page -->
     <div id="scanPage" class="page active">
@@ -21,9 +21,12 @@
         </div>
 
         <div class="camera-section">
-            <div class="camera-placeholder">
-                <p>Allow camera access and position barcode within frame</p>
+            <div id="cameraPlaceholder" class="camera-placeholder">
+                <p>Click "Start Camera" to begin scanning</p>
             </div>
+            <div id="interactive" class="viewport"></div>
+            <button id="startCamera" class="camera-btn">Start Camera</button>
+            <button id="stopCamera" class="camera-btn stop-btn" style="display:none;">Stop Camera</button>
         </div>
 
         <div class="manual-entry">
@@ -123,6 +126,9 @@
 
         // Inventory storage (in-memory)
         let inventory = [];
+        let scannerActive = false;
+        let lastScannedCode = '';
+        let lastScanTime = 0;
 
         // Page navigation
         const scanPage = document.getElementById('scanPage');
@@ -131,6 +137,7 @@
         const toScannerBtn = document.getElementById('toScanner');
 
         toInventoryBtn.addEventListener('click', () => {
+            stopScanner();
             scanPage.classList.remove('active');
             inventoryPage.classList.add('active');
             renderInventory();
@@ -140,6 +147,119 @@
             inventoryPage.classList.remove('active');
             scanPage.classList.add('active');
         });
+
+        // Camera controls
+        const startCameraBtn = document.getElementById('startCamera');
+        const stopCameraBtn = document.getElementById('stopCamera');
+        const cameraPlaceholder = document.getElementById('cameraPlaceholder');
+        const interactive = document.getElementById('interactive');
+
+        startCameraBtn.addEventListener('click', startScanner);
+        stopCameraBtn.addEventListener('click', stopScanner);
+
+        // Initialize Quagga barcode scanner
+        function startScanner() {
+            cameraPlaceholder.style.display = 'none';
+            interactive.style.display = 'block';
+            startCameraBtn.style.display = 'none';
+            stopCameraBtn.style.display = 'inline-block';
+
+            Quagga.init({
+                inputStream: {
+                    name: "Live",
+                    type: "LiveStream",
+                    target: document.querySelector('#interactive'),
+                    constraints: {
+                        width: 640,
+                        height: 480,
+                        facingMode: "environment"
+                    },
+                },
+                decoder: {
+                    readers: [
+                        "code_128_reader",
+                        "ean_reader",
+                        "ean_8_reader",
+                        "upc_reader",
+                        "upc_e_reader"
+                    ]
+                },
+                locate: true
+            }, function(err) {
+                if (err) {
+                    console.error(err);
+                    alert('Error accessing camera. Please ensure camera permissions are granted.');
+                    stopScanner();
+                    return;
+                }
+                console.log("Scanner initialized");
+                Quagga.start();
+                scannerActive = true;
+            });
+
+            Quagga.onDetected(onBarcodeDetected);
+        }
+
+        function stopScanner() {
+            if (scannerActive) {
+                Quagga.stop();
+                scannerActive = false;
+            }
+            interactive.style.display = 'none';
+            cameraPlaceholder.style.display = 'flex';
+            startCameraBtn.style.display = 'inline-block';
+            stopCameraBtn.style.display = 'none';
+        }
+
+        function onBarcodeDetected(result) {
+            const code = result.codeResult.code;
+            const currentTime = Date.now();
+            
+            // Prevent duplicate scans within 2 seconds
+            if (code === lastScannedCode && currentTime - lastScanTime < 2000) {
+                return;
+            }
+
+            lastScannedCode = code;
+            lastScanTime = currentTime;
+
+            // Extract PLU code (last 4-5 digits typically)
+            let pluCode = code;
+            
+            // If it's a longer barcode, try to extract PLU
+            if (code.length > 5) {
+                // Many produce barcodes have PLU as last 4-5 digits
+                pluCode = code.slice(-5);
+                if (!fruitDatabase[pluCode]) {
+                    pluCode = code.slice(-4);
+                }
+            }
+
+            console.log('Scanned code:', code, 'Extracted PLU:', pluCode);
+            
+            // Provide feedback
+            playBeep();
+            lookupFruit(pluCode);
+        }
+
+        function playBeep() {
+            // Simple audio feedback for successful scan
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            oscillator.frequency.value = 800;
+            oscillator.type = 'sine';
+            
+            gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
+            
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + 0.1);
+        }
 
         // PLU code submission
         const submitBtn = document.getElementById('submitPLU');
@@ -187,8 +307,11 @@
 
                 // Clear input
                 manualPLUInput.value = '';
+
+                // Show success message
+                showToast(`Added ${fruit.name} to inventory!`);
             } else {
-                alert('PLU code not found in database. Please try another code.');
+                showToast('PLU code not found in database. Please try another code.', 'error');
             }
         }
 
@@ -239,8 +362,34 @@
             renderInventory();
         }
 
+        // Toast notification
+        function showToast(message, type = 'success') {
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.textContent = message;
+            document.body.appendChild(toast);
+            
+            setTimeout(() => {
+                toast.classList.add('show');
+            }, 10);
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => {
+                    document.body.removeChild(toast);
+                }, 300);
+            }, 3000);
+        }
+
         // Make removeItem available globally
         window.removeItem = removeItem;
+
+        // Stop scanner when page is hidden
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden && scannerActive) {
+                stopScanner();
+            }
+        });
     </script>
 </body>
 </html>
