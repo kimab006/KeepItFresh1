@@ -1,403 +1,104 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fruit Tag Scanner</title>
-    <link rel="stylesheet" href="stylei.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fruit Code</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Chivo:ital,wght@0,100..900;1,100..900&family=Kode+Mono:wght@400..700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Kode Mono', monospace;
+      background-color: #ffffff;
+      color: black;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .info {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .scanner-frame {
+      width: 280px;
+      height: 100px;
+      border: 2px solid black;
+      border-radius: 10px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: auto;
+    }
+
+    .scanner-frame span {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .bottom-buttons {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      padding: 20px;
+    }
+
+    .bottom-buttons a {
+      font-family: 'Kode Mono', monospace;
+      padding: 10px 20px;
+      border: 2px solid black;
+      border-radius: 10px;
+      text-decoration: none;
+      color: black;
+      font-size: 16px;
+    }
+
+    /* Responsive tweak */
+    @media (max-width: 400px) {
+      .scanner-frame {
+        width: 80%;
+        height: 80px;
+      }
+
+      .info {
+        font-size: 12px;
+      }
+
+      .bottom-buttons a {
+        font-size: 14px;
+        padding: 8px 16px;
+      }
+    }
+  </style>
 </head>
 <body>
-    <!-- Scanner/Landing Page -->
-    <div id="scanPage" class="page active">
-        <div class="header">
-            <h1>Fruit Tag Scanner</h1>
-        </div>
 
-        <div class="scan-info">
-            <p class="subject">Subject: <span id="fruitName">---</span></p>
-            <p class="plu-type">PLU Type: <span id="pluType">---</span></p>
-            <p class="plu-code">PLU: <span id="pluCode">---</span></p>
-        </div>
+  <div class="info">
+    Subject: Unknown<br>
+    Code: #FFFFFF<br>
+    PLU: Unknown
+  </div>
 
-        <div class="camera-section">
-            <div id="cameraPlaceholder" class="camera-placeholder">
-                <p>Click "Start Camera" to begin scanning</p>
-            </div>
-            <div id="interactive" class="viewport">
-                <div class="scan-frame">
-                    <div class="corner top-left"></div>
-                    <div class="corner top-right"></div>
-                    <div class="corner bottom-left"></div>
-                    <div class="corner bottom-right"></div>
-                    <p class="scan-instruction">Position barcode within frame</p>
-                </div>
-            </div>
-            <button id="startCamera" class="camera-btn">Start Camera</button>
-            <button id="stopCamera" class="camera-btn stop-btn" style="display:none;">Stop Camera</button>
-        </div>
+  <div class="scanner-frame">
+    <span>+</span>
+  </div>
 
-        <div class="manual-entry">
-            <input type="number" id="manualPLU" placeholder="enter plu code" maxlength="5">
-            <button id="submitPLU">Submit</button>
-        </div>
+  <div class="bottom-buttons">
+    <a href="index.html">Library</a>
+    <a href="scanner.html">Scan</a>
+  </div>
 
-        <div class="fruit-details" id="fruitDetails">
-            <p><strong>Origin:</strong> <span id="origin">---</span></p>
-            <p><strong>Nutrition:</strong> <span id="nutrition">---</span></p>
-            <p><strong>Seasonality:</strong> <span id="seasonality">---</span></p>
-        </div>
-
-        <button class="nav-btn" id="toInventory">View Inventory</button>
-    </div>
-
-    <!-- Inventory Page -->
-    <div id="inventoryPage" class="page">
-        <div class="header">
-            <h1>User Inventory</h1>
-        </div>
-
-        <div class="inventory-grid" id="inventoryGrid">
-            <!-- Inventory items will be added here dynamically -->
-        </div>
-
-        <button class="nav-btn" id="toScanner">Back to Scanner</button>
-    </div>
-
-    <script>
-        // Fruit database
-        const fruitDatabase = {
-            '93283': {
-                name: 'Banana',
-                type: 'organic',
-                origin: 'Malaya Peninsula, Indonesia, the Philippines and New Guinea',
-                nutrition: 'High in potassium, vitamin B6, and fiber',
-                seasonality: 'Available year-round'
-            },
-            '4011': {
-                name: 'Banana',
-                type: 'conventional',
-                origin: 'Ecuador, Guatemala, Costa Rica',
-                nutrition: 'High in potassium, vitamin B6, and fiber',
-                seasonality: 'Available year-round'
-            },
-            '94011': {
-                name: 'Banana',
-                type: 'gmo',
-                origin: 'Laboratory cultivated varieties',
-                nutrition: 'Enhanced vitamin A, modified fiber content',
-                seasonality: 'Available year-round'
-            },
-            '4131': {
-                name: 'Apple',
-                type: 'conventional',
-                origin: 'Washington, USA',
-                nutrition: 'Rich in fiber, vitamin C, and antioxidants',
-                seasonality: 'Peak: September to November'
-            },
-            '94131': {
-                name: 'Apple',
-                type: 'organic',
-                origin: 'Washington, USA',
-                nutrition: 'Rich in fiber, vitamin C, and antioxidants',
-                seasonality: 'Peak: September to November'
-            },
-            '4030': {
-                name: 'Kiwi',
-                type: 'conventional',
-                origin: 'New Zealand, Italy, Chile',
-                nutrition: 'Excellent source of vitamin C, K, and E',
-                seasonality: 'Peak: November to May'
-            },
-            '94030': {
-                name: 'Kiwi',
-                type: 'organic',
-                origin: 'New Zealand, Italy',
-                nutrition: 'Excellent source of vitamin C, K, and E',
-                seasonality: 'Peak: November to May'
-            },
-            '4048': {
-                name: 'Lime',
-                type: 'conventional',
-                origin: 'Mexico, Brazil, India',
-                nutrition: 'High in vitamin C and antioxidants',
-                seasonality: 'Available year-round'
-            },
-            '94048': {
-                name: 'Lime',
-                type: 'organic',
-                origin: 'Mexico, Peru',
-                nutrition: 'High in vitamin C and antioxidants',
-                seasonality: 'Available year-round'
-            }
-        };
-
-        // Inventory storage (in-memory)
-        let inventory = [];
-        let scannerActive = false;
-        let lastScannedCode = '';
-        let lastScanTime = 0;
-
-        // Page navigation
-        const scanPage = document.getElementById('scanPage');
-        const inventoryPage = document.getElementById('inventoryPage');
-        const toInventoryBtn = document.getElementById('toInventory');
-        const toScannerBtn = document.getElementById('toScanner');
-
-        toInventoryBtn.addEventListener('click', () => {
-            stopScanner();
-            scanPage.classList.remove('active');
-            inventoryPage.classList.add('active');
-            renderInventory();
-        });
-
-        toScannerBtn.addEventListener('click', () => {
-            inventoryPage.classList.remove('active');
-            scanPage.classList.add('active');
-        });
-
-        // Camera controls
-        const startCameraBtn = document.getElementById('startCamera');
-        const stopCameraBtn = document.getElementById('stopCamera');
-        const cameraPlaceholder = document.getElementById('cameraPlaceholder');
-        const interactive = document.getElementById('interactive');
-
-        startCameraBtn.addEventListener('click', startScanner);
-        stopCameraBtn.addEventListener('click', stopScanner);
-
-        // Initialize Quagga barcode scanner
-        function startScanner() {
-            cameraPlaceholder.style.display = 'none';
-            interactive.style.display = 'block';
-            startCameraBtn.style.display = 'none';
-            stopCameraBtn.style.display = 'inline-block';
-
-            Quagga.init({
-                inputStream: {
-                    name: "Live",
-                    type: "LiveStream",
-                    target: document.querySelector('#interactive'),
-                    constraints: {
-                        width: 640,
-                        height: 480,
-                        facingMode: "environment"
-                    },
-                },
-                decoder: {
-                    readers: [
-                        "code_128_reader",
-                        "ean_reader",
-                        "ean_8_reader",
-                        "upc_reader",
-                        "upc_e_reader"
-                    ]
-                },
-                locate: true
-            }, function(err) {
-                if (err) {
-                    console.error(err);
-                    alert('Error accessing camera. Please ensure camera permissions are granted.');
-                    stopScanner();
-                    return;
-                }
-                console.log("Scanner initialized");
-                Quagga.start();
-                scannerActive = true;
-            });
-
-            Quagga.onDetected(onBarcodeDetected);
-        }
-
-        function stopScanner() {
-            if (scannerActive) {
-                Quagga.stop();
-                scannerActive = false;
-            }
-            interactive.style.display = 'none';
-            cameraPlaceholder.style.display = 'flex';
-            startCameraBtn.style.display = 'inline-block';
-            stopCameraBtn.style.display = 'none';
-        }
-
-        function onBarcodeDetected(result) {
-            const code = result.codeResult.code;
-            const currentTime = Date.now();
-            
-            // Prevent duplicate scans within 2 seconds
-            if (code === lastScannedCode && currentTime - lastScanTime < 2000) {
-                return;
-            }
-
-            lastScannedCode = code;
-            lastScanTime = currentTime;
-
-            // Extract PLU code (last 4-5 digits typically)
-            let pluCode = code;
-            
-            // If it's a longer barcode, try to extract PLU
-            if (code.length > 5) {
-                // Many produce barcodes have PLU as last 4-5 digits
-                pluCode = code.slice(-5);
-                if (!fruitDatabase[pluCode]) {
-                    pluCode = code.slice(-4);
-                }
-            }
-
-            console.log('Scanned code:', code, 'Extracted PLU:', pluCode);
-            
-            // Provide feedback
-            playBeep();
-            lookupFruit(pluCode);
-        }
-
-        function playBeep() {
-            // Simple audio feedback for successful scan
-            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            const oscillator = audioContext.createOscillator();
-            const gainNode = audioContext.createGain();
-            
-            oscillator.connect(gainNode);
-            gainNode.connect(audioContext.destination);
-            
-            oscillator.frequency.value = 800;
-            oscillator.type = 'sine';
-            
-            gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
-            
-            oscillator.start(audioContext.currentTime);
-            oscillator.stop(audioContext.currentTime + 0.1);
-        }
-
-        // PLU code submission
-        const submitBtn = document.getElementById('submitPLU');
-        const manualPLUInput = document.getElementById('manualPLU');
-
-        submitBtn.addEventListener('click', () => {
-            const pluCode = manualPLUInput.value.trim();
-            if (pluCode) {
-                lookupFruit(pluCode);
-            }
-        });
-
-        manualPLUInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                const pluCode = manualPLUInput.value.trim();
-                if (pluCode) {
-                    lookupFruit(pluCode);
-                }
-            }
-        });
-
-        // Lookup fruit and display info
-        function lookupFruit(pluCode) {
-            const fruit = fruitDatabase[pluCode];
-            
-            if (fruit) {
-                // Update display
-                document.getElementById('fruitName').textContent = fruit.name;
-                document.getElementById('pluType').textContent = fruit.type;
-                document.getElementById('pluCode').textContent = pluCode;
-                document.getElementById('origin').textContent = fruit.origin;
-                document.getElementById('nutrition').textContent = fruit.nutrition;
-                document.getElementById('seasonality').textContent = fruit.seasonality;
-
-                // Update color coding
-                const scanInfo = document.querySelector('.scan-info');
-                scanInfo.classList.remove('organic', 'conventional', 'gmo');
-                scanInfo.classList.add(fruit.type);
-
-                // Show details
-                document.getElementById('fruitDetails').style.display = 'block';
-
-                // Add to inventory
-                addToInventory(pluCode, fruit);
-
-                // Clear input
-                manualPLUInput.value = '';
-
-                // Show success message
-                showToast(`Added ${fruit.name} to inventory!`);
-            } else {
-                showToast('PLU code not found in database. Please try another code.', 'error');
-            }
-        }
-
-        // Add fruit to inventory
-        function addToInventory(pluCode, fruit) {
-            const existingItem = inventory.find(item => item.pluCode === pluCode);
-            
-            if (existingItem) {
-                existingItem.count++;
-            } else {
-                inventory.push({
-                    pluCode: pluCode,
-                    name: fruit.name,
-                    type: fruit.type,
-                    count: 1,
-                    dateAdded: new Date().toLocaleDateString()
-                });
-            }
-        }
-
-        // Render inventory grid
-        function renderInventory() {
-            const grid = document.getElementById('inventoryGrid');
-            grid.innerHTML = '';
-
-            if (inventory.length === 0) {
-                grid.innerHTML = '<p class="empty-message">No items scanned yet. Start scanning to build your inventory!</p>';
-                return;
-            }
-
-            inventory.forEach((item, index) => {
-                const itemDiv = document.createElement('div');
-                itemDiv.className = `inventory-item ${item.type}`;
-                itemDiv.innerHTML = `
-                    <div class="item-header">${item.name}</div>
-                    <div class="item-plu">PLU: ${item.pluCode}</div>
-                    <div class="item-count">Qty: ${item.count}</div>
-                    <div class="item-date">${item.dateAdded}</div>
-                    <button class="remove-btn" onclick="removeItem(${index})">Remove</button>
-                `;
-                grid.appendChild(itemDiv);
-            });
-        }
-
-        // Remove item from inventory
-        function removeItem(index) {
-            inventory.splice(index, 1);
-            renderInventory();
-        }
-
-        // Toast notification
-        function showToast(message, type = 'success') {
-            const toast = document.createElement('div');
-            toast.className = `toast ${type}`;
-            toast.textContent = message;
-            document.body.appendChild(toast);
-            
-            setTimeout(() => {
-                toast.classList.add('show');
-            }, 10);
-            
-            setTimeout(() => {
-                toast.classList.remove('show');
-                setTimeout(() => {
-                    document.body.removeChild(toast);
-                }, 300);
-            }, 3000);
-        }
-
-        // Make removeItem available globally
-        window.removeItem = removeItem;
-
-        // Stop scanner when page is hidden
-        document.addEventListener('visibilitychange', () => {
-            if (document.hidden && scannerActive) {
-                stopScanner();
-            }
-        });
-    </script>
 </body>
 </html>
