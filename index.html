@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PLU Scanner</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Chivo:ital,wght@0,100..900;1,100..900&family=Kode+Mono:wght@400..700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Fruit PLU Scanner</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Kode+Mono:wght@400..700&display=swap" rel="stylesheet" />
 
   <style>
     body {
@@ -18,18 +18,69 @@
       height: 100vh;
       display: flex;
       flex-direction: column;
+    }
+
+    .container {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
       justify-content: space-between;
-      align-items: center;
+      height: 100%;
+      box-sizing: border-box;
     }
 
     .info {
-      position: absolute;
-      top: 20px;
-      left: 20px;
       font-size: 14px;
       line-height: 1.6;
     }
 
+    .center-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      flex-grow: 1;
+    }
+
+    /* Manual entry input + button container */
+    .manual-entry {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      width: 280px; /* matches scanner frame width */
+      box-sizing: border-box;
+    }
+
+    .manual-entry input {
+      flex: 1;
+      padding: 10px;
+      border: 2px solid black;
+      border-radius: 8px;
+      font-family: 'Kode Mono', monospace;
+      font-size: 14px;
+      text-align: center;
+      margin-right: 20px; 
+    }
+
+    .manual-entry button {
+      width: 90px; 
+      padding: 10px;
+      border: 2px solid black;
+      border-radius: 8px;
+      background: white;
+      font-family: 'Kode Mono', monospace;
+      font-size: 14px;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+
+    .manual-entry button:hover {
+      background: black;
+      color: white;
+    }
+
+    
     .scanner-frame {
       width: 280px;
       height: 100px;
@@ -39,7 +90,7 @@
       justify-content: center;
       align-items: center;
       cursor: pointer;
-      margin: auto;
+      box-sizing: border-box;
     }
 
     .scanner-frame span {
@@ -53,11 +104,14 @@
       100% { transform: translateY(-8px); }
     }
 
+    .click-text {
+      margin-top: 6px;
+      font-size: 14px;
+    }
+
     .bottom-buttons {
-      width: 100%;
       display: flex;
       justify-content: space-between;
-      padding: 20px;
     }
 
     .bottom-buttons a {
@@ -76,8 +130,20 @@
         height: 80px;
       }
 
+      .manual-entry {
+        width: 80%;
+      }
+
+      .manual-entry input {
+        margin-right: 12px;
+      }
+
       .info {
         font-size: 12px;
+      }
+
+      .click-text {
+        font-size: 13px;
       }
 
       .bottom-buttons a {
@@ -89,21 +155,46 @@
 </head>
 <body>
 
-  <div class="info">
-    Subject: Unknown<br>
-    Code: #FFFFFF<br>
-    PLU: Unknown
+  <div class="container">
+
+    <div class="info">
+      Subject: Unknown<br>
+      Code: #FFFFFF<br>
+      PLU: Unknown
+    </div>
+
+    <div class="center-wrapper">
+
+      
+      <div class="manual-entry">
+        <input id="pluInput" type="text" placeholder="manually enter PLU" maxlength="5" />
+        <button onclick="submitPLU()">submit</button>
+      </div>
+
+      
+      <div onclick="window.location.href='scan.html'" class="scanner-frame">
+        <span>+</span>
+      </div>
+      <div class="click-text">Click to start scanning</div>
+    </div>
+
+    <div class="bottom-buttons">
+      <a href="index.html">Library</a>
+      <a href="scan.html">Scan</a>
+    </div>
+
   </div>
 
-  <!-- Scanner Button -->
-  <div class="scanner-frame" onclick="window.location.href='scan.html'">
-    <span>+</span>
-  </div>
-
-  <div class="bottom-buttons">
-    <a href="index.html">Library</a>
-    <a href="scan.html">Scan</a>
-  </div>
+  <script>
+    function submitPLU() {
+      const input = document.getElementById('pluInput').value.trim();
+      if (/^\d{4,5}$/.test(input)) {
+        window.location.href = `fruit.html?plu=${input}`;
+      } else {
+        alert("Please enter a valid 4- or 5-digit PLU code.");
+      }
+    }
+  </script>
 
 </body>
 </html>

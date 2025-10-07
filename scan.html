@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>PLU Scanner</title>
+  <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Kode Mono', monospace;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: #000;
+      color: white;
+      height: 100vh;
+    }
+
+    #reader {
+      width: 90%;
+      max-width: 400px;
+      margin: auto;
+      border: 2px solid white;
+      border-radius: 10px;
+    }
+
+    .message {
+      margin-top: 20px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="reader"></div>
+  <div class="message" id="message">Scanning for PLU code...</div>
+
+  <script>
+    function startScanner() {
+      const message = document.getElementById('message');
+
+      const html5QrCode = new Html5Qrcode("reader");
+      const config = { fps: 10, qrbox: { width: 250, height: 150 } };
+
+      html5QrCode.start(
+        { facingMode: "environment" },
+        config,
+        (decodedText) => {
+          if (/^\d{4,5}$/.test(decodedText)) {
+            message.innerText = `Detected PLU: ${decodedText}`;
+            html5QrCode.stop().then(() => {
+              window.location.href = `fruit.html?plu=${decodedText}`;
+            });
+          } else {
+            message.innerText = "Invalid code. Try again.";
+          }
+        },
+        (error) => {
+          console.warn(`Scan error: ${error}`);
+        }
+      ).catch((err) => {
+        message.innerText = "Camera error. Please allow access.";
+        console.error("Camera start failed", err);
+      });
+    }
+
+    startScanner();
+  </script>
+</body>
+</html>

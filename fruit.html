@@ -1,69 +1,164 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PLU Scanner</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Fruit Details</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Kode+Mono:wght@400..700&display=swap" rel="stylesheet" />
+
   <style>
-    body, html {
+    body {
       margin: 0;
       padding: 0;
-      height: 100%;
       font-family: 'Kode Mono', monospace;
+      background-color: #ED228D;
+      color: #EAFF00;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      background-color: #000;
-      color: white;
+      min-height: 100vh;
+      box-sizing: border-box;
     }
 
-    video {
-      width: 100%;
-      max-width: 500px;
-      border: 5px solid white;
+    .container {
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 100vh;
+      box-sizing: border-box;
+    }
+
+    .top-info {
+      font-size: 16px;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+
+    .spacer {
+      flex-grow: 1;
+    }
+
+    .description {
+      font-size: 16px;
+      line-height: 1.6;
+      margin-bottom: 30px;
+    }
+
+    .bottom-buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: auto;
+    }
+
+    .bottom-buttons a {
+      font-family: 'Kode Mono', monospace;
+      padding: 12px 24px;
+      border: 2px solid #EAFF00;
       border-radius: 10px;
+      text-decoration: none;
+      color: #EAFF00;
+      font-size: 16px;
+      transition: background 0.2s ease;
     }
 
-    .message {
-      margin-top: 20px;
-      text-align: center;
+    .bottom-buttons a:hover {
+      background: #EAFF00;
+      color: #ED228D;
+    }
+
+    @media (max-width: 400px) {
+      .top-info, .description {
+        font-size: 14px;
+      }
+      .bottom-buttons a {
+        font-size: 14px;
+        padding: 10px 20px;
+      }
     }
   </style>
 </head>
+
 <body>
+  <div class="container">
+    <!-- Top section with Subject, Code, PLU -->
+    <div class="top-info" id="topInfo">
+      Loading...
+    </div>
 
-  <video id="video" autoplay></video>
-  <div class="message" id="message">Scanning for PLU code...</div>
+    <!-- Empty space in the middle -->
+    <div class="spacer"></div>
 
-  <script type="module">
-    import { BrowserMultiFormatReader } from 'https://cdn.jsdelivr.net/npm/@zxing/browser@latest';
+    <!-- Bottom section with description -->
+    <div>
+      <div class="description" id="description">
+        
+      </div>
 
-    const codeReader = new BrowserMultiFormatReader();
-    const videoElement = document.getElementById('video');
-    const messageElement = document.getElementById('message');
+      <div class="bottom-buttons">
+        <a href="index.html">Library</a>
+        <a href="scan.html">Scan</a>
+      </div>
+    </div>
+  </div>
 
-    codeReader
-      .listVideoInputDevices()
-      .then((videoInputDevices) => {
-        const selectedDeviceId = videoInputDevices[0]?.deviceId;
-        return codeReader.decodeFromVideoDevice(selectedDeviceId, videoElement, (result, err) => {
-          if (result) {
-            const code = result.text.trim();
-            messageElement.textContent = `PLU code detected: ${code}`;
+  <script>
+    async function loadFruitData() {
+      const params = new URLSearchParams(window.location.search);
+      const plu = params.get('plu');
 
-            // Redirect based on PLU code
-            setTimeout(() => {
-              window.location.href = `fruit/${code}.html`;
-            }, 1000);
-          }
-        });
-      })
-      .catch((err) => {
-        messageElement.textContent = "Error accessing camera.";
-        console.error(err);
-      });
+      const topInfo = document.getElementById('topInfo');
+      const description = document.getElementById('description');
+
+      if (!plu) {
+        topInfo.innerHTML = `Subject: Unknown<br>Code: #ED228D<br>PLU: No code provided`;
+        description.innerHTML = `Please scan a fruit or enter a valid PLU code.`;
+        return;
+      }
+
+      try {
+        // Try multiple possible paths for the JSON file
+        let response;
+        let fruits;
+        
+        try {
+          response = await fetch('data/fruits.json');
+          if (!response.ok) throw new Error('Not found at data/fruits.json');
+          fruits = await response.json();
+        } catch (e) {
+          // Try alternative path
+          response = await fetch('fruits.json');
+          if (!response.ok) throw new Error('Not found at fruits.json');
+          fruits = await response.json();
+        }
+
+        console.log('Loaded fruits data:', fruits);
+        console.log('Looking for PLU:', plu);
+        
+        const fruit = fruits[plu];
+        console.log('Found fruit:', fruit);
+
+        if (!fruit) {
+          topInfo.innerHTML = `Subject: Unknown<br>Code: #ED228D<br>PLU: ${plu}`;
+          description.innerHTML = `This fruit is not in the database yet. Please scan another code or check your entry.`;
+          return;
+        }
+
+        // Display top info
+        topInfo.innerHTML = `Subject: ${fruit.subject}<br>Code: ${fruit.code}<br>PLU: ${fruit.plu}`;
+        
+        // Display description at bottom
+        description.innerHTML = fruit.description;
+
+      } catch (err) {
+        console.error('Error details:', err);
+        topInfo.innerHTML = `Subject: Error<br>Code: #ED228D<br>PLU: ${plu || 'Unknown'}`;
+        description.innerHTML = `Error loading fruit data. Please try again.<br><br>Error: ${err.message}`;
+      }
+    }
+
+    loadFruitData();
   </script>
-
 </body>
 </html>
