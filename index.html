@@ -24,7 +24,15 @@
             <div id="cameraPlaceholder" class="camera-placeholder">
                 <p>Click "Start Camera" to begin scanning</p>
             </div>
-            <div id="interactive" class="viewport"></div>
+            <div id="interactive" class="viewport">
+                <div class="scan-frame">
+                    <div class="corner top-left"></div>
+                    <div class="corner top-right"></div>
+                    <div class="corner bottom-left"></div>
+                    <div class="corner bottom-right"></div>
+                    <p class="scan-instruction">Position barcode within frame</p>
+                </div>
+            </div>
             <button id="startCamera" class="camera-btn">Start Camera</button>
             <button id="stopCamera" class="camera-btn stop-btn" style="display:none;">Stop Camera</button>
         </div>
