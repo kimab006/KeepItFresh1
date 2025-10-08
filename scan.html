@@ -4,7 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>PLU Scanner</title>
-  <script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Kode+Mono:wght@400..700&display=swap" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/quagga/0.12.1/quagga.min.js"></script>
   <style>
     body {
       margin: 0;
@@ -17,57 +20,176 @@
       background: #000;
       color: white;
       height: 100vh;
+      overflow: hidden;
     }
 
-    #reader {
+    #scanner-container {
+      position: relative;
       width: 90%;
-      max-width: 400px;
-      margin: auto;
+      max-width: 640px;
+      height: 480px;
       border: 2px solid white;
       border-radius: 10px;
+      overflow: hidden;
+    }
+
+    #interactive {
+      width: 100%;
+      height: 100%;
+    }
+
+    #interactive video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .drawingBuffer {
+      position: absolute;
+      top: 0;
+      left: 0;
     }
 
     .message {
       margin-top: 20px;
       text-align: center;
+      font-size: 16px;
+      padding: 0 20px;
+    }
+
+    .back-button {
+      margin-top: 20px;
+      padding: 12px 24px;
+      border: 2px solid white;
+      border-radius: 10px;
+      background: transparent;
+      color: white;
+      font-family: 'Kode Mono', monospace;
+      font-size: 16px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .back-button:hover {
+      background: white;
+      color: black;
+    }
+
+    @media (max-width: 400px) {
+      #scanner-container {
+        height: 300px;
+      }
+      .message {
+        font-size: 14px;
+      }
     }
   </style>
 </head>
 <body>
 
-  <div id="reader"></div>
-  <div class="message" id="message">Scanning for PLU code...</div>
+  <div id="scanner-container">
+    <div id="interactive" class="viewport"></div>
+  </div>
+  <div class="message" id="message">Scanning for barcode... Point camera at PLU sticker</div>
+  <a href="index.html" class="back-button">Back to Home</a>
 
   <script>
-    function startScanner() {
-      const message = document.getElementById('message');
+    const message = document.getElementById('message');
+    let isProcessing = false;
 
-      const html5QrCode = new Html5Qrcode("reader");
-      const config = { fps: 10, qrbox: { width: 250, height: 150 } };
-
-      html5QrCode.start(
-        { facingMode: "environment" },
-        config,
-        (decodedText) => {
-          if (/^\d{4,5}$/.test(decodedText)) {
-            message.innerText = `Detected PLU: ${decodedText}`;
-            html5QrCode.stop().then(() => {
-              window.location.href = `fruit.html?plu=${decodedText}`;
-            });
-          } else {
-            message.innerText = "Invalid code. Try again.";
-          }
-        },
-        (error) => {
-          console.warn(`Scan error: ${error}`);
-        }
-      ).catch((err) => {
-        message.innerText = "Camera error. Please allow access.";
-        console.error("Camera start failed", err);
-      });
+    function extractPLU(code) {
+      const cleaned = code.replace(/\D/g, '');
+      
+      if (cleaned.length >= 4 && cleaned.length <= 5) {
+        return cleaned;
+      }
+      
+      if (cleaned.length > 5) {
+        const last4 = cleaned.slice(-4);
+        const last5 = cleaned.slice(-5);
+        return last5;
+      }
+      
+      return null;
     }
 
-    startScanner();
+    async function checkPLUExists(plu) {
+      try {
+        const response = await fetch('fruits.json');
+        const fruitsData = await response.json();
+        return fruitsData.hasOwnProperty(plu);
+      } catch (error) {
+        console.error('Error checking PLU:', error);
+        return false;
+      }
+    }
+
+    Quagga.init({
+      inputStream: {
+        name: "Live",
+        type: "LiveStream",
+        target: document.querySelector('#interactive'),
+        constraints: {
+          facingMode: "environment"
+        },
+      },
+      decoder: {
+        readers: [
+          "upc_reader",
+          "ean_reader",
+          "code_128_reader",
+          "code_39_reader",
+          "upc_e_reader"
+        ]
+      },
+      locate: true,
+      locator: {
+        patchSize: "medium",
+        halfSample: true
+      },
+      numOfWorkers: 2,
+      frequency: 10
+    }, function(err) {
+      if (err) {
+        console.error(err);
+        message.innerText = "Camera error. Please allow camera access and refresh.";
+        return;
+      }
+      console.log("Scanner initialized");
+      Quagga.start();
+    });
+
+    Quagga.onDetected(async function(result) {
+      if (isProcessing) return;
+      
+      const code = result.codeResult.code;
+      console.log("Detected code:", code);
+      
+      const plu = extractPLU(code);
+      
+      if (plu) {
+        isProcessing = true;
+        message.innerText = `Checking PLU: ${plu}...`;
+        
+        const exists = await checkPLUExists(plu);
+        
+        if (exists) {
+          message.innerText = `Found! Redirecting...`;
+          Quagga.stop();
+          window.location.href = `fruit.html?plu=${plu}`;
+        } else {
+          message.innerText = `PLU ${plu} not in database. Keep scanning...`;
+          setTimeout(() => {
+            isProcessing = false;
+          }, 2000);
+        }
+      }
+    });
+
+    window.addEventListener('beforeunload', function() {
+      Quagga.stop();
+    });
   </script>
 </body>
 </html>

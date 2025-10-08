@@ -23,7 +23,7 @@
       overflow-x: hidden;
     }
 
-    /* Centered background image - larger and cropped */
+    
     .fruit-image {
       position: fixed;
       top: 50%;
@@ -102,19 +102,19 @@
 </head>
 
 <body>
-  <!-- Background fruit image (centered, fills screen, cropped at edges) -->
+  
   <img id="fruitImage" class="fruit-image" alt="Fruit" style="display: none;">
 
   <div class="container">
-    <!-- Top section with Subject, Code, PLU -->
+    
     <div class="top-info" id="topInfo">
       Loading...
     </div>
 
-    <!-- Empty space in the middle -->
+    
     <div class="spacer"></div>
 
-    <!-- Bottom section with description -->
+    
     <div>
       <div class="description" id="description">
         
@@ -128,16 +128,16 @@
   </div>
 
   <script>
-    // Get PLU from URL
+    
     const params = new URLSearchParams(window.location.search);
     const plu = params.get('plu');
 
-    // Get HTML elements
+    
     const topInfo = document.getElementById('topInfo');
     const description = document.getElementById('description');
     const fruitImage = document.getElementById('fruitImage');
 
-    // Load fruit data
+    
     async function loadFruitData() {
       if (!plu) {
         topInfo.innerHTML = `Subject: Unknown<br>Code: #ED228D<br>PLU: No code provided`;
@@ -146,17 +146,17 @@
       }
 
       try {
-        // Fetch the JSON file
+        
         const response = await fetch('fruits.json');
         
         if (!response.ok) {
           throw new Error('Failed to load fruits.json');
         }
 
-        // Parse JSON data
+        
         const fruitsData = await response.json();
         
-        // Get the specific fruit by PLU
+        
         const fruit = fruitsData[plu];
 
         if (!fruit) {
@@ -165,11 +165,11 @@
           return;
         }
 
-        // Display fruit information
+        
         topInfo.innerHTML = `Subject: ${fruit.subject}<br>Code: ${fruit.code}<br>PLU: ${fruit.plu}`;
         description.innerHTML = fruit.description;
 
-        // Display fruit image
+        
         if (fruit.image) {
           fruitImage.src = fruit.image;
           fruitImage.style.display = 'block';
@@ -187,7 +187,7 @@
       }
     }
 
-    // Run the function
+    
     loadFruitData();
   </script>
 </body>
