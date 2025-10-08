@@ -98,17 +98,55 @@
     const message = document.getElementById('message');
     let isProcessing = false;
 
-    function extractPLU(code) {
+    async function extractPLU(code) {
       const cleaned = code.replace(/\D/g, '');
       
+      // If it's already 4-5 digits, return it
       if (cleaned.length >= 4 && cleaned.length <= 5) {
         return cleaned;
       }
       
-      if (cleaned.length > 5) {
-        const last4 = cleaned.slice(-4);
+      // For longer barcodes, try to find the PLU code within it
+      // Load the fruits database to check against
+      try {
+        const response = await fetch('fruits.json');
+        const fruitsData = await response.json();
+        const validPLUs = Object.keys(fruitsData);
+        
+        // Try all possible 4-digit and 5-digit substrings
+        for (let i = 0; i <= cleaned.length - 4; i++) {
+          // Try 5-digit first
+          if (i <= cleaned.length - 5) {
+            const substring5 = cleaned.substring(i, i + 5);
+            if (validPLUs.includes(substring5)) {
+              return substring5;
+            }
+          }
+          // Then try 4-digit
+          const substring4 = cleaned.substring(i, i + 4);
+          if (validPLUs.includes(substring4)) {
+            return substring4;
+          }
+        }
+        
+        // If no match found, try common positions
+        // Try last 4-5 digits (removing check digit if present)
         const last5 = cleaned.slice(-5);
-        return last5;
+        const last4 = cleaned.slice(-4);
+        
+        if (validPLUs.includes(last5)) return last5;
+        if (validPLUs.includes(last4)) return last4;
+        
+        // Try middle section (common for produce barcodes)
+        if (cleaned.length >= 8) {
+          const middle5 = cleaned.substring(3, 8);
+          const middle4 = cleaned.substring(3, 7);
+          if (validPLUs.includes(middle5)) return middle5;
+          if (validPLUs.includes(middle4)) return middle4;
+        }
+        
+      } catch (error) {
+        console.error('Error in PLU extraction:', error);
       }
       
       return null;
@@ -166,16 +204,16 @@
       const code = result.codeResult.code;
       console.log("Detected code:", code);
       
-      const plu = extractPLU(code);
+      isProcessing = true;
+      message.innerText = `Processing code: ${code}...`;
+      
+      const plu = await extractPLU(code);
       
       if (plu) {
-        isProcessing = true;
-        message.innerText = `Checking PLU: ${plu}...`;
-        
         const exists = await checkPLUExists(plu);
         
         if (exists) {
-          message.innerText = `Found! Redirecting...`;
+          message.innerText = `Found PLU ${plu}! Redirecting...`;
           Quagga.stop();
           window.location.href = `fruit.html?plu=${plu}`;
         } else {
@@ -184,6 +222,11 @@
             isProcessing = false;
           }, 2000);
         }
+      } else {
+        message.innerText = `No valid PLU found in barcode. Keep scanning...`;
+        setTimeout(() => {
+          isProcessing = false;
+        }, 2000);
       }
     });
 
