@@ -91,7 +91,7 @@
   <div id="scanner-container">
     <div id="interactive" class="viewport"></div>
   </div>
-  <div class="message" id="message">Scanning for barcode... Please point camera at PLU sticker</div>
+  <div class="message" id="message">Scanning for barcode... Point camera at PLU sticker</div>
   <a href="index.html" class="back-button">Back to Home</a>
 
   <script>
@@ -101,9 +101,17 @@
     async function extractPLU(code) {
       const cleaned = code.replace(/\D/g, '');
       
-      // If it's already 4-5 digits, return it
+      // If it's already 4-5 digits, check if it's valid
       if (cleaned.length >= 4 && cleaned.length <= 5) {
-        return cleaned;
+        try {
+          const response = await fetch('fruits.json');
+          const fruitsData = await response.json();
+          if (fruitsData.hasOwnProperty(cleaned)) {
+            return cleaned;
+          }
+        } catch (error) {
+          console.error('Error checking PLU:', error);
+        }
       }
       
       // For longer barcodes, try to find the PLU code within it
@@ -113,9 +121,10 @@
         const fruitsData = await response.json();
         const validPLUs = Object.keys(fruitsData);
         
-        // Try all possible 4-digit and 5-digit substrings
+        // Try all possible CONSECUTIVE 4-digit and 5-digit substrings IN ORDER
+        // This ensures we match the exact sequence like "4035" not scattered digits
         for (let i = 0; i <= cleaned.length - 4; i++) {
-          // Try 5-digit first
+          // Try 5-digit first (priority for 5-digit PLUs)
           if (i <= cleaned.length - 5) {
             const substring5 = cleaned.substring(i, i + 5);
             if (validPLUs.includes(substring5)) {
@@ -127,22 +136,6 @@
           if (validPLUs.includes(substring4)) {
             return substring4;
           }
-        }
-        
-        // If no match found, try common positions
-        // Try last 4-5 digits (removing check digit if present)
-        const last5 = cleaned.slice(-5);
-        const last4 = cleaned.slice(-4);
-        
-        if (validPLUs.includes(last5)) return last5;
-        if (validPLUs.includes(last4)) return last4;
-        
-        // Try middle section (common for produce barcodes)
-        if (cleaned.length >= 8) {
-          const middle5 = cleaned.substring(3, 8);
-          const middle4 = cleaned.substring(3, 7);
-          if (validPLUs.includes(middle5)) return middle5;
-          if (validPLUs.includes(middle4)) return middle4;
         }
         
       } catch (error) {
