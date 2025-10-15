@@ -9,110 +9,108 @@
   <link href="https://fonts.googleapis.com/css2?family=Kode+Mono:wght@400..700&display=swap" rel="stylesheet" />
 
   <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      overflow: hidden; /* no scroll */
-      font-family: 'Kode Mono', monospace;
-      background-color: #ED228D;
-      color: #EAFF00;
-      -webkit-text-size-adjust: 100%; /* prevent font auto scaling */
-    }
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    overflow: hidden; /* no scroll */
+    font-family: 'Kode Mono', monospace;
+    background-color: #ED228D;
+    color: #EAFF00;
+    -webkit-text-size-adjust: 100%; /* prevent font auto scaling */
+  }
 
-    body {
-      position: relative;
-    }
+  body {
+    position: relative;
+  }
 
-    .fruit-image {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      min-width: 100%;
-      min-height: 100%;
-      width: auto;
-      height: auto;
-      max-width: none;
-      max-height: none;
-      opacity: 1;
-      z-index: 0;
-      object-fit: cover;
-    }
+  .fruit-image {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    max-width: none;
+    max-height: none;
+    opacity: 1;
+    z-index: 0;
+    object-fit: cover;
+  }
 
-    .container {
-      position: absolute;
-      inset: 0;
-      z-index: 1;
-      padding: 20px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      box-sizing: border-box;
-      overflow: hidden;
-    }
+  .container {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
 
+  .top-info {
+    font-size: 16px;
+    line-height: 1.4;
+    margin-bottom: 10px;
+  }
+
+  .bottom-group {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    gap: 25px; /* increased spacing here */
+  }
+
+  .description {
+    font-size: 14px;
+    line-height: 1.4;
+    max-height: 35vh;
+    overflow-wrap: break-word;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .bottom-buttons {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .bottom-buttons a {
+    font-family: 'Kode Mono', monospace;
+    padding: 12px 24px;
+    border: 2px solid #EAFF00;
+    border-radius: 10px;
+    text-decoration: none;
+    color: #EAFF00;
+    font-size: 16px;
+    transition: background 0.2s ease;
+    user-select: none;
+  }
+
+  .bottom-buttons a:hover {
+    background: #EAFF00;
+    color: #ED228D;
+  }
+
+  @media (max-width: 400px) {
     .top-info {
-      font-size: 16px;
-      line-height: 1.4;
-      margin-bottom: 10px;
-    }
-
-    .bottom-group {
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      gap: 15px;
-    }
-
-    .description {
       font-size: 14px;
-      line-height: 1.4;
-      /* No bottom margin since gap is used */
-      max-height: 35vh;
-      overflow-wrap: break-word;
-      overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
-      /* Scroll only inside description if needed */
     }
-
-    .bottom-buttons {
-      display: flex;
-      justify-content: space-between;
+    .description {
+      font-size: 13px;
+      max-height: 40vh;
     }
-
     .bottom-buttons a {
-      font-family: 'Kode Mono', monospace;
-      padding: 12px 24px;
-      border: 2px solid #EAFF00;
-      border-radius: 10px;
-      text-decoration: none;
-      color: #EAFF00;
-      font-size: 16px;
-      transition: background 0.2s ease;
-      user-select: none;
+      font-size: 14px;
+      padding: 10px 20px;
     }
+  }
+</style>
 
-    .bottom-buttons a:hover {
-      background: #EAFF00;
-      color: #ED228D;
-    }
-
-    /* Responsive tweaks */
-    @media (max-width: 400px) {
-      .top-info {
-        font-size: 14px;
-      }
-      .description {
-        font-size: 13px;
-        max-height: 40vh;
-      }
-      .bottom-buttons a {
-        font-size: 14px;
-        padding: 10px 20px;
-      }
-    }
-  </style>
 </head>
 
 <body>
