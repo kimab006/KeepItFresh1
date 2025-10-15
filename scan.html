@@ -58,7 +58,7 @@
       left: 50%;
       transform: translateX(-50%);
       font-size: 14px;
-      color: #ED228D;;
+      color: #ED228D;
       white-space: nowrap;
     }
 
@@ -98,17 +98,6 @@
       color: black;
     }
 
-    .button.capture {
-      background: #ED228D;
-      color: black;
-      border-color: #ED228D;
-    }
-
-    .button.capture:hover {
-      background: #ED228D;
-      border-color: #ED228D;
-    }
-
     @media (max-width: 400px) {
       #video-container {
         height: 300px;
@@ -134,7 +123,6 @@
   <div class="message" id="message">Point camera at PLU number on sticker</div>
   
   <div class="buttons">
-    <button class="button capture" onclick="captureAndScan()">Scan PLU</button>
     <a href="index.html" class="button">Back to Home</a>
   </div>
 
@@ -185,8 +173,6 @@
       // Look for 4 or 5 digit sequences
       const matches = text.match(/\b\d{4,5}\b/g);
       if (!matches) return null;
-      
-      // Return all found numbers
       return matches;
     }
 
@@ -196,15 +182,11 @@
       isProcessing = true;
       message.innerText = "Scanning...";
 
-      // Set canvas size to video size
       canvas.width = video.videoWidth;
       canvas.height = video.videoHeight;
-
-      // Draw current video frame to canvas
       ctx.drawImage(video, 0, 0);
 
       try {
-        // Use Tesseract to recognize text
         const result = await Tesseract.recognize(
           canvas,
           'eng',
@@ -225,7 +207,6 @@
         if (possiblePLUs && possiblePLUs.length > 0) {
           console.log('Found possible PLUs:', possiblePLUs);
           
-          // Check each found number against database
           for (const plu of possiblePLUs) {
             const exists = await checkPLUExists(plu);
             if (exists) {
