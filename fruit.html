@@ -9,21 +9,25 @@
   <link href="https://fonts.googleapis.com/css2?family=Kode+Mono:wght@400..700&display=swap" rel="stylesheet" />
 
   <style>
-    body {
+    html, body {
       margin: 0;
       padding: 0;
+      height: 100svh; /* Use 100svh for better mobile support */
+      overflow: hidden; /* Prevent scroll */
       font-family: 'Kode Mono', monospace;
       background-color: #ED228D;
       color: #EAFF00;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-      box-sizing: border-box;
-      position: relative;
-      overflow-x: hidden;
     }
 
-    
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      box-sizing: border-box;
+      position: relative;
+    }
+
     .fruit-image {
       position: fixed;
       top: 50%;
@@ -41,46 +45,42 @@
     }
 
     .container {
-      position: relative;
+      position: absolute;
+      inset: 0;
       z-index: 1;
       padding: 20px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
-      min-height: 100vh;
       box-sizing: border-box;
+      overflow: hidden;
     }
 
     .top-info {
       font-size: 16px;
-      line-height: 1.6;
-      margin-bottom: 20px;
-    }
-
-    .spacer {
-      flex-grow: 1;
+      line-height: 1.4;
+      margin-bottom: 10px;
     }
 
     .description {
-      font-size: 16px;
-      line-height: 1.6;
-      margin-bottom: 30px;
+      font-size: 14px;
+      line-height: 1.4;
+      margin-bottom: 20px;
     }
 
     .bottom-buttons {
       display: flex;
       justify-content: space-between;
-      margin-top: auto;
     }
 
     .bottom-buttons a {
       font-family: 'Kode Mono', monospace;
-      padding: 12px 24px;
+      padding: 10px 20px;
       border: 2px solid #EAFF00;
       border-radius: 10px;
       text-decoration: none;
       color: #EAFF00;
-      font-size: 16px;
+      font-size: 14px;
       transition: background 0.2s ease;
     }
 
@@ -89,13 +89,20 @@
       color: #ED228D;
     }
 
-    @media (max-width: 400px) {
-      .top-info, .description {
-        font-size: 14px;
-      }
+    @media (max-width: 400px), (max-height: 700px) {
+      .top-info,
+      .description,
       .bottom-buttons a {
-        font-size: 14px;
-        padding: 10px 20px;
+        font-size: 13px;
+      }
+
+      .bottom-buttons {
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      .bottom-buttons a {
+        text-align: center;
       }
     }
   </style>
@@ -106,38 +113,27 @@
   <img id="fruitImage" class="fruit-image" alt="Fruit" style="display: none;">
 
   <div class="container">
-    
     <div class="top-info" id="topInfo">
       Loading...
     </div>
 
-    
-    <div class="spacer"></div>
+    <div class="description" id="description">
+    </div>
 
-    
-    <div>
-      <div class="description" id="description">
-        
-      </div>
-
-      <div class="bottom-buttons">
-        <a href="index.html">Home</a>
-        <a href="scan.html">Scan</a>
-      </div>
+    <div class="bottom-buttons">
+      <a href="index.html">Home</a>
+      <a href="scan.html">Scan</a>
     </div>
   </div>
 
   <script>
-    
     const params = new URLSearchParams(window.location.search);
     const plu = params.get('plu');
 
-    
     const topInfo = document.getElementById('topInfo');
     const description = document.getElementById('description');
     const fruitImage = document.getElementById('fruitImage');
 
-    
     async function loadFruitData() {
       if (!plu) {
         topInfo.innerHTML = `Subject: Unknown<br>Code: #ED228D<br>PLU: No code provided`;
@@ -146,17 +142,12 @@
       }
 
       try {
-        
         const response = await fetch('fruits.json');
-        
         if (!response.ok) {
           throw new Error('Failed to load fruits.json');
         }
 
-        
         const fruitsData = await response.json();
-        
-        
         const fruit = fruitsData[plu];
 
         if (!fruit) {
@@ -165,15 +156,13 @@
           return;
         }
 
-        
         topInfo.innerHTML = `Subject: ${fruit.subject}<br>Code: ${fruit.code}<br>PLU: ${fruit.plu}`;
         description.innerHTML = fruit.description;
 
-        
         if (fruit.image) {
           fruitImage.src = fruit.image;
           fruitImage.style.display = 'block';
-          
+
           fruitImage.onerror = function() {
             console.error('Failed to load image:', fruit.image);
             fruitImage.style.display = 'none';
@@ -187,7 +176,6 @@
       }
     }
 
-    
     loadFruitData();
   </script>
 </body>
