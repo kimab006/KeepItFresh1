@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
   <title>Fruit Details</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -12,19 +12,15 @@
     html, body {
       margin: 0;
       padding: 0;
-      height: 100svh; /* Use 100svh for better mobile support */
-      overflow: hidden; /* Prevent scroll */
+      height: 100%;
+      overflow: hidden; /* no scroll */
       font-family: 'Kode Mono', monospace;
       background-color: #ED228D;
       color: #EAFF00;
+      -webkit-text-size-adjust: 100%; /* prevent font auto scaling */
     }
 
     body {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      box-sizing: border-box;
       position: relative;
     }
 
@@ -62,10 +58,22 @@
       margin-bottom: 10px;
     }
 
+    .bottom-group {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      gap: 15px;
+    }
+
     .description {
       font-size: 14px;
       line-height: 1.4;
-      margin-bottom: 20px;
+      /* No bottom margin since gap is used */
+      max-height: 35vh;
+      overflow-wrap: break-word;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+      /* Scroll only inside description if needed */
     }
 
     .bottom-buttons {
@@ -75,13 +83,14 @@
 
     .bottom-buttons a {
       font-family: 'Kode Mono', monospace;
-      padding: 10px 20px;
+      padding: 12px 24px;
       border: 2px solid #EAFF00;
       border-radius: 10px;
       text-decoration: none;
       color: #EAFF00;
-      font-size: 14px;
+      font-size: 16px;
       transition: background 0.2s ease;
+      user-select: none;
     }
 
     .bottom-buttons a:hover {
@@ -89,27 +98,24 @@
       color: #ED228D;
     }
 
-    @media (max-width: 400px), (max-height: 700px) {
-      .top-info,
-      .description,
-      .bottom-buttons a {
+    /* Responsive tweaks */
+    @media (max-width: 400px) {
+      .top-info {
+        font-size: 14px;
+      }
+      .description {
         font-size: 13px;
+        max-height: 40vh;
       }
-
-      .bottom-buttons {
-        flex-direction: column;
-        gap: 10px;
-      }
-
       .bottom-buttons a {
-        text-align: center;
+        font-size: 14px;
+        padding: 10px 20px;
       }
     }
   </style>
 </head>
 
 <body>
-  
   <img id="fruitImage" class="fruit-image" alt="Fruit" style="display: none;">
 
   <div class="container">
@@ -117,12 +123,13 @@
       Loading...
     </div>
 
-    <div class="description" id="description">
-    </div>
+    <div class="bottom-group">
+      <div class="description" id="description"></div>
 
-    <div class="bottom-buttons">
-      <a href="index.html">Home</a>
-      <a href="scan.html">Scan</a>
+      <div class="bottom-buttons">
+        <a href="index.html">Home</a>
+        <a href="scan.html">Scan</a>
+      </div>
     </div>
   </div>
 
@@ -146,8 +153,8 @@
         if (!response.ok) {
           throw new Error('Failed to load fruits.json');
         }
-
         const fruitsData = await response.json();
+
         const fruit = fruitsData[plu];
 
         if (!fruit) {
@@ -168,7 +175,6 @@
             fruitImage.style.display = 'none';
           };
         }
-
       } catch (error) {
         console.error('Error loading fruit data:', error);
         topInfo.innerHTML = `Subject: Error<br>Code: #ED228D<br>PLU: ${plu || 'Unknown'}`;
