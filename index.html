@@ -47,7 +47,7 @@
       justify-content: space-between;
       align-items: center;
       margin-bottom: 20px;
-      width: 280px; 
+      width: 280px;
       box-sizing: border-box;
     }
 
@@ -59,11 +59,11 @@
       font-family: 'Kode Mono', monospace;
       font-size: 14px;
       text-align: center;
-      margin-right: 20px; 
+      margin-right: 20px;
     }
 
     .manual-entry button {
-      width: 90px; 
+      width: 90px;
       padding: 10px;
       border: 2px solid black;
       border-radius: 8px;
@@ -79,7 +79,6 @@
       color: white;
     }
 
-    
     .scanner-frame {
       width: 280px;
       height: 100px;
@@ -108,21 +107,6 @@
       font-size: 14px;
     }
 
-    .bottom-buttons {
-      display: flex;
-      justify-content: space-between;
-    }
-
-    .bottom-buttons a {
-      font-family: 'Kode Mono', monospace;
-      padding: 10px 20px;
-      border: 2px solid black;
-      border-radius: 10px;
-      text-decoration: none;
-      color: black;
-      font-size: 16px;
-    }
-
     @media (max-width: 400px) {
       .scanner-frame {
         width: 80%;
@@ -144,15 +128,70 @@
       .click-text {
         font-size: 13px;
       }
+    }
 
-      .bottom-buttons a {
-        font-size: 14px;
-        padding: 8px 16px;
-      }
+    /* 🔄 Loading overlay styles */
+    #loading-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #ED228D;
+      color: black;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Kode Mono', monospace;
+      z-index: 9999;
+      visibility: hidden;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    #loading-overlay.visible {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .loading-text {
+      font-size: 18px;
+      margin-bottom: 20px;
+    }
+
+    .loading-bar {
+      width: 80%;
+      max-width: 300px;
+      height: 10px;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 5px;
+      overflow: hidden;
+    }
+
+    .loading-bar-inner {
+      width: 0%;
+      height: 100%;
+      background: yellow;
+      animation: loading 1.5s infinite;
+    }
+
+    @keyframes loading {
+      0% { width: 0%; }
+      50% { width: 100%; }
+      100% { width: 0%; }
     }
   </style>
 </head>
 <body>
+
+  <!-- 🔄 Loading overlay -->
+  <div id="loading-overlay">
+    <div class="loading-text">Pulling from preexisting archive</div>
+    <div class="loading-bar">
+      <div class="loading-bar-inner"></div>
+    </div>
+  </div>
 
   <div class="container">
 
@@ -164,31 +203,31 @@
 
     <div class="center-wrapper">
 
-      
       <div class="manual-entry">
         <input id="pluInput" type="text" placeholder="manually enter PLU" maxlength="5" />
         <button onclick="submitPLU()">submit</button>
       </div>
 
-      
       <div onclick="window.location.href='scan.html'" class="scanner-frame">
         <span>+</span>
       </div>
       <div class="click-text">Click to start scanning</div>
     </div>
-
-    <!-- <div class="bottom-buttons">
-      <a href="index.html">Search</a>
-      <a href="scan.html">Scan</a>
-    </div> -->
-
   </div>
 
   <script>
     function submitPLU() {
       const input = document.getElementById('pluInput').value.trim();
+      const loadingOverlay = document.getElementById('loading-overlay');
+
       if (/^\d{4,5}$/.test(input)) {
-        window.location.href = `fruit.html?plu=${input}`;
+        // Show loading animation
+        loadingOverlay.classList.add('visible');
+
+        // Delay navigation
+        setTimeout(() => {
+          window.location.href = `fruit.html?plu=${input}`;
+        }, 1500); // Adjust time as needed
       } else {
         alert("Please enter a valid 4- or 5-digit PLU code.");
       }
