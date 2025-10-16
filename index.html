@@ -10,7 +10,6 @@
 
   <style>
     html {
-      
       background-color: white;
     }
 
@@ -32,6 +31,31 @@
       justify-content: space-between;
       height: 100%;
       box-sizing: border-box;
+      position: relative;
+    }
+
+    .info-button {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      width: 28px;
+      height: 28px;
+      border: 2px solid black;
+      border-radius: 50%;
+      background-color: white;
+      color: black;
+      font-family: 'Kode Mono', monospace;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.2s ease;
+      z-index: 10;
+    }
+
+    .info-button:hover {
+      background-color: #f0f0f0;
     }
 
     .info {
@@ -135,7 +159,6 @@
       }
     }
 
-    /* 🔄 Loading overlay styles */
     #loading-overlay {
       position: fixed;
       top: 0;
@@ -153,7 +176,7 @@
       visibility: hidden;
       opacity: 0;
       transition: opacity 0.3s ease;
-      overflow: hidden; /* Prevent scroll inside overlay */
+      overflow: hidden;
     }
 
     #loading-overlay.visible {
@@ -188,11 +211,65 @@
       50% { width: 100%; }
       100% { width: 0%; }
     }
+
+    #info-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(255, 255, 255, 0.5);
+      backdrop-filter: blur(6px);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 9998;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    #info-modal .modal-content {
+      background: rgba(255, 255, 255, 0.9);
+      border: 2px solid black;
+      border-radius: 12px;
+      padding: 24px;
+      width: 100%;
+      max-width: 500px;
+      margin: 0 auto;
+      color: black;
+      font-family: 'Kode Mono', monospace;
+      font-size: 14px;
+      line-height: 1.6;
+      position: relative;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    #info-modal .modal-content p {
+      text-align: left;
+      margin: 0;
+      hyphens: auto;
+      -webkit-hyphens: auto;
+    }
+
+    #info-modal .close-btn {
+      position: absolute;
+      top: 10px;
+      right: 14px;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      border: none;
+      background: none;
+      color: black;
+    }
+
+    #info-modal .close-btn:hover {
+      color: red;
+    }
   </style>
 </head>
 <body>
 
-  <!-- 🔄 Loading overlay -->
   <div id="loading-overlay">
     <div class="loading-text">Pulling from preexisting archive</div>
     <div class="loading-bar">
@@ -200,7 +277,19 @@
     </div>
   </div>
 
+  <div id="info-modal">
+    <div class="modal-content">
+      <button class="close-btn" onclick="closeModal()">✕</button>
+      <p>
+        <strong>What is a PLU code?</strong><br><br>
+        A PLU (Price Look-Up) code is a four or five-digit number on a sticker on fresh produce that identifies the item for cashiers to ring up at the register. These individual codes help retailers track inventory and ensure correct pricing, and they also provide consumers with information about how the produce was grown. There are over 1,500 global Price Look Up codes assigned by the International Federation for Produce Standards (IFPS). Use this site to scan or search fruit PLU codes to find out more information.
+      </p>
+    </div>
+  </div>
+
   <div class="container">
+    <!-- ℹ️ Info Button -->
+    <div class="info-button" onclick="openModal()">i</div>
 
     <div class="info">
       Subject: Unknown<br>
@@ -209,7 +298,6 @@
     </div>
 
     <div class="center-wrapper">
-
       <div class="manual-entry">
         <input id="pluInput" type="text" placeholder="manually enter PLU" maxlength="5" />
         <button onclick="submitPLU()">submit</button>
@@ -218,6 +306,7 @@
       <div onclick="window.location.href='scan.html'" class="scanner-frame">
         <span>+</span>
       </div>
+
       <div class="click-text">Click to start scanning</div>
     </div>
   </div>
@@ -228,17 +317,23 @@
       const loadingOverlay = document.getElementById('loading-overlay');
 
       if (/^\d{4,5}$/.test(input)) {
-        // Show loading animation
         loadingOverlay.classList.add('visible');
-        document.body.style.overflow = 'hidden'; // Prevent background scroll
+        document.body.style.overflow = 'hidden';
 
-        // Delay navigation
         setTimeout(() => {
           window.location.href = `fruit.html?plu=${input}`;
         }, 1500);
       } else {
         alert("Please enter a valid 4- or 5-digit PLU code.");
       }
+    }
+
+    function openModal() {
+      document.getElementById('info-modal').style.display = 'flex';
+    }
+
+    function closeModal() {
+      document.getElementById('info-modal').style.display = 'none';
     }
   </script>
 
