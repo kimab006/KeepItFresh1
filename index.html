@@ -9,6 +9,11 @@
   <link href="https://fonts.googleapis.com/css2?family=Kode+Mono:wght@400..700&display=swap" rel="stylesheet" />
 
   <style>
+    html {
+      
+      background-color: white;
+    }
+
     body {
       margin: 0;
       padding: 0;
@@ -135,8 +140,8 @@
       position: fixed;
       top: 0;
       left: 0;
-      width: 100%;
-      height: 100%;
+      width: 100vw;
+      height: 100vh;
       background: #ED228D;
       color: black;
       display: flex;
@@ -148,6 +153,7 @@
       visibility: hidden;
       opacity: 0;
       transition: opacity 0.3s ease;
+      overflow: hidden; /* Prevent scroll inside overlay */
     }
 
     #loading-overlay.visible {
@@ -224,11 +230,12 @@
       if (/^\d{4,5}$/.test(input)) {
         // Show loading animation
         loadingOverlay.classList.add('visible');
+        document.body.style.overflow = 'hidden'; // Prevent background scroll
 
         // Delay navigation
         setTimeout(() => {
           window.location.href = `fruit.html?plu=${input}`;
-        }, 1500); // Adjust time as needed
+        }, 1500);
       } else {
         alert("Please enter a valid 4- or 5-digit PLU code.");
       }
